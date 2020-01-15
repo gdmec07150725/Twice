@@ -55,13 +55,12 @@
   "lint-staged": {
     "src/**/*.{js,vue}": [
       "eslint --fix",
-      "npm run format-code",
       "git add"
     ]
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "npm run format-code && lint-staged"
     }
   },
   "browserslist": [
