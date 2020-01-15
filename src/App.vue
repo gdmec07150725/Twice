@@ -18,6 +18,7 @@ export default {
       console.log(1);
     },
   },
+  created() {},
 };
 </script>
 
