@@ -6,16 +6,17 @@
 
 <script>
 export default {
-  name: "layout",
+  name: 'layout',
   data() {
     return {
-      index: 1
+      index: 1,
     };
   },
   methods: {
     handleCollease() {
       console.log(1);
-    }
-  }
+    },
+  },
+  created() {},
 };
 </script>
