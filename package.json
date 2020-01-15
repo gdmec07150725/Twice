@@ -6,7 +6,6 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "eslint-fix": "eslint src/**/**/*.vue --fix",
     "format-code": "prettier-eslint --write \"src/**/*.js\" \"src/**/*.vue\""
   },
   "dependencies": {
@@ -54,8 +53,8 @@
     }
   },
   "lint-staged": {
-    "**/**.{js,json,pcss,md,vue}": [
-      "prettier --write",
+    "src/**/*.{js,vue}": [
+      "eslint --fix",
       "git add"
     ]
   },
