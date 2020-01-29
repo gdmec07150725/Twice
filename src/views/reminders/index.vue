@@ -1,12 +1,11 @@
 <template>
-  <div id="app">
-    <router-view />
+  <div>
+    reminders
   </div>
 </template>
 
 <script>
 export default {
-  name: 'app',
-  methods: {},
+  name: 'reminders',
 };
 </script>

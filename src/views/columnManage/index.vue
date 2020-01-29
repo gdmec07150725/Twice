@@ -1,12 +1,11 @@
 <template>
-  <div id="app">
-    <router-view />
+  <div>
+    columnManage
   </div>
 </template>
 
 <script>
 export default {
-  name: 'app',
-  methods: {},
+  name: 'columnManage',
 };
 </script>
