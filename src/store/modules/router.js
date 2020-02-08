@@ -21,7 +21,7 @@ export function filterAsyncRoutes(routes) {
 const state = {
   routers: routes,
   hasGetRules: false,
-  routerBg: '#242D31',
+  routerBg: '#304156',
 };
 
 const mutations = {

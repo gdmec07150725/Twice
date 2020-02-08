@@ -17,7 +17,7 @@ module.exports = {
   productionSourceMap: false,
   // 解决跨域问题
   devServer: {
-    port: 8080, // 端口
+    port: 8081, // 端口
     proxy: 'http://192.168.11.150:8080',
   },
 };

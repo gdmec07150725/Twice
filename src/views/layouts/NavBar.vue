@@ -1,14 +1,11 @@
 <template>
-  <div>
-    <div class="header_content">
-      <!-- <div>
-        <icon-font
-          :class="triggerClasses"
-          icon="icon-menu"
-          @click.native="handleCollapse"
-        />
-      </div> -->
-    </div>
+  <div class="header_content">
+    <icon-font
+      class="trigger-icon"
+      :icon="collapseIcon"
+      :size="28"
+      @click.native="handleCollapse"
+    />
   </div>
 </template>
 <script>
@@ -20,6 +17,7 @@ export default {
       isReset: false,
       screenWidth: 0,
       timer: null,
+      collapseIcon: 'el-icon-s-fold',
     };
   },
   computed: {
@@ -27,9 +25,6 @@ export default {
       collapse: state => state.collapse,
     }),
     ...mapGetters(['user']),
-    triggerClasses() {
-      return ['trigger-icon', this.collapse ? 'rotate' : ''];
-    },
   },
   methods: {
     ...mapMutations(['CHANGECOLLAPSE', 'CLOSECOLLAPSE', 'RESETUSER']),
@@ -73,6 +68,13 @@ export default {
         }, 400);
       }
     },
+    collapse(newVal) {
+      if (newVal) {
+        this.collapseIcon = 'el-icon-s-unfold';
+      } else {
+        this.collapseIcon = 'el-icon-s-fold';
+      }
+    },
   },
   created() {
     this.screenWidth = document.body.clientWidth;
@@ -87,13 +89,10 @@ export default {
 <style lang="less">
 .trigger-icon {
   cursor: pointer;
-  transition: transform 0.3s ease;
-  &.rotate {
-    transform: rotateZ(-90deg);
-    transition: transform 0.3s ease;
-  }
 }
+
 .header_content {
+  height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;

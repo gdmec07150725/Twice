@@ -50,7 +50,7 @@ export default {
 }
 .sider_outer {
   height: 100%;
-  overflow-y: auto;
+  // overflow-y: auto;
 }
 .header_wrapper {
   background-color: #fff;
