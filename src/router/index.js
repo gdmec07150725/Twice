@@ -48,6 +48,7 @@ router.beforeEach(async (to, from, next) => {
 router.afterEach(() => {
   // finish progress bar
   NProgress.done();
+  window.scrollTo(0, 0); // 让页面滚动到顶部
 });
 
 export default router;
