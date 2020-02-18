@@ -39,20 +39,20 @@
               :key="`menu_${item.children[0].name}`"
               :index="item.children[0].name"
             >
-              <!-- <icon-font :icon="item.children[0].icon" /> -->
-              <span slot="title" style="margin-left: 10px">{{
-                item.children[0].meta.title
-              }}</span>
+              <icon-font :icon="item.children[0].icon" />
+              <span slot="title" style="margin-left: 12px">
+                {{ item.children[0].meta.title }}
+              </span>
             </el-menu-item>
             <el-menu-item
               v-else-if="!item.children"
               :key="`menu_${item.name}`"
               :index="item.name"
             >
-              <!-- <icon-font :icon="item.icon" /> -->
-              <span slot="title" style="margin-left: 10px">{{
-                item.meta.title
-              }}</span>
+              <icon-font :icon="item.icon" />
+              <span slot="title" style="margin-left: 10px">
+                {{ item.meta.title }}
+              </span>
             </el-menu-item>
           </template>
         </template>
@@ -63,7 +63,7 @@
 
 <script>
 import { Scrollbar, Menu, MenuItem } from 'element-ui';
-import SlideItem from '@/views/businessComponent/SlideItem.vue';
+import SlideItem from '@/views/businessComponent/slideItem';
 import { mapState, mapMutations } from 'vuex';
 import { getOpenArrByName } from '@/lib/router';
 import { isIE } from '@/utils/utils';

@@ -2,7 +2,7 @@
   <div>
     <el-submenu :index="parent.name">
       <template slot="title" v-if="!parent.isHidden">
-        <!-- <icon-font :icon="parent.icon" /> -->
+        <icon-font :icon="parent.icon" />
         <span slot="title" style="margin-left: 10px">
           {{ parent.meta.title }}
         </span>
@@ -24,7 +24,7 @@
           :key="`menu_${item.name}`"
           :index="item.name"
         >
-          <!-- <icon-font :icon="item.icon" /> -->
+          <icon-font :icon="item.icon" />
           <span slot="title" style="margin-left: 10px">
             {{ item.meta.title }}
           </span>

@@ -17,7 +17,7 @@ export default {
       isReset: false,
       screenWidth: 0,
       timer: null,
-      collapseIcon: 'el-icon-s-fold',
+      collapseIcon: 'icon-menu-fold-left',
     };
   },
   computed: {
@@ -70,9 +70,9 @@ export default {
     },
     collapse(newVal) {
       if (newVal) {
-        this.collapseIcon = 'el-icon-s-unfold';
+        this.collapseIcon = 'icon-menu-fold';
       } else {
-        this.collapseIcon = 'el-icon-s-fold';
+        this.collapseIcon = 'icon-menu-fold-left';
       }
     },
   },

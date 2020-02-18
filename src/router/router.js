@@ -11,7 +11,7 @@ export const permissionRouter = [
       {
         path: 'workplace',
         name: 'workplace',
-        icon: 'icon-dashboard',
+        icon: 'icon-gongzuotai1',
         component: () => import('@/views/workplace'),
         meta: {
           title: '工作台',
@@ -31,7 +31,7 @@ export const permissionRouter = [
       {
         path: 'index',
         name: 'reminders',
-        icon: '',
+        icon: 'icon-tixingshixiang',
         meta: {
           title: '提醒事项',
           permissions: [],
@@ -52,7 +52,7 @@ export const permissionRouter = [
       {
         path: 'index',
         name: 'publishInfo',
-        icon: '',
+        icon: 'icon-fabugonggao',
         meta: {
           title: '发布公告',
           permissions: [],
@@ -66,7 +66,7 @@ export const permissionRouter = [
     name: 'documentation',
     component: Layouts,
     hidden: false,
-    icon: '',
+    icon: 'icon-wendangguanli',
     alwaysShow: true, // 显示一级menu
     meta: {
       title: '文档管理',
@@ -98,7 +98,7 @@ export const permissionRouter = [
     name: 'tomatoMethod',
     component: Layouts,
     hidden: false,
-    icon: '',
+    icon: 'icon-fanqie-',
     alwaysShow: true,
     meta: {
       title: '番茄工作法',
@@ -130,7 +130,7 @@ export const permissionRouter = [
     name: 'materialStatistics',
     component: Layouts,
     hidden: false,
-    icon: '',
+    icon: 'icon-cz-wztj',
     alwaysShow: true,
     meta: {
       title: '物资统计',
@@ -171,7 +171,7 @@ export const permissionRouter = [
       {
         path: 'index',
         name: 'projectManage',
-        icon: '',
+        icon: 'icon-xiangmuguanli',
         meta: {
           title: '项目管理',
           permissions: [],
@@ -192,7 +192,7 @@ export const permissionRouter = [
       {
         path: 'index',
         name: 'reimburseManage',
-        icon: '',
+        icon: 'icon-baoxiaoguanli',
         meta: {
           title: '报销管理',
           permissions: [],
@@ -213,12 +213,33 @@ export const permissionRouter = [
       {
         path: 'index',
         name: 'columnManage',
-        icon: '',
+        icon: 'icon-zhuanlan-',
         meta: {
           title: '专栏管理',
           permissions: [],
         },
         component: () => import('@/views/columnManage'),
+      },
+    ],
+  },
+  {
+    path: '/staffManage',
+    component: Layouts,
+    redirect: '/staffManage/index',
+    hidden: false,
+    meta: {
+      permission: [],
+    },
+    children: [
+      {
+        path: 'index',
+        name: 'staffManage',
+        icon: 'icon-renyuan',
+        meta: {
+          title: '人员管理',
+          permission: [],
+        },
+        component: () => import('@/views/staffManage'),
       },
     ],
   },
