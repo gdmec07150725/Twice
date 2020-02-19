@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "11264737",
+      "name": "公司管理",
+      "font_class": "gongsiguanli",
+      "unicode": "e691",
+      "unicode_decimal": 59025
+    },
+    {
       "icon_id": "9252253",
       "name": "工作台",
       "font_class": "gongzuotai1",

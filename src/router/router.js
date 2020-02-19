@@ -244,6 +244,27 @@ export const permissionRouter = [
     ],
   },
   {
+    path: '/companyManage',
+    component: Layouts,
+    redirect: '/companyManage/index',
+    hidden: false,
+    meta: {
+      permission: [],
+    },
+    children: [
+      {
+        path: 'index',
+        name: 'companyManage',
+        icon: 'icon-gongsiguanli',
+        meta: {
+          title: '公司管理',
+          permission: [],
+        },
+        component: () => import('@/views/companyManage'),
+      },
+    ],
+  },
+  {
     path: '*',
     component: Layouts,
     redirect: '/404',

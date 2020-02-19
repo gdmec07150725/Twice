@@ -18,6 +18,6 @@ module.exports = {
   // 解决跨域问题
   devServer: {
     port: 8081, // 端口
-    proxy: 'http://192.168.11.150:8080',
+    proxy: 'http://101.133.219.6:10010',
   },
 };

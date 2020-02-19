@@ -152,14 +152,6 @@ export default {
 }
 .el-menu > .is-active,
 .el-menu--inline > .is-active {
-  background: rgb(28, 34, 37) !important;
-}
-.el-menu-item,
-.el-submenu__title {
-  height: 37px;
-  line-height: 37px;
-}
-.icon-users {
-  font-size: 14px !important;
+  background: #409eff !important;
 }
 </style>

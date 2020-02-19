@@ -7,6 +7,8 @@ import '@/assets/font/iconfont.css';
 import IconFont from '@/components/icon-font';
 
 Vue.component('icon-font', IconFont); // 全局注册icon组件
+Vue.prototype.$ELEMENT = { size: 'medium' }; // 全局element-ui配置
+
 Vue.config.productionTip = false;
 
 new Vue({

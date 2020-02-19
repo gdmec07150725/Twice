@@ -3,7 +3,7 @@
     <icon-font
       class="trigger-icon"
       :icon="collapseIcon"
-      :size="28"
+      :size="25"
       @click.native="handleCollapse"
     />
   </div>
