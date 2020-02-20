@@ -8,9 +8,9 @@
       type="password"
       class="input"
     ></el-input>
-    <el-button type="primary" class="button" @click="handleSubmit">
-      login
-    </el-button>
+    <el-button type="primary" class="button" @click="handleSubmit"
+      >login</el-button
+    >
   </div>
 </template>
 
@@ -45,7 +45,7 @@ export default {
 <style scoped lang="less">
 .login_wrapper {
   position: absolute;
-  width: 480px;
+  width: 350px;
   left: 50%;
   top: 200px;
   transform: translateX(-50%);

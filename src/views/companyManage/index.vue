@@ -18,6 +18,11 @@ export default {
     card,
     'el-button': Button,
   },
+  data() {
+    return {
+      testVal: '',
+    };
+  },
   methods: {
     ...mapActions(['getAllCompanyList']),
     async handleClick() {
