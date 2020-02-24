@@ -8,7 +8,7 @@ const env = process.env.NODE_ENV;
 console.log('env', env);
 
 const development = {
-  serverURL: 'http://localhost:8081/api/company-service',
+  serverURL: 'http://localhost:8081/api',
 };
 
 const qa = {

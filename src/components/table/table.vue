@@ -20,7 +20,7 @@
           :key="item.prop"
           :fixed="item.fixed"
           :prop="item.prop"
-          :label="$t(item.label)"
+          :label="item.label"
           :align="item.align || 'left'"
           :width="item.width"
           :min-width="item.minWidth"
@@ -34,7 +34,7 @@
           :key="item.prop"
           :fixed="item.fixed"
           :prop="item.prop"
-          :label="$t(item.label)"
+          :label="item.label"
           :align="item.align || 'left'"
           :width="item.width"
           :min-width="item.minWidth"
@@ -52,7 +52,7 @@
           :key="item.prop"
           :fixed="item.fixed"
           :prop="item.prop"
-          :label="$t(item.label)"
+          :label="item.label"
           :align="item.align || 'left'"
           :width="item.width"
           :min-width="item.minWidth"
@@ -65,7 +65,7 @@
           v-if="item.slot && !item.filters"
           :fixed="item.fixed"
           :prop="item.prop"
-          :label="$t(item.label)"
+          :label="item.label"
           :align="item.align || 'left'"
           :width="item.width"
           :min-width="item.minWidth"
@@ -78,11 +78,7 @@
         </el-table-column>
       </template>
       <template v-if="!ActionBar || !ActionBar.NoDisplayButton">
-        <el-table-column
-          fixed="right"
-          :label="$t('btn_action')"
-          :width="actionWidth"
-        >
+        <el-table-column fixed="right" label="操作" :width="actionWidth">
           <template slot-scope="scope">
             <slot :row="scope.row" name="btnGroup"></slot>
           </template>
@@ -104,7 +100,7 @@ export default {
   props: {
     emptyText: {
       type: String,
-      default: '',
+      default: '暂无数据',
     },
     tableColumns: {
       type: Array,
@@ -220,7 +216,7 @@ export default {
           <Popover placement="bottom" width="200" trigger="click">
             <div class="table_checkboxWrapper">
               <custome-input
-                placeholder={this.$t('views_component_table_tip_search')}
+                placeholder="搜索"
                 value={this.filterInput[prop]}
                 style="margin-bottom: 10px;"
                 clearable={true}
@@ -245,7 +241,7 @@ export default {
                     this.handleCheckAllChange(value, prop, filters)
                   }
                   style="margin-bottom: 10px;">
-                  {this.$t('views_component_table_text_checkAll')}
+                  全选
                 </custome-checkbox>
               </span>
               <div style="max-height: 300px; overflow-y: auto; margin-bottom: 12px;">
@@ -269,12 +265,12 @@ export default {
                   disabled={
                     this.filterObj[prop] && !this.filterObj[prop].length
                   }>
-                  {this.$t('views_component_table_btn_apply')}
+                  应用
                 </custome-button>
                 <custome-button
                   size="mini"
                   on-click={() => this.handleClear(prop, filters)}>
-                  {this.$t('views_component_table_btn_clear')}
+                  清除
                 </custome-button>
               </div>
             </div>
@@ -297,7 +293,7 @@ export default {
                     ? 'highlight'
                     : ''
                 }>
-                <i class="iconfont icon-filter"></i>
+                <i class="iconfont icon-guolv"></i>
               </span>
             </div>
           </Popover>

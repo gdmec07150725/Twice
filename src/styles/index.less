@@ -22,3 +22,40 @@ html {
 #app {
   height: 100%;
 }
+
+// 模块页面头部文字样式
+.title {
+  font-size: 24px;
+  color: #000;
+  padding: 0 0 20px 0;
+  margin: 0;
+}
+
+// 表格表头高度修改
+.line_height {
+  .el-table th div  {
+    line-height: 24px !important;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+  }
+}
+// 隐藏表格中下拉勾选箭头
+.hide {
+  .el-table__column-filter-trigger {
+    // display: none
+    float: left;
+    position: absolute;
+    visibility: collapse
+  }
+}
+// 表格操作列按钮
+.operation{
+  display: flex;
+  // 表格里面按钮左对齐，并且调整间隙一样宽
+  .global_button {
+    margin-left:10px
+  }
+}

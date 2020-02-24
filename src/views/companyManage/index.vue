@@ -1,38 +1,32 @@
 <template>
   <div>
-    <card>
-      <div slot="search">公司管理</div>
-      <div slot="buttonGroup">
-        <el-button>新增公司</el-button>
-      </div>
-    </card>
+    <company-list />
   </div>
 </template>
 <script>
-import card from '@/components/card';
-import { Button } from 'element-ui';
-import { mapActions } from 'vuex';
+import companyList from '@/views/businessComponent/companyManage/companyList.vue';
+import store from '@/store';
 export default {
   name: 'companyManage',
   components: {
-    card,
-    'el-button': Button,
+    companyList,
   },
-  data() {
-    return {
-      testVal: '',
+  beforeRouteEnter(to, from, next) {
+    // 重设表格过滤项和分页
+    store.commit('REST_COMPANY_PAGINATION');
+    const filterParams = {
+      type: [],
+      name: null,
     };
-  },
-  methods: {
-    ...mapActions(['getAllCompanyList']),
-    async handleClick() {
-      try {
-        const res = await this.getAllCompanyList();
-        console.log(res);
-      } catch (error) {
-        console.log(error);
-      }
-    },
+    const filterInputValueParams = {
+      type: '',
+    };
+    store.commit('RESET_FILTER_AND_SORT', {
+      filterParams,
+      filterInputValueParams,
+      page: 'company',
+    });
+    next();
   },
 };
 </script>
