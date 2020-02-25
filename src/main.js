@@ -10,6 +10,7 @@ import IconFont from '@/components/icon-font';
 import editButton from '_c/Button/editButton.vue';
 import deleteButton from '_c/Button/deleteButton.vue';
 import primaryButton from '_c/Button/primaryButton.vue';
+import successButton from '_c/Button/successButton.vue';
 import {
   Loading,
   MessageBox,
@@ -27,6 +28,7 @@ Vue.component('icon-font', IconFont); // 全局注册icon组件
 Vue.component('edit-button', editButton);
 Vue.component('delete-button', deleteButton);
 Vue.component('primary-button', primaryButton);
+Vue.component('success-button', successButton);
 Vue.component('Popover', Popover); // for jsx
 Vue.component('customeInput', Input); // for jsx
 Vue.component('customeCheckbox', Checkbox); // for jsx

@@ -7,10 +7,10 @@ const formatDate = value => {
   }
 };
 
-/* 将时间转换为时间戳 */
+/* 将时间转换为时间戳 (毫秒)*/
 const timestampDate = value => {
   if (value) {
-    return moment(value).format('X');
+    return Number(moment(value).format('x'));
   }
 };
 

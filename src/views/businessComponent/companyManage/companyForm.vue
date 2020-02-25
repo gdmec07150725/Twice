@@ -58,23 +58,18 @@
         </el-form-item>
         <el-form-item label="管理员名称" prop="username">
           <el-input
+            :disabled="actionType === 2"
             v-model="companyForm.username"
             placeholder="请输入管理员名称"
           ></el-input>
         </el-form-item>
         <el-form-item label="管理员邮箱" prop="email">
           <el-input
+            :disabled="actionType === 2"
             v-model="companyForm.email"
             placeholder="请输入管理员邮箱"
           ></el-input>
         </el-form-item>
-        <!-- <el-form-item label="公司简介" prop="intro">
-          <el-input
-            type="textarea"
-            v-model="companyForm.intro"
-            placeholder="请输入公司简介"
-          ></el-input>
-        </el-form-item> -->
       </el-form>
       <div slot="action">
         <edit-button
@@ -93,6 +88,8 @@ import { Form, FormItem, Input, DatePicker, Select, Option } from 'element-ui';
 import MDialog from '_c/dialog';
 import singleUpload from '_c/upload/singleUpload.vue';
 import regExp from '@/utils/regExp';
+import * as filter from '@/utils/filter';
+
 export default {
   name: 'companyForm',
   props: {
@@ -205,6 +202,10 @@ export default {
     handleUploadSuccess() {
       this.$refs['companyLogo'] && this.$refs['companyLogo'].clearValidate();
     },
+    handleError(error = {}) {
+      const { message = '' } = error;
+      message && this.$message.error(message);
+    },
     handleCreateClick() {
       this.$refs['form'].validate(pass => {
         if (pass) {
@@ -213,7 +214,6 @@ export default {
       });
     },
     assemblyParams() {
-      console.log(this.companyForm);
       const { username, email, ...otherParams } = this.companyForm;
       const params = {
         ...otherParams,
@@ -235,12 +235,14 @@ export default {
         this.handleCloseDialog(true);
       } catch (error) {
         this.addLoading = false;
+        this.handleError(error);
       }
     },
     async handleEditCompany() {
-      console.log('出发了');
       try {
+        const { id } = this.companyDetail;
         const params = this.assemblyParams();
+        params.id = id;
         this.addLoading = true;
         const res = await this.modifyCompany(params);
         const { message = '' } = res;
@@ -249,6 +251,7 @@ export default {
         this.handleCloseDialog(true);
       } catch (error) {
         this.addLoading = false;
+        this.handleError(error);
       }
     },
     initCompany() {
@@ -258,6 +261,9 @@ export default {
       const { user: { username = '', email = '' } = {} } = this.companyDetail;
       this.companyForm['username'] = username;
       this.companyForm['email'] = email;
+      this.companyForm['establishAt'] = filter.timestampDate(
+        this.companyDetail['establishAt'] || ''
+      );
     },
     handleCloseDialog(refresh = false) {
       this.$emit('onHandleCloseDialog', refresh);

@@ -7,7 +7,12 @@ class Company {
    * 查询所有公司信息
    */
   async getAllCompany(params) {
-    return Restful.get(`/company-service/companies/page?${stringify(params)}`);
+    return Restful.get(
+      `/company-service/companies/page?${stringify(params, {
+        arrayFormat: 'repeat',
+        skipNulls: true,
+      })}`
+    );
   }
 
   /* 新增公司 */

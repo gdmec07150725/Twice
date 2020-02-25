@@ -13,16 +13,24 @@ const state = {
       name: null,
       type: [],
     },
+    reminders: {
+      name: null,
+      status: [],
+    },
   },
   // 检索的input：区分不同页面
   filterInput: {
     company: {
       type: '',
     },
+    reminders: {
+      status: '',
+    },
   },
   // 排序：区分不同页面
   sort: {
     company: { ...defaultSort },
+    reminders: { ...defaultSort },
   },
 };
 
