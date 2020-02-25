@@ -4,7 +4,8 @@
       <div class="paginationMain-right page">
         <el-pagination
           background
-          layout="prev, pager, next, jumper"
+          layout="total, prev, pager, next, jumper"
+          :hide-on-single-page="true"
           :current-page="currentPage"
           :total="total"
           :pageSize="pageSize"
