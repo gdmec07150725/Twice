@@ -11,14 +11,14 @@
         </div>
       </div>
       <div slot="buttonGroup">
-        <edit-button @click="handleAddCompany" icon="el-icon-plus"
-          >提醒事项</edit-button
-        >
+        <edit-button @click="handleAddReminders" icon="el-icon-plus">
+          提醒事项
+        </edit-button>
       </div>
       <div slot="content">
         <m-table
           :tableColumns="tableColumns"
-          :tableData="companyList"
+          :tableData="remindersList"
           :loading="tableLoading"
           ref="remindersTable"
           :actionWidth="210"
@@ -36,7 +36,7 @@
             <div class="operation">
               <success-button>完成</success-button>
               <edit-button
-                @click="handleCompanyEdit(row)"
+                @click="handleRemindersEdit(row)"
                 class="global_button"
               >
                 编辑
@@ -63,7 +63,7 @@
         :companyType="companyType"
         :companyNumber="companyNumber"
         :actionType="actionType"
-        :companyDetail="companyDetail"
+        :remindersDetail="remindersDetail"
       />
     </template>
   </div>
@@ -87,15 +87,14 @@ export default {
   },
   computed: {
     ...mapState({
-      companyList: state => state.company.companyList,
-      pagination: state => state.company.companyTablePagination,
+      remindersList: state => state.reminders.remindersList,
+      pagination: state => state.reminders.remindersTablePagination,
       filter: state => state.filter.filter.company,
       filterInputValue: state => state.filter.filterInput.company,
     }),
   },
   watch: {
     companyType(newValue) {
-      console.log(newValue);
       const copyCompanyType = [...newValue];
       const newFilterList = copyCompanyType.map(item => {
         return {
@@ -110,18 +109,18 @@ export default {
     return {
       tableColumns: [
         {
-          prop: 'name',
+          prop: 'content',
           label: '提醒内容',
           slot: false,
         },
         {
-          prop: 'number',
+          prop: 'remindAt',
           label: '提醒时间',
           slot: false,
         },
         {
-          prop: 'type',
-          label: '优先级',
+          prop: 'prior',
+          label: '权重',
           slot: false,
           filters: [],
           filterValue: [],
@@ -130,7 +129,6 @@ export default {
         {
           prop: 'status',
           label: '状态',
-          slot: true,
         },
       ],
       tableLoading: false,
@@ -138,13 +136,13 @@ export default {
       companyType: [],
       companyNumber: [],
       actionType: 1,
-      companyDetail: {},
+      remindersDetail: {},
     };
   },
   methods: {
     ...mapActions([
       'getConstantBeforeRequest',
-      'getAllCompanyList',
+      'getAllReminders',
       'deleteCompany',
     ]),
     ...mapMutations([
@@ -155,17 +153,17 @@ export default {
     handleCloseDialog(refresh) {
       this.openFormModal = false;
       if (refresh) {
-        this.loadCompanyList();
+        this.loadRemindersList();
       }
     },
-    handleAddCompany() {
+    handleAddReminders() {
       this.actionType = 1;
       this.openFormModal = true;
     },
-    handleCompanyEdit(row) {
+    handleRemindersEdit(row) {
       this.actionType = 2;
       this.openFormModal = true;
-      this.companyDetail = { ...row };
+      this.remindersDetail = { ...row };
     },
     async handleCompanyDelete(row) {
       try {
@@ -177,10 +175,10 @@ export default {
         });
         await this.deleteCompany(row.id);
         // 在删除成功的回调里：判断当前列表是否是一条：调用calculationPage函数去处理分页
-        if (this.companyList.length == 1) {
+        if (this.remindersList.length == 1) {
           this.SET_COMPANY_PAGINATION(calculationPage(this.pagination.page));
         }
-        this.loadCompanyList();
+        this.loadRemindersList();
       } catch (error) {
         const { message = '' } = error;
         message && this.$message.error(message);
@@ -190,7 +188,7 @@ export default {
       const params = {
         page: currentPage,
       };
-      this.loadCompanyList(params);
+      this.loadRemindersList(params);
     },
     handleSubmitSearch(searchValue) {
       this.handlefilterChange('name', searchValue);
@@ -205,7 +203,7 @@ export default {
         page: 1,
       };
       this.CHANGEFILTER(filterParams);
-      this.loadCompanyList(params);
+      this.loadRemindersList(params);
     },
     handleFilterInputChange(filterInputKey, filterInputValue) {
       const filterInputParams = {
@@ -215,14 +213,14 @@ export default {
       };
       this.CHANGEFILTERINPUT(filterInputParams);
     },
-    loadCompanyList(params = {}) {
+    loadRemindersList(params = {}) {
       const concatParams = {
         ...params,
         ...this.filter,
       };
-      this.queryCompanyList(concatParams);
+      this.queryRemindersList(concatParams);
     },
-    async queryCompanyList(params = {}) {
+    async queryRemindersList(params = {}) {
       try {
         const concatParams = {
           page: this.pagination.page,
@@ -231,7 +229,7 @@ export default {
         };
         console.log('concatParams', concatParams);
         this.tableLoading = true;
-        await this.getAllCompanyList(filterData(concatParams));
+        await this.getAllReminders(filterData(concatParams));
         this.tableLoading = false;
       } catch (error) {
         this.tableLoading = false;
@@ -255,7 +253,7 @@ export default {
     },
   },
   created() {
-    this.loadCompanyList();
+    this.loadRemindersList();
     this.loadConstants();
     this.setDefaultFilterValue();
   },

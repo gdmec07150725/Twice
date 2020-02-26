@@ -2,7 +2,7 @@
 /**
  * 审计日志
  */
-import company from '@/api/company';
+import reminders from '@/api/reminders';
 
 const defaultPagination = {
   page: 1,
@@ -38,10 +38,10 @@ const mutations = {
 };
 const actions = {
   // 获取提醒事项列表数据
-  getRemindersList({ commit }, params) {
+  getAllReminders({ commit }, params) {
     return new Promise((resolve, reject) => {
-      company
-        .getAllCompany(params)
+      reminders
+        .getAllReminders(params)
         .then(res => {
           resolve(res);
           commit('SETREMINDERSLIST', res);
@@ -52,10 +52,10 @@ const actions = {
     });
   },
   // 新增公司
-  addNewReminders({ commit }, params) {
+  createNewReminders({ commit }, params) {
     return new Promise((resolve, reject) => {
-      company
-        .addNewCompany(params)
+      reminders
+        .createNewReminders(params)
         .then(res => {
           resolve(res);
         })
@@ -65,10 +65,10 @@ const actions = {
     });
   },
   // 修改公司
-  modifyReminders({ commit }, params) {
+  editReminders({ commit }, params) {
     return new Promise((resolve, reject) => {
-      company
-        .modifyCompany(params)
+      reminders
+        .editReminders(params)
         .then(res => {
           resolve(res);
         })
@@ -80,8 +80,8 @@ const actions = {
   // 删除公司
   deleteReminders({ commit }, id) {
     return new Promise((resolve, reject) => {
-      company
-        .deleteCompany(id)
+      reminders
+        .deleteReminders(id)
         .then(res => {
           resolve(res);
         })
