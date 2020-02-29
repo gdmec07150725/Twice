@@ -10,7 +10,7 @@ const defaultPagination = {
   total: 0,
 };
 const state = {
-  companyTablePagination: defaultPagination,
+  companyTablePagination: { ...defaultPagination },
   companyList: [],
 };
 

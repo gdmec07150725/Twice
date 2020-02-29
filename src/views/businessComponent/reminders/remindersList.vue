@@ -1,11 +1,11 @@
 <template>
-  <div class="company-list">
+  <div class="reminders-list">
     <p class="title">提醒事项</p>
     <m-card>
       <div slot="search">
         <div class="filterInput">
           <m-search
-            :searchText="filter.name"
+            :searchText="filter.content"
             @onHandleSubmitSearch="handleSubmitSearch"
           />
         </div>
@@ -21,7 +21,7 @@
           :tableData="remindersList"
           :loading="tableLoading"
           ref="remindersTable"
-          :actionWidth="210"
+          :actionWidth="145"
           @onHandleFilterChange="handlefilterChange"
           @onHandleFilterInputChange="handleFilterInputChange"
         >
@@ -34,18 +34,15 @@
           }}</template>
           <template #btnGroup="{ row }">
             <div class="operation">
-              <success-button>完成</success-button>
-              <edit-button
-                @click="handleRemindersEdit(row)"
-                class="global_button"
-              >
+              <edit-button @click="handleRemindersEdit(row)">
                 编辑
               </edit-button>
               <delete-button
-                @click="handleCompanyDelete(row)"
+                @click="handleRemindersDelete(row)"
                 class="global_button"
-                >删除</delete-button
               >
+                删除
+              </delete-button>
             </div>
           </template>
         </m-table>
@@ -89,8 +86,8 @@ export default {
     ...mapState({
       remindersList: state => state.reminders.remindersList,
       pagination: state => state.reminders.remindersTablePagination,
-      filter: state => state.filter.filter.company,
-      filterInputValue: state => state.filter.filterInput.company,
+      filter: state => state.filter.filter.reminders,
+      filterInputValue: state => state.filter.filterInput.reminders,
     }),
   },
   watch: {
@@ -143,12 +140,12 @@ export default {
     ...mapActions([
       'getConstantBeforeRequest',
       'getAllReminders',
-      'deleteCompany',
+      'deleteReminders',
     ]),
     ...mapMutations([
       'CHANGEFILTER',
       'CHANGEFILTERINPUT',
-      'SET_COMPANY_PAGINATION',
+      'SET_REMINDERS_PAGINATION',
     ]),
     handleCloseDialog(refresh) {
       this.openFormModal = false;
@@ -165,7 +162,7 @@ export default {
       this.openFormModal = true;
       this.remindersDetail = { ...row };
     },
-    async handleCompanyDelete(row) {
+    async handleRemindersDelete(row) {
       try {
         await this.$confirm('确认删除该条提醒？', '提示', {
           confirmButtonText: '确认',
@@ -173,10 +170,10 @@ export default {
           type: 'warning',
           closeOnClickModal: false,
         });
-        await this.deleteCompany(row.id);
+        await this.deleteReminders(row.id);
         // 在删除成功的回调里：判断当前列表是否是一条：调用calculationPage函数去处理分页
         if (this.remindersList.length == 1) {
-          this.SET_COMPANY_PAGINATION(calculationPage(this.pagination.page));
+          this.SET_REMINDERS_PAGINATION(calculationPage(this.pagination.page));
         }
         this.loadRemindersList();
       } catch (error) {
@@ -191,13 +188,13 @@ export default {
       this.loadRemindersList(params);
     },
     handleSubmitSearch(searchValue) {
-      this.handlefilterChange('name', searchValue);
+      this.handlefilterChange('content', searchValue);
     },
     handlefilterChange(filterKey, filterValue) {
       const filterParams = {
         filterKey,
         filterValue,
-        page: 'company',
+        page: 'reminders',
       };
       const params = {
         page: 1,
@@ -209,7 +206,7 @@ export default {
       const filterInputParams = {
         filterInputKey,
         filterInputValue,
-        page: 'company',
+        page: 'reminders',
       };
       this.CHANGEFILTERINPUT(filterInputParams);
     },
@@ -227,7 +224,6 @@ export default {
           rows: this.pagination.rows,
           ...params,
         };
-        console.log('concatParams', concatParams);
         this.tableLoading = true;
         await this.getAllReminders(filterData(concatParams));
         this.tableLoading = false;
@@ -246,16 +242,16 @@ export default {
       }
     },
     // 设置filter初始值
-    setDefaultFilterValue() {
-      const { type } = this.filter;
-      this.tableColumns[3].filterValue = type;
-      this.tableColumns[3].filterInputValue = this.filterInputValue['type'];
-    },
+    // setDefaultFilterValue() {
+    //   const { type } = this.filter;
+    //   this.tableColumns[3].filterValue = type;
+    //   this.tableColumns[3].filterInputValue = this.filterInputValue['type'];
+    // },
   },
   created() {
     this.loadRemindersList();
     this.loadConstants();
-    this.setDefaultFilterValue();
+    // this.setDefaultFilterValue();
   },
 };
 </script>

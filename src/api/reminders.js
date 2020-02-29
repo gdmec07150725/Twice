@@ -25,7 +25,7 @@ class Reminders {
 
   /* 删除提醒事项 */
   async deleteReminders(id) {
-    return Restful.delete(`/user-service/reminds${id}`);
+    return Restful.delete(`/user-service/reminds/${id}`);
   }
 }
 

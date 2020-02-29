@@ -265,6 +265,44 @@ export const permissionRouter = [
     ],
   },
   {
+    path: '/',
+    name: 'settings',
+    component: Layouts,
+    hidden: false,
+    icon: 'icon-cz-wztj',
+    alwaysShow: true,
+    meta: {
+      title: '系统配置',
+      permissions: [],
+    },
+    children: [
+      {
+        path: 'constant',
+        name: 'constant',
+        meta: {
+          title: '字典管理',
+          permissions: [],
+        },
+        component: () => import('@/views/settings/constant/parentConstant.vue'),
+      },
+      {
+        path: 'constant/child',
+        name: 'childConstant',
+        type: 'item',
+        hidden: true,
+        meta: {
+          noCache: true,
+          activeMenu: 'constant',
+          permissions: [],
+        },
+        component: () =>
+          import(
+            '@/views/businessComponent/settings/constant/childConstantList.vue'
+          ),
+      },
+    ],
+  },
+  {
     path: '*',
     component: Layouts,
     redirect: '/404',

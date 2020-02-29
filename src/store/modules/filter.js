@@ -14,8 +14,11 @@ const state = {
       type: [],
     },
     reminders: {
-      name: null,
-      status: [],
+      content: null,
+      // status: [],
+    },
+    constant: {
+      key: null,
     },
   },
   // 检索的input：区分不同页面

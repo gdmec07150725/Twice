@@ -2,7 +2,7 @@
   <div>
     <m-dialog
       dialogWidth="25%"
-      title="新增提醒事项"
+      :title="actionType === 1 ? '新增提醒事项' : '编辑提醒事项'"
       :dialogVisible="true"
       :isDestroyClose="true"
       @onHandleClose="handleCloseDialog"
@@ -115,7 +115,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['createNewReminders']),
+    ...mapActions(['createNewReminders', 'editReminders']),
     handleError(error = {}) {
       const { message = '' } = error;
       message && this.$message.error(message);

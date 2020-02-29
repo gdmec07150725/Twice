@@ -21,7 +21,7 @@
           :tableData="companyList"
           :loading="tableLoading"
           ref="companyTable"
-          :actionWidth="150"
+          :actionWidth="145"
           @onHandleFilterChange="handlefilterChange"
           @onHandleFilterInputChange="handleFilterInputChange"
         >
