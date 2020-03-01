@@ -74,3 +74,12 @@ export const sortArr = (arr = [], sortKey) => {
     return [];
   }
 };
+
+/**
+ * 消息提示音
+ *
+ */
+export function playMus() {
+  var gamemuiscs1 = new Audio('/static/resources/default.mp3');
+  gamemuiscs1.play();
+}

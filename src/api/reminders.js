@@ -27,6 +27,10 @@ class Reminders {
   async deleteReminders(id) {
     return Restful.delete(`/user-service/reminds/${id}`);
   }
+  /* 根据id查找提醒事项 */
+  async getRemindersDetailById(id) {
+    return Restful.get(`/user-service/reminds/${id}`);
+  }
 }
 
 export default new Reminders();

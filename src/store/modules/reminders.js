@@ -90,6 +90,19 @@ const actions = {
         });
     });
   },
+  // 根据id查看提醒事项详情
+  getRemindersDetailById({ commit }, id) {
+    return new Promise((resolve, reject) => {
+      reminders
+        .getRemindersDetailById(id)
+        .then(res => {
+          resolve(res);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
 };
 
 export default {

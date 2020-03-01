@@ -24,9 +24,11 @@ import NavBar from './NavBar.vue';
 import Slider from './Slider.vue';
 import ContentWrap from './ContentWrap.vue';
 import { mapState } from 'vuex';
+import socket from '@/mixin/socket.js';
 // import slideMenuItems from '@/lib/slideMenuItems.js'
 export default {
   name: 'layout',
+  mixins: [socket],
   components: {
     'el-container': Container,
     'el-header': Header,

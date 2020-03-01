@@ -9,14 +9,17 @@ console.log('env', env);
 
 const development = {
   serverURL: 'http://localhost:8081',
+  socketURL: 'http://101.133.219.6:10010/websocket-service/app',
 };
 
 const qa = {
   serverURL: '',
+  socketURL: '',
 };
 
 const production = {
   serverURL: '',
+  socketURL: '',
 };
 
 const config = {

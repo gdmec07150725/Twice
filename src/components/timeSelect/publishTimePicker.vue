@@ -26,7 +26,7 @@
         @change="handleChangeTime"
         :picker-options="{
           start: '00:00',
-          step: '00:30',
+          step: '00:15',
           end: '23:30',
           minTime: minTime,
         }"
@@ -180,8 +180,12 @@ export default {
         let nowHours = new Date().getHours();
         let nowMinutes = new Date().getMinutes();
         let defaultTime = '00:00';
-        if (nowMinutes < 30) {
+        if (nowMinutes < 15) {
+          defaultTime = `${nowHours}:15`;
+        } else if (nowMinutes < 30) {
           defaultTime = `${nowHours}:30`;
+        } else if (nowMinutes < 45) {
+          defaultTime = `${nowHours}:45`;
         } else if (nowMinutes < 59) {
           defaultTime = `${nowHours + 1}:00`;
         }

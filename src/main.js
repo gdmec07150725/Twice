@@ -15,6 +15,7 @@ import {
   Loading,
   MessageBox,
   Message,
+  Notification,
   Popover,
   Input,
   Checkbox,
@@ -38,6 +39,7 @@ Vue.component('customeButton', Button); // for jsx
 Vue.prototype.$loading = Loading.service;
 Vue.prototype.$confirm = MessageBox.confirm;
 Vue.prototype.$message = Message;
+Vue.prototype.$notify = Notification;
 Vue.prototype.$bus = EventBus;
 Vue.prototype.$ELEMENT = { size: 'medium' }; // 全局element-ui配置
 

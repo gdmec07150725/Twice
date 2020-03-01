@@ -131,8 +131,8 @@ export default {
       try {
         const params = {
           ...this.remindersForm,
+          userId: 1, // 后面做好登录之后，应该不需要传这个参数
         };
-        console.log(params);
         this.addLoading = true;
         const res = await this.createNewReminders(params);
         const { message = '' } = res;
@@ -150,6 +150,7 @@ export default {
         const params = {
           id,
           ...this.remindersForm,
+          userId: 1,
         };
         this.addLoading = true;
         const res = await this.editReminders(params);
