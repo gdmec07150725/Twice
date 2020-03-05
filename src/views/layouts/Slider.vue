@@ -9,9 +9,7 @@
     </div>
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
-        :default-active="
-          activeRouteName || $route.meta.activeMenu || $route.name
-        "
+        :default-active="$route.meta.activeMenu || $route.name"
         :background-color="routerBg"
         text-color="#BBC7CD"
         active-text-color="#FFF"
@@ -86,7 +84,6 @@ export default {
     ...mapState({
       routers: state => state.router.routers,
       collapse: state => state.collapse,
-      activeRouteName: state => state.router.activeRouteName,
       routerBg: state => state.router.routerBg,
     }),
     openNames() {
