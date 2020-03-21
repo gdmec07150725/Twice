@@ -202,18 +202,19 @@ export const permissionRouter = [
     ],
   },
   {
-    path: '/columnManage',
+    path: '/category',
+    name: 'category',
+    icon: 'icon-zhuanlan-',
     component: Layouts,
-    redirect: '/columnManage/index',
     hidden: false,
     meta: {
+      title: '分类管理',
       permissions: [],
     },
     children: [
       {
-        path: 'index',
+        path: 'columnManage',
         name: 'columnManage',
-        icon: 'icon-zhuanlan-',
         meta: {
           title: '专栏管理',
           permissions: [],

@@ -27,7 +27,7 @@ const mutations = {
   },
   SAVE_CHILD_COLUMN(state, data) {
     let { childColumnList } = state;
-    childColumnList = data.data;
+    childColumnList = data;
     state.childColumnList = [...childColumnList];
   },
   SET_PARENT_PAGINATION(state, currentPage) {
@@ -64,8 +64,8 @@ const actions = {
       column
         .getChildrenColumn(params)
         .then(res => {
-          resolve(res);
           commit('SAVE_CHILD_COLUMN', res);
+          resolve(res);
         })
         .catch(error => {
           reject(error);

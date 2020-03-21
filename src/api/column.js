@@ -9,8 +9,8 @@ class Column {
   }
 
   /* 查询二级专栏 */
-  async getChildrenColumn(id) {
-    return Restful.get(`/user-service/categories/first/${id}`);
+  async getChildrenColumn(params) {
+    return Restful.get(`/user-service/categories/first/${params.pid}`);
   }
   /* 新增专栏 */
   async addColumn(params) {

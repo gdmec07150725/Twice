@@ -31,6 +31,7 @@
                 name: 'childColumn',
                 query: {
                   pid: row.id,
+                  pname: row.name,
                 },
               }"
             >

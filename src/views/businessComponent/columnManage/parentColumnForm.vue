@@ -55,6 +55,7 @@ export default {
   data() {
     return {
       parentColumnForm: {
+        id: '',
         name: '',
       },
       rules: {
@@ -70,6 +71,10 @@ export default {
   },
   methods: {
     ...mapActions(['addColumn', 'editColumn']),
+    handleError(error = {}) {
+      const { message = '' } = error;
+      message && this.$message.error(message);
+    },
     handleClick() {
       this.$refs['form'].validate(pass => {
         if (pass) {
@@ -91,7 +96,7 @@ export default {
         this.handleCloseDialog(true);
       } catch (error) {
         this.loading = false;
-        // this.handleError(error);
+        this.handleError(error);
       }
     },
     async handleEditParentColumn() {
@@ -104,6 +109,7 @@ export default {
         this.handleCloseDialog(true);
       } catch (error) {
         this.loading = false;
+        this.handleError(error);
       }
     },
     initParentColumn() {
