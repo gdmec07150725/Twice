@@ -220,6 +220,21 @@ export const permissionRouter = [
         },
         component: () => import('@/views/columnManage'),
       },
+      {
+        path: 'columnManage/child',
+        name: 'childColumn',
+        type: 'item',
+        hidden: true,
+        meta: {
+          noCache: true,
+          activeMenu: 'columnManage',
+          permissions: [],
+        },
+        component: () =>
+          import(
+            '@/views/businessComponent/columnManage/childrenColumnList.vue'
+          ),
+      },
     ],
   },
   {

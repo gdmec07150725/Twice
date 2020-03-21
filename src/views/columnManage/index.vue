@@ -1,11 +1,15 @@
 <template>
   <div>
-    columnManage
+    <parent-column-list />
   </div>
 </template>
 
 <script>
+import parentColumnList from '@/views/businessComponent/columnManage/parentColumnList.vue';
 export default {
   name: 'columnManage',
+  components: {
+    parentColumnList,
+  },
 };
 </script>
