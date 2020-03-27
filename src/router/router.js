@@ -208,7 +208,7 @@ export const permissionRouter = [
     component: Layouts,
     hidden: false,
     meta: {
-      title: '分类管理',
+      title: '内容管理',
       permissions: [],
     },
     children: [
@@ -235,6 +235,15 @@ export const permissionRouter = [
           import(
             '@/views/businessComponent/columnManage/childrenColumnList.vue'
           ),
+      },
+      {
+        path: 'articleManage',
+        name: 'articleManage',
+        meta: {
+          title: '文章管理',
+          permissions: [],
+        },
+        component: () => import('@/views/articleManage'),
       },
     ],
   },
