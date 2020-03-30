@@ -1,5 +1,4 @@
-
-*{ 
+* {
   margin: 0px;
   padding: 0px;
 }
@@ -9,7 +8,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  font-family:  'Source Sans Pro', 'PingFang HK','PingFang SC', Helvetica Neue, Helvetica, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+  font-family: 'Source Sans Pro', 'PingFang HK', 'PingFang SC', Helvetica Neue,
+    Helvetica, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
   margin: 0;
   overflow-y: hidden;
 }
@@ -38,7 +38,7 @@ a {
 
 // 表格表头高度修改
 .line_height {
-  .el-table th div  {
+  .el-table th div {
     line-height: 24px !important;
     width: 100%;
     display: flex;
@@ -56,14 +56,31 @@ a {
     // display: none
     float: left;
     position: absolute;
-    visibility: collapse
+    visibility: collapse;
   }
 }
 // 表格操作列按钮
-.operation{
+.operation {
   display: flex;
   // 表格里面按钮左对齐，并且调整间隙一样宽
   .global_button {
-    margin-left:10px
+    margin-left: 10px;
   }
+}
+// 修改drawer内容区样式
+.drawer-wrapper {
+  .el-drawer__body {
+    height: 100%;
+    overflow-y: auto;
+  }
+}
+
+/* 头像样式 */
+.avatar {
+  display: inline-block;
+  position: relative;
+  background-position: 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: #eee;
 }

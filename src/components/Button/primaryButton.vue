@@ -5,7 +5,7 @@
       :icon="icon"
       :size="size"
       :loading="loading"
-      @click="handleClick"
+      @click.stop="handleClick"
     >
       <slot></slot>
     </el-button>

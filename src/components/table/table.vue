@@ -11,7 +11,9 @@
       @filter-change="filterChange"
       ref="table"
       :row-key="rowKey"
+      :row-style="rowStyle"
       :empty-text="emptyText"
+      @row-click="handleRowClick"
     >
       <template v-for="item in tableColumns">
         <el-table-column
@@ -120,6 +122,10 @@ export default {
     rowKey: {
       type: String,
       default: '',
+    },
+    rowStyle: {
+      type: Object,
+      default: () => ({}),
     },
     ActionBar: {
       type: Object,
@@ -368,6 +374,9 @@ export default {
     },
     sortColumns(props, order) {
       this.$refs.table.sort(props, order);
+    },
+    handleRowClick(row) {
+      this.$emit('rowClick', row);
     },
     // renderRoleHeader(h, { column, $index }) {
     //   return h(

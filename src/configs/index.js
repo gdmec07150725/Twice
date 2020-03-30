@@ -18,8 +18,8 @@ const qa = {
 };
 
 const production = {
-  serverURL: '',
-  socketURL: '',
+  serverURL: 'http://101.133.219.6:10010',
+  socketURL: 'http://101.133.219.6:10010/websocket-service/app',
 };
 
 const config = {

@@ -9,6 +9,9 @@ const defaultSort = {
 const state = {
   // 检索：区分不同页面
   filter: {
+    article: {
+      title: null,
+    },
     company: {
       name: null,
       type: [],

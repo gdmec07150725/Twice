@@ -11,9 +11,9 @@
         </div>
       </div>
       <div slot="buttonGroup">
-        <edit-button @click="handleAddCompany" icon="el-icon-plus"
-          >新增公司</edit-button
-        >
+        <edit-button @click="handleAddCompany" icon="el-icon-plus">
+          新增公司
+        </edit-button>
       </div>
       <div slot="content">
         <m-table

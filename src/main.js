@@ -5,6 +5,7 @@ import store from './store';
 import EventBus from './lib/eventBus.js';
 import '@/styles/index.less'; // 全局样式
 import '@/assets/font/iconfont.css';
+import 'highlight.js/styles/tomorrow.css';
 import * as customFilters from '@/utils/filter';
 import IconFont from '@/components/icon-font';
 import editButton from '_c/Button/editButton.vue';

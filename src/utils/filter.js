@@ -7,6 +7,12 @@ const formatDate = value => {
   }
 };
 
+const formatTime = value => {
+  if (value) {
+    return moment(value).format('YYYY-MM-DD HH:mm:ss');
+  }
+};
+
 /* 将时间转换为时间戳 (毫秒)*/
 const timestampDate = value => {
   if (value) {
@@ -14,4 +20,4 @@ const timestampDate = value => {
   }
 };
 
-export { formatDate, timestampDate };
+export { formatDate, formatTime, timestampDate };
