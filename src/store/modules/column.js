@@ -13,21 +13,26 @@ const state = {
   parentTablePagination: { ...defaultPagination },
   parentColumnList: [],
   childColumnList: [],
+  childTablePagination: { ...defaultPagination },
 };
 
 const mutations = {
   SAVE_PARENT_COLUMN(state, data) {
     const { parentTablePagination } = state;
     let { parentColumnList } = state;
-    // parentTablePagination.page = data.currentPage;
-    // parentTablePagination.total = data.total;
-    parentColumnList = data;
-    // state.parentTablePagination = { ...parentTablePagination };
+    parentTablePagination.page = data.currentPage;
+    parentTablePagination.total = data.total;
+    parentColumnList = data.result;
+    state.parentTablePagination = { ...parentTablePagination };
     state.parentColumnList = [...parentColumnList];
   },
   SAVE_CHILD_COLUMN(state, data) {
+    const { childTablePagination } = state;
     let { childColumnList } = state;
-    childColumnList = data;
+    childTablePagination.page = data.currentPage;
+    childTablePagination.total = data.total;
+    childColumnList = data.result;
+    state.childTablePagination = { ...childTablePagination };
     state.childColumnList = [...childColumnList];
   },
   SET_PARENT_PAGINATION(state, currentPage) {

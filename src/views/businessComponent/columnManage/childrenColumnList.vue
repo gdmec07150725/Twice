@@ -36,6 +36,12 @@
             </div>
           </template>
         </m-table>
+        <m-pagination
+          :currentPage="pagination.page"
+          :pageSize="pagination.rows"
+          :total="pagination.total"
+          @onHandleCurrentChange="handleCurrentChange"
+        />
       </div>
     </m-card>
     <template v-if="openFormModal">
@@ -64,6 +70,7 @@ export default {
   computed: {
     ...mapState({
       childColumnList: state => state.column.childColumnList,
+      pagination: state => state.column.childTablePagination,
     }),
   },
   data() {
@@ -127,6 +134,12 @@ export default {
         message && this.$message.error(message);
       }
     },
+    handleCurrentChange(currentPage) {
+      const params = {
+        page: currentPage,
+      };
+      this.loadChildColumnList(params);
+    },
     handleSubmitSearch(searchValue) {
       this.handlefilterChange('key', searchValue);
     },
@@ -155,6 +168,8 @@ export default {
           query: { pid },
         } = this.$route;
         const concatParams = {
+          page: this.pagination.page,
+          rows: this.pagination.rows,
           ...params,
           pid,
         };
