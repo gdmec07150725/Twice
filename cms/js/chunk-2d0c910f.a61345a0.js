@@ -1,1 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0c910f"],{"580f":function(e,n,a){"use strict";a.r(n);var t=function(){var e=this,n=e.$createElement,a=e._self._c||n;return a("div",[e._v(" materialManage ")])},l=[],c={name:"materialManage"},r=c,u=a("2877"),i=Object(u["a"])(r,t,l,!1,null,null,null);n["default"]=i.exports}}]);

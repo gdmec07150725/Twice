@@ -8,7 +8,7 @@
  * author: LN
  */
 import configs from '@/configs';
-import Ajax from '@/common/ajax';
+import Ajax from '@/utils/ajax';
 import { Message } from 'element-ui';
 import { getCookie, setCookie } from '@/utils/utils';
 import moment from 'moment';

@@ -10,7 +10,7 @@ class Constant {
     return Restful.get(`/constant-service/constants`);
   }
   /**
-   * 查询所有常量数据
+   * 查询所有父級常量数据
    * @param {*} params
    */
   async getParentConstantList(params) {

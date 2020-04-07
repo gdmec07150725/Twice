@@ -1,1 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0d004a"],{"65d9":function(e,n,r){"use strict";r.r(n);var t=function(){var e=this,n=e.$createElement,r=e._self._c||n;return r("div",[e._v(" error_404 ")])},u=[],a={name:"error_404"},c=a,l=r("2877"),o=Object(l["a"])(c,t,u,!1,null,null,null);n["default"]=o.exports}}]);
