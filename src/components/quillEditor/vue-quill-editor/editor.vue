@@ -15,7 +15,7 @@ const Quill = window.Quill || _Quill;
 // pollfill
 if (typeof Object.assign != 'function') {
   Object.defineProperty(Object, 'assign', {
-    value(target, varArgs) {
+    value(target) {
       if (target == null) {
         throw new TypeError('Cannot convert undefined or null to object');
       }
@@ -111,7 +111,7 @@ export default {
         });
 
         // Update model if text changes
-        this.quill.on('text-change', (delta, oldDelta, source) => {
+        this.quill.on('text-change', () => {
           let html = this.$refs.editor.children[0].innerHTML;
           const quill = this.quill;
           const text = this.quill.getText();
@@ -128,7 +128,7 @@ export default {
   },
   watch: {
     // Watch content change
-    content(newVal, oldVal) {
+    content(newVal) {
       if (this.quill) {
         if (newVal && newVal !== this._content) {
           this._content = newVal;
@@ -139,7 +139,7 @@ export default {
       }
     },
     // Watch content change
-    value(newVal, oldVal) {
+    value(newVal) {
       if (this.quill) {
         if (newVal && newVal !== this._content) {
           this._content = newVal;
@@ -150,7 +150,7 @@ export default {
       }
     },
     // Watch disabled change
-    disabled(newVal, oldVal) {
+    disabled(newVal) {
       if (this.quill) {
         this.quill.enable(!newVal);
       }
