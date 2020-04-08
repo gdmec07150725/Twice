@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import { routes } from './router';
-import { getCookie } from '@/utils/utils';
+import storage from '@/utils/storage';
 import store from '@/store';
 import NProgress from 'nprogress'; // progress bar
 import 'nprogress/nprogress.css'; // progress bar style
@@ -19,7 +19,7 @@ router.beforeEach(async (to, from, next) => {
   // start progress bar
   NProgress.start();
 
-  const isLogin = getCookie('isLogin');
+  const isLogin = Number(storage.getLogin());
   const { name } = to;
   if (isLogin) {
     if (!store.state.cmsRouter.hasGetRules) {
@@ -39,8 +39,17 @@ router.beforeEach(async (to, from, next) => {
       next();
       NProgress.done();
     } else {
-      next({ name: 'login' });
-      NProgress.done();
+      if (to.path !== '/') {
+        if (!Object.keys(to.query) > 0) {
+          next({ name: 'login', query: { redirect: to.path } });
+          NProgress.done();
+        } else {
+          next({ name: 'login', query: { redirect: to.path, ...to.query } });
+          NProgress.done();
+        }
+      } else {
+        next({ name: 'login' });
+      }
     }
   }
 });

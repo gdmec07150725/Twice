@@ -9,9 +9,10 @@
  */
 import configs from '@/configs';
 import Ajax from '@/utils/ajax';
+import storage from '@/utils/storage';
 import { Message } from 'element-ui';
-import { getCookie, setCookie } from '@/utils/utils';
-import moment from 'moment';
+// import { getCookie, setCookie } from '@/utils/utils';
+// import moment from 'moment';
 /**
  * 获取数据
  * 主要是get请求数据
@@ -22,7 +23,7 @@ import moment from 'moment';
 function getData(res) {
   if (res && res.data) {
     // touch cookie
-    touchCookie();
+    // touchCookie();
     return res.data.data ? res.data.data : res.data;
   }
   return null;
@@ -34,44 +35,44 @@ function getData(res) {
  * 失败： 响应状态码 statusCode，消息 message
  */
 function getResult(res) {
-  touchCookie();
+  // touchCookie();
   return res.data;
 }
 
 /**
  * 每次请求成功 touch一次cookie
  */
-function touchCookie() {
-  setTimeout(() => {
-    const isLogin = getCookie('isLogin');
-    const isRemember = getCookie('isRemember');
-    if (isLogin) {
-      if (isRemember) {
-        setCookie(
-          true,
-          'isLogin',
-          new Date(
-            moment()
-              .add(30, 'days')
-              .add(-5, 'minutes')
-          )
-        );
-        setCookie(
-          true,
-          'isRemember',
-          new Date(
-            moment()
-              .add(30, 'days')
-              .add(-5, 'minutes')
-          )
-        );
-      } else {
-        // 提前5分钟（两小时过期）
-        setCookie(true, 'isLogin', new Date(moment().add(115, 'minutes')));
-      }
-    }
-  }, 500);
-}
+// function touchCookie() {
+//   setTimeout(() => {
+//     const isLogin = getCookie('isLogin');
+//     const isRemember = getCookie('isRemember');
+//     if (isLogin) {
+//       if (isRemember) {
+//         setCookie(
+//           true,
+//           'isLogin',
+//           new Date(
+//             moment()
+//               .add(30, 'days')
+//               .add(-5, 'minutes')
+//           )
+//         );
+//         setCookie(
+//           true,
+//           'isRemember',
+//           new Date(
+//             moment()
+//               .add(30, 'days')
+//               .add(-5, 'minutes')
+//           )
+//         );
+//       } else {
+//         // 提前5分钟（两小时过期）
+//         setCookie(true, 'isLogin', new Date(moment().add(115, 'minutes')));
+//       }
+//     }
+//   }, 500);
+// }
 
 /**
  * 错误处理
@@ -121,7 +122,51 @@ class Restful {
     this.ajax = new Ajax(configs.serverURL);
   }
 
+  async setToken(token) {
+    this.ajax.setHeader({
+      Authorization: token || '',
+    });
+    return this;
+  }
+
+  async getToken() {
+    const accessToken = storage.getAccessToken();
+    if (!accessToken) {
+      return '';
+    }
+    if (accessToken.isValid()) {
+      // 判断是否过期了
+      return accessToken.token;
+    }
+    // 如果过期了就使用refresh token 获取新的access token
+    return this.freshAccessToken(accessToken);
+  }
+
+  /* 刷新token */
+  async freshAccessToken(accessToken) {
+    const freshToken = storage.getRefreshToken();
+    if (!freshToken) {
+      return accessToken.token;
+    }
+    const url = `/login-service/token/refresh?refreshToken=${freshToken}`;
+    const data = await this.ajax.get(url).then(
+      res => getResult(res),
+      err => handlerError(err)
+    );
+    storage.saveRefreshToken(data.refreshToken);
+    const newAccessToken = storage.saveAccessToken(data.token);
+    return newAccessToken.token;
+  }
+
+  /* 处理token */
+  async ensureAccessToken() {
+    const token = await this.getToken();
+    console.log(token);
+    return this.setToken(token);
+  }
+
   async get(url, cancleRequest = false) {
+    await this.ensureAccessToken();
     return this.ajax.get(url, cancleRequest).then(
       res => getData(res),
       err => handlerError(err)
@@ -129,6 +174,7 @@ class Restful {
   }
 
   async delete(url, data) {
+    await this.ensureAccessToken();
     return this.ajax.delete(url, data).then(
       res => getResult(res),
       err => handlerError(err)
@@ -136,6 +182,7 @@ class Restful {
   }
 
   async post(url, data) {
+    await this.ensureAccessToken();
     return this.ajax.post(url, data).then(
       res => getResult(res),
       err => handlerError(err)
@@ -143,6 +190,7 @@ class Restful {
   }
 
   async put(url, data) {
+    await this.ensureAccessToken();
     return this.ajax.put(url, data).then(
       res => getResult(res),
       err => handlerError(err)
@@ -150,6 +198,7 @@ class Restful {
   }
 
   async formPost(url, data) {
+    await this.ensureAccessToken();
     return this.ajax.formPost(url, data).then(
       res => getResult(res),
       err => handlerError(err)
@@ -157,6 +206,7 @@ class Restful {
   }
 
   async formGet(url) {
+    await this.ensureAccessToken();
     return this.ajax.formGet(url).then(
       res => getData(res),
       err => handlerError(err)
@@ -164,6 +214,7 @@ class Restful {
   }
 
   async upload(url, formData) {
+    await this.ensureAccessToken();
     return this.ajax.upload(url, formData).then(
       res => getResult(res),
       err => handlerError(err)

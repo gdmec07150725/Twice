@@ -2,10 +2,14 @@
  * Storage管理
  * 主要是缓存信息保存
  */
+import Token from './token';
 
 const FIRSTLOGIN = 'firstLogin';
+const ISLOGIN = 'isLogin';
 const USER = 'user';
 const VERSION = 'version';
+const ACCESS_TOKEN_OBJECT = 'accessTokenObject';
+const REFRESH_TOKEN_OBJECT = 'refreshTokenObject';
 
 class Storage {
   setVersion(version) {
@@ -24,6 +28,14 @@ class Storage {
     return localStorage.getItem(FIRSTLOGIN);
   }
 
+  setLogin(value) {
+    return localStorage.setItem(ISLOGIN, value);
+  }
+
+  getLogin() {
+    return localStorage.getItem(ISLOGIN) || 0;
+  }
+
   setUserDetail(detail) {
     return localStorage.setItem(USER, detail);
   }
@@ -34,6 +46,61 @@ class Storage {
 
   getUserDetail() {
     return localStorage.getItem(USER);
+  }
+
+  getToken() {
+    const token = this.getAccessToken();
+    return token ? token.token : null;
+  }
+
+  /* 获取access token 对象 */
+  getAccessToken() {
+    const token = localStorage.getItem(ACCESS_TOKEN_OBJECT);
+    if (token) {
+      const json = JSON.parse(token);
+      return new Token(json.token, json.expireTime);
+    }
+    return null;
+  }
+
+  /**
+   * 保存access token 提前一分钟过期
+   * 现在access token是10分钟过期
+   * @param {*} accessToken token
+   * @param {*} expiresIn 过期时间
+   */
+  saveAccessToken(accessToken, expiresIn) {
+    const expireTime =
+      Date.now() + (expiresIn > 0 ? expiresIn - 60 : 600 - 60) * 1000;
+    return this.setAccessToken(accessToken, expireTime);
+  }
+
+  setAccessToken(accessToken, expireTime) {
+    const token = new Token(accessToken, expireTime);
+    localStorage.setItem(ACCESS_TOKEN_OBJECT, JSON.stringify(token));
+    return token;
+  }
+
+  /* 获取refresh token 对象*/
+  getRefreshToken() {
+    const token = localStorage.getItem(REFRESH_TOKEN_OBJECT);
+    if (token) {
+      const json = JSON.parse(token);
+      return new Token(json.token, json.expireTime);
+    }
+    return null;
+  }
+
+  /**
+   * 保存refresh token 提前十分钟过期
+   * 现在refresh token 是1个小时过期
+   * @param {*} refreshToken
+   */
+  saveRefreshToken(refreshToken) {
+    const expireTime = Date.now() + (3600 - 60) * 1000;
+    const token = new Token(refreshToken, expireTime);
+    localStorage.setItem(REFRESH_TOKEN_OBJECT, JSON.stringify(token));
+    return token;
   }
 
   clear() {

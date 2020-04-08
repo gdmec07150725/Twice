@@ -34,4 +34,13 @@ export const routes = [
       },
     ],
   },
+  {
+    path: '/login',
+    name: 'login',
+    hidden: true,
+    component: () => import('@/common/login'),
+    meta: {
+      title: '登录',
+    },
+  },
 ];
