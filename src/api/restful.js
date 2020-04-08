@@ -148,13 +148,13 @@ class Restful {
     if (!freshToken) {
       return accessToken.token;
     }
-    const url = `/login-service/token/refresh?refreshToken=${freshToken}`;
+    const url = `/login-service/token/refresh?refreshToken=${freshToken.token}`;
     const data = await this.ajax.get(url).then(
       res => getResult(res),
       err => handlerError(err)
     );
-    storage.saveRefreshToken(data.refreshToken);
-    const newAccessToken = storage.saveAccessToken(data.token);
+    // storage.saveRefreshToken(data.refreshToken);
+    const newAccessToken = storage.saveAccessToken(data.data);
     return newAccessToken.token;
   }
 

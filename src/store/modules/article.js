@@ -5,12 +5,18 @@ const defaultPagination = {
   rows: 10,
   total: 0,
 };
+const clientDefaultPagination = {
+  page: 0,
+  rows: 10,
+  total: 0,
+  totalPage: 0,
+};
 
 const state = {
   cmsArticleList: [],
   cmsArticlePagination: { ...defaultPagination },
   clientArticleList: [],
-  clientArticlePagination: { ...defaultPagination },
+  clientArticlePagination: { ...clientDefaultPagination },
   categoryList: [],
   childCategory: [],
   secondItem: '', // 选中的一级分类
@@ -37,7 +43,7 @@ const mutations = {
     state.clientArticleList = [];
   },
   REST_CLIENT_PAGINATION(state) {
-    state.clientArticlePagination = { ...defaultPagination };
+    state.clientArticlePagination = { ...clientDefaultPagination };
   },
   SAVE_CATEGORY_LIST(state, data) {
     let { categoryList } = state;
