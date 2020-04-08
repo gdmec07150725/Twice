@@ -1,0 +1,86 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  height: 100% !important;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: 'Source Sans Pro', 'PingFang HK', 'PingFang SC', Helvetica Neue,
+    Helvetica, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+  margin: 0;
+  overflow-y: hidden;
+}
+
+html {
+  height: 100% !important;
+  box-sizing: border-box;
+}
+
+#cms {
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: #3a8ee6;
+}
+
+// 模块页面头部文字样式
+.title {
+  font-size: 24px;
+  color: #000;
+  padding: 0 0 20px 0;
+  margin: 0;
+}
+
+// 表格表头高度修改
+.line_height {
+  .el-table th div {
+    line-height: 24px !important;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+  }
+  .el-table--medium td {
+    padding: 7px 0 !important;
+  }
+}
+// 隐藏表格中下拉勾选箭头
+.hide {
+  .el-table__column-filter-trigger {
+    // display: none
+    float: left;
+    position: absolute;
+    visibility: collapse;
+  }
+}
+// 表格操作列按钮
+.operation {
+  display: flex;
+  // 表格里面按钮左对齐，并且调整间隙一样宽
+  .global_button {
+    margin-left: 10px;
+  }
+}
+// 修改drawer内容区样式
+.drawer-wrapper {
+  .el-drawer__body {
+    height: 100%;
+    overflow-y: auto;
+  }
+}
+
+/* 头像样式 */
+.avatar {
+  display: inline-block;
+  position: relative;
+  background-position: 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: #eee;
+}
