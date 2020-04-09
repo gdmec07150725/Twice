@@ -300,6 +300,15 @@ export const permissionRouter = [
     },
     children: [
       {
+        path: 'authorization',
+        name: 'authorization',
+        meta: {
+          title: '权限管理',
+          permissions: [],
+        },
+        component: () => import('@/cms/views/settings/authorization'),
+      },
+      {
         path: 'constant',
         name: 'constant',
         meta: {
