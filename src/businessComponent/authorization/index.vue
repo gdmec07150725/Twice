@@ -2,10 +2,16 @@
   <div>
     <el-row>
       <el-col :span="12">
-        <authorization-left />
+        <authorization-left
+          ref="authLeft"
+          @onHandleTreeNodeclick="handleTreeNodeClick"
+        />
       </el-col>
       <el-col :span="12">
-        <authorization-right />
+        <authorization-right
+          :id="currentNodeId"
+          @onHandleRefreshAuth="handleRefreshAuth"
+        />
       </el-col>
     </el-row>
   </div>
@@ -21,6 +27,19 @@ export default {
     authorizationRight,
     'el-row': Row,
     'el-col': Col,
+  },
+  data() {
+    return {
+      currentNodeId: '',
+    };
+  },
+  methods: {
+    handleTreeNodeClick(id) {
+      this.currentNodeId = id;
+    },
+    handleRefreshAuth() {
+      this.$refs['authLeft'] && this.$refs['authLeft'].queryAllAuth();
+    },
   },
 };
 </script>
