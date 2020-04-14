@@ -309,6 +309,15 @@ export const permissionRouter = [
         component: () => import('@/cms/views/settings/authorization'),
       },
       {
+        path: 'role',
+        name: 'role',
+        meta: {
+          title: '角色管理',
+          permission: [],
+        },
+        component: () => import('@/cms/views/settings/role'),
+      },
+      {
         path: 'constant',
         name: 'constant',
         meta: {

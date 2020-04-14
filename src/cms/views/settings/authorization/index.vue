@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import authorizationPage from '@/businessComponent/authorization';
+import authorizationPage from '@/businessComponent/settings/authorization';
 export default {
   name: 'authorization',
   components: {

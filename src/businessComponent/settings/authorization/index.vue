@@ -1,13 +1,13 @@
 <template>
   <div>
-    <el-row>
-      <el-col :span="12">
+    <el-row :gutter="24">
+      <el-col :xs="24" :sm="12" :md="12" :lg="12">
         <authorization-left
           ref="authLeft"
           @onHandleTreeNodeclick="handleTreeNodeClick"
         />
       </el-col>
-      <el-col :span="12">
+      <el-col :xs="24" :sm="12" :md="12" :lg="12">
         <authorization-right
           :id="currentNodeId"
           @onHandleRefreshAuth="handleRefreshAuth"
