@@ -7,20 +7,20 @@
       <div>
         <div class="create-role">
           <el-button
-            type="primary"
             size="small"
             icon="el-icon-plus"
             class="btn"
+            @click="handleRoleAdd"
           >
             新增角色
           </el-button>
         </div>
-        <div class="role-list">
+        <div class="role-list" v-loading="dataLoading">
           <ul>
             <li
               v-for="role in roleList"
               :key="role.id"
-              @click="handleRoleClick(role.id)"
+              @click="handleRoleClick(role)"
               :class="{ active: role.id === activeRole }"
             >
               {{ role.name }}
@@ -44,6 +44,7 @@ export default {
     return {
       activeRole: '',
       roleList: [],
+      dataLoading: false,
     };
   },
   methods: {
@@ -56,25 +57,57 @@ export default {
       const { message } = res;
       message && this.$message.success(message);
     },
-    handleRoleClick(id) {
+    cancelActive() {
+      this.activeRole = '';
+    },
+    handleRoleAdd() {
+      this.cancelActive();
+      this.$emit('onHandleRoleAdd');
+    },
+    handleRoleClick(role) {
+      const { id, name } = role;
       if (this.activeRole === id) {
         return;
       }
       this.activeRole = id;
-      this.$emit('onHandleRoleClick', id);
+      const params = {
+        id,
+        name,
+      };
+      this.$emit('onHandleRoleClick', params);
+    },
+    async refreshRole(id) {
+      await this.queryRoleList();
+      if (id) {
+        this.roleList.length > 0 &&
+          this.handleRoleClick(
+            this.roleList.filter(item => {
+              return item.id === id;
+            })
+          );
+      } else {
+        this.roleList.length > 0 && this.handleRoleClick(this.roleList[0]);
+      }
     },
     async queryRoleList() {
       try {
+        this.dataLoading = true;
         const res = await this.getRole();
         this.roleList = res;
+        this.dataLoading = false;
+        return;
       } catch (error) {
+        this.dataLoading = false;
         this.handleError(error);
       }
     },
   },
-  created() {
-    // Todo: 设置第一个被选中
-    this.queryRoleList();
+  async created() {
+    await this.queryRoleList();
+    // 设置第一个被选中
+    if (this.roleList.length > 0) {
+      this.handleRoleClick(this.roleList[0]);
+    }
   },
 };
 </script>
@@ -85,7 +118,7 @@ export default {
   }
 }
 .role-list {
-  margin-top: 15px;
+  margin-top: 20px;
   ul {
     list-style: none;
     li {

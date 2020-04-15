@@ -126,14 +126,18 @@ export default {
         const res = await this.getAllAuth();
         this.dataLoading = false;
         this.treeData = res;
+        return;
       } catch (error) {
         this.dataLoading = false;
         this.handleError(error);
       }
     },
   },
-  created() {
-    this.queryAllAuth();
+  async created() {
+    await this.queryAllAuth();
+    if (this.treeData.length > 0) {
+      this.handleNodeClick(this.treeData[0]);
+    }
   },
 };
 </script>
@@ -160,8 +164,7 @@ export default {
   .el-tree--highlight-current
     .el-tree-node.is-current
     > .el-tree-node__content {
-    background-color: #409eff;
-    color: #fff;
+    background-color: #e6f7ff;
   }
 }
 </style>

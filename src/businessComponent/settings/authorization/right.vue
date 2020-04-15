@@ -47,8 +47,8 @@
           <el-form-item label="请求路径" prop="path">
             <el-input v-model="authForm.path" />
           </el-form-item>
-          <el-form-item label="权限ID" prop="id">
-            <el-input v-model="authForm.id" />
+          <el-form-item label="权限ID" prop="name">
+            <el-input v-model="authForm.name" />
           </el-form-item>
           <el-form-item label="权限名称" prop="description">
             <el-input v-model="authForm.description" />
@@ -99,6 +99,7 @@ export default {
         description: '',
         path: '',
         method: '',
+        name: '',
       },
       defaultAuthForm: {
         type: 1,
@@ -106,10 +107,11 @@ export default {
         description: '',
         path: '',
         method: '',
+        name: '',
       },
       temporary: {}, // 临时保存authForm的值
       rules: {
-        id: [
+        name: [
           {
             required: true,
             message: '请输入权限ID',
