@@ -4,6 +4,7 @@
     <el-upload
       class="avatar-uploader"
       accept=".png, .jpg, .bmp, .gif, .webp"
+      :headers="headers"
       :action="baseURL"
       :show-file-list="false"
       :before-upload="beforeAvatarUpload"
@@ -26,7 +27,7 @@
 <script>
 import { Upload, Dialog } from 'element-ui';
 import configs from '@/configs';
-import { removeCookie } from '@/utils/utils';
+import storage from '@/utils/storage';
 
 export default {
   name: 'singleUpload',
@@ -46,6 +47,7 @@ export default {
       dialogImageUrl: '',
       baseURL: `${configs.serverURL}/upload-service/upload`,
       imageUrl: '',
+      headers: { Authorization: storage.getToken() },
       // currentNumber: 0 // 当limit不为1的时候, 用于控制图片没上传完的Icon显示隐藏
     };
   },
@@ -91,8 +93,8 @@ export default {
     },
     handleError(err) {
       if (err && err.status === 401) {
-        removeCookie('isLogin');
-        window.bugs.$emit('show-logout-confirm');
+        storage.cleanLogin();
+        // window.bugs.$emit('show-logout-confirm');
       } else {
         this.$message.error('上传错误');
       }

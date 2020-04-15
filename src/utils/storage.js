@@ -32,6 +32,10 @@ class Storage {
     return localStorage.setItem(ISLOGIN, value);
   }
 
+  cleanLogin() {
+    localStorage.removeItem(ISLOGIN);
+  }
+
   getLogin() {
     return localStorage.getItem(ISLOGIN) || 0;
   }

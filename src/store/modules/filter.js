@@ -23,6 +23,9 @@ const state = {
     constant: {
       key: null,
     },
+    staff: {
+      username: null,
+    },
   },
   // 检索的input：区分不同页面
   filterInput: {

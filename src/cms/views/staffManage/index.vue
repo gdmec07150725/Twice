@@ -1,10 +1,14 @@
 <template>
   <div>
-    人员管理
+    <staff-list />
   </div>
 </template>
 <script>
+import staffList from '@/businessComponent/staffManage/staffList.vue';
 export default {
   name: 'staffManage',
+  components: {
+    staffList,
+  },
 };
 </script>

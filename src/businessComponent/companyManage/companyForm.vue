@@ -1,7 +1,7 @@
 <template>
   <div>
     <m-dialog
-      title="新增公司"
+      :title="actionType === 1 ? '新增公司' : '编辑公司'"
       :dialogVisible="true"
       :isDestroyClose="true"
       @onHandleClose="handleCloseDialog"
