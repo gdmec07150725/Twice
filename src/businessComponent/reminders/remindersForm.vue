@@ -29,7 +29,11 @@
           />
         </el-form-item>
         <el-form-item label="权重" prop="prior">
-          <el-select v-model="remindersForm.prior" placeholder="请选择权重">
+          <el-select
+            v-model="remindersForm.prior"
+            placeholder="请选择权重"
+            style="width: 100%"
+          >
             <!-- <template v-for="item in companyType">
               <el-option
                 :label="item.paramValue"

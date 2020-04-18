@@ -48,7 +48,7 @@
             <el-input v-model="authForm.path" />
           </el-form-item>
           <el-form-item label="权限ID" prop="name">
-            <el-input v-model="authForm.name" />
+            <el-input v-model="authForm.name" :disabled="actionType === 2" />
           </el-form-item>
           <el-form-item label="权限名称" prop="description">
             <el-input v-model="authForm.description" />
@@ -200,7 +200,7 @@ export default {
         this.dataLoading = false;
         this.handleSuccess(res);
         // 刷新权限列表数据
-        this.$emit('onHandleRefreshAuth');
+        this.$emit('onHandleRefreshAuth', params.id);
       } catch (error) {
         this.dataLoading = false;
         this.handleError(error);
@@ -213,7 +213,7 @@ export default {
         this.dataLoading = false;
         this.handleSuccess(res);
         // 刷新权限列表数据
-        this.$emit('onHandleRefreshAuth');
+        this.$emit('onHandleRefreshAuth', params.pid);
       } catch (error) {
         this.dataLoading = false;
         this.handleError(error);

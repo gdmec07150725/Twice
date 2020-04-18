@@ -108,7 +108,7 @@ class Storage {
   }
 
   clear() {
-    localStorage.removeItem();
+    localStorage.clear();
   }
 }
 

@@ -21,7 +21,11 @@
           ></el-input>
         </el-form-item>
         <el-form-item label="公司人数" prop="number">
-          <el-select v-model="companyForm.number" placeholder="请选择公司人数">
+          <el-select
+            v-model="companyForm.number"
+            placeholder="请选择公司人数"
+            style="width: 100%"
+          >
             <template v-for="item in companyNumber">
               <el-option
                 :label="item.paramValue"
@@ -32,7 +36,11 @@
           </el-select>
         </el-form-item>
         <el-form-item label="所属行业" prop="type">
-          <el-select v-model="companyForm.type" placeholder="请选择行业">
+          <el-select
+            v-model="companyForm.type"
+            placeholder="请选择行业"
+            style="width: 100%"
+          >
             <template v-for="item in companyType">
               <el-option
                 :label="item.paramValue"
@@ -48,6 +56,7 @@
             placeholder="选择日期"
             v-model="companyForm.establishAt"
             value-format="timestamp"
+            style="width: 100%"
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="公司logo" prop="logo" ref="companyLogo">

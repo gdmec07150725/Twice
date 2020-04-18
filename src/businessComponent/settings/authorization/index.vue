@@ -37,8 +37,8 @@ export default {
     handleTreeNodeClick(id) {
       this.currentNodeId = id;
     },
-    handleRefreshAuth() {
-      this.$refs['authLeft'] && this.$refs['authLeft'].queryAllAuth();
+    handleRefreshAuth(id) {
+      this.$refs['authLeft'] && this.$refs['authLeft'].queryAllAuth(id);
     },
   },
 };

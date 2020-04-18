@@ -1,4 +1,5 @@
 import Restful from './restful';
+// import { stringify } from 'qs';
 
 class Role {
   /* 查询角色 */

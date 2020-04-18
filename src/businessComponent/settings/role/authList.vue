@@ -112,6 +112,7 @@ export default {
       'addRole',
       'editRole',
       'deleteRole',
+      'assignAuth',
     ]),
     handleError(error = {}) {
       const { message = '' } = error;
@@ -184,11 +185,12 @@ export default {
     },
     judgePermission() {
       console.log('handleGetChecked', this.handleGetChecked());
-      if (this.handleGetChecked().length > 0) {
+      const finalChecked = this.handleGetChecked();
+      if (finalChecked.length > 0) {
         if (this.actionType === 1) {
-          this.handleAddRole();
+          this.handleAddRole(finalChecked);
         } else {
-          this.handleEditRole();
+          this.handleEditRole(finalChecked);
         }
       } else {
         this.handleError({ message: '请勾选权限' });
@@ -209,11 +211,16 @@ export default {
         this.handleError(error);
       }
     },
-    async handleAddRole() {
+    async handleAddRole(finalChecked) {
       try {
         const { name } = this.roleForm;
         this.saveLoading = true;
         const res = await this.addRole({ name });
+        if (res && res.data) {
+          // 为用户分配权限
+          const params = { id: res.data, permissionIds: finalChecked };
+          await this.assignAuth(params);
+        }
         this.handleSuccess(res);
         this.saveLoading = false;
         this.showForm = false;

@@ -93,8 +93,7 @@ export default {
     },
     handleError(err) {
       if (err && err.status === 401) {
-        storage.cleanLogin();
-        // window.bugs.$emit('show-logout-confirm');
+        storage.clear();
       } else {
         this.$message.error('上传错误');
       }

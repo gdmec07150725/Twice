@@ -21,7 +21,11 @@
           ></el-input>
         </el-form-item>
         <el-form-item label="角色" prop="roleIds">
-          <el-select v-model="staffForm.roleIds" placeholder="请选择角色">
+          <el-select
+            v-model="staffForm.roleIds"
+            placeholder="请选择角色"
+            style="width: 100%"
+          >
             <template v-for="item in roleList">
               <el-option
                 :label="item.name"
@@ -45,18 +49,18 @@
             maxlength="16"
           ></el-input>
         </el-form-item>
-        <el-form-item label="头像" prop="avatar" ref="avatar">
-          <single-upload
-            v-model="staffForm.avatar"
-            @onSuccess="handleUploadSuccess"
-          />
-        </el-form-item>
         <el-form-item label="邮箱" prop="email">
           <el-input
             :disabled="actionType === 2"
             v-model="staffForm.email"
             placeholder="请输入邮箱"
           ></el-input>
+        </el-form-item>
+        <el-form-item label="头像" prop="avatar" ref="avatar">
+          <single-upload
+            v-model="staffForm.avatar"
+            @onSuccess="handleUploadSuccess"
+          />
         </el-form-item>
       </el-form>
       <div slot="action">

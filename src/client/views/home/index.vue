@@ -90,31 +90,11 @@
                         <router-link
                           :to="{ name: 'articleDetail' }"
                           class="title"
-                          >{{ item.title }}</router-link
                         >
+                          {{ item.title }}
+                        </router-link>
                       </div>
-                      <div class="action-row">
-                        <ul class="action-list">
-                          <li class="item like">
-                            <a class="title-box">
-                              <img
-                                src="https://b-gold-cdn.xitu.io/v3/static/img/zan.e9d7698.svg"
-                                class="icon"
-                              />
-                              <span class="count">10</span>
-                            </a>
-                          </li>
-                          <li class="item comment">
-                            <a class="title-box">
-                              <img
-                                src="https://b-gold-cdn.xitu.io/v3/static/img/comment.4d5744f.svg"
-                                class="icon"
-                              />
-                              <span class="count">23</span>
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
+                      <action-icon />
                     </div>
                     <div data-src class="lazy thumb" v-if="item.image">
                       <img :src="item.image" width="100%" height="100%" />
@@ -136,6 +116,7 @@ import secondNav from '@/components/NavBar/secondNav';
 import thirdNav from '@/components/NavBar/thirdNav';
 import contextLeft from '@/components/context/contextLeft.vue';
 import contextRight from '@/components/context/contextRight.vue';
+import actionIcon from '@/businessComponent/actionIcon';
 import { mapState, mapMutations, mapActions } from 'vuex';
 import store from '@/store';
 
@@ -146,6 +127,7 @@ export default {
     thirdNav,
     contextLeft,
     contextRight,
+    actionIcon,
   },
   computed: {
     ...mapState({

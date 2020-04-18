@@ -4,7 +4,7 @@
       <article slot="leftContent" class="article">
         <div class="author-info-block">
           <a href="#" target="_blank" class="avatar-link">
-            <div class="avatar"></div>
+            <user-avatar />
           </a>
           <div class="author-info-box">
             <a target="_blank" class="username ellipsis">Tony</a>
@@ -24,6 +24,7 @@
           v-html="articleDetail.content"
           class="ql-editor article-content"
         ></div>
+        <comment />
       </article>
     </context-left>
     <context-right />
@@ -32,12 +33,16 @@
 <script>
 import contextLeft from '@/components/context/contextLeft.vue';
 import contextRight from '@/components/context/contextRight.vue';
+import userAvatar from '@/businessComponent/userAvatar';
+import comment from '@/businessComponent/comment';
 import { mapActions } from 'vuex';
 export default {
   name: 'articleDetail',
   components: {
     contextLeft,
     contextRight,
+    comment,
+    userAvatar,
   },
   data() {
     return {

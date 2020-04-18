@@ -87,9 +87,9 @@ function handlerError(err) {
   const { status } = err.response;
   const body = err.response.data;
   if (status === 401) {
+    // 重新登录
+    storage.clear();
     return Promise.reject(false);
-    // 不需要返回任何消息了
-    // return Promise.reject(body)
   }
   if (status === 403) {
     Message.error(body ? body.message : status);

@@ -120,13 +120,15 @@ export default {
         this.defaultExpandKey = expendArr;
       }
     },
-    async queryAllAuth() {
+    async queryAllAuth(id) {
       try {
         this.dataLoading = true;
         const res = await this.getAllAuth();
         this.dataLoading = false;
         this.treeData = res;
-        return;
+        if (id) {
+          this.setCurrentKey(id);
+        }
       } catch (error) {
         this.dataLoading = false;
         this.handleError(error);
