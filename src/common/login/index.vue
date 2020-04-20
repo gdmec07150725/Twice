@@ -89,10 +89,12 @@ export default {
         const res = await this.logIn(params);
         const {
           // message,
-          data: { refreshToken, token },
+          data: { refreshToken, token, user, company },
         } = res;
         // message && this.$message.success(message);
         storage.setLogin(1);
+        storage.setUserDetail(JSON.stringify(user));
+        storage.setCompanyDetail(JSON.stringify(company));
         this.handleSaveToken(token, refreshToken);
         this.loading = false;
         this.handleJumpPage();

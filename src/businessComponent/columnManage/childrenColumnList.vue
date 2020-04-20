@@ -58,6 +58,7 @@
 import { mapState, mapActions, mapMutations } from 'vuex';
 import MTable from '_c/table/table.vue';
 import MCard from '_c/card';
+import MPagination from '_c/pagination';
 import childrenColumnForm from './childrenColumnForm';
 import { filterData } from '@/utils/utils';
 export default {
@@ -65,6 +66,7 @@ export default {
   components: {
     MTable,
     MCard,
+    MPagination,
     childrenColumnForm,
   },
   computed: {

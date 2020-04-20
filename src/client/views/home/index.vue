@@ -116,9 +116,10 @@ import secondNav from '@/components/NavBar/secondNav';
 import thirdNav from '@/components/NavBar/thirdNav';
 import contextLeft from '@/components/context/contextLeft.vue';
 import contextRight from '@/components/context/contextRight.vue';
-import actionIcon from '@/businessComponent/actionIcon';
+import actionIcon from '@/components/actionIcon';
 import { mapState, mapMutations, mapActions } from 'vuex';
 import store from '@/store';
+import storage from '@/utils/storage';
 
 export default {
   name: 'home',
@@ -199,7 +200,7 @@ export default {
         const concatParams = {
           page: this.pagination.page,
           rows: this.pagination.rows,
-          companyId: 1,
+          companyId: JSON.parse(storage.getCompanyDetail()).id,
           ...params,
         };
         this.canScroll = false;
@@ -217,7 +218,7 @@ export default {
     },
     queryCategoryList() {
       const params = {
-        companyId: 1,
+        companyId: JSON.parse(storage.getCompanyDetail()).id,
         page: 1,
         rows: 999, // 最大程度获取所有数据（一级一般不会很多数据）
       };

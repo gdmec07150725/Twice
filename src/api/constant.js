@@ -1,3 +1,4 @@
+/* 字典管理 */
 import Restful from './restful';
 import { stringify } from 'qs';
 

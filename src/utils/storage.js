@@ -7,6 +7,7 @@ import Token from './token';
 const FIRSTLOGIN = 'firstLogin';
 const ISLOGIN = 'isLogin';
 const USER = 'user';
+const COMPANY = 'company';
 const VERSION = 'version';
 const ACCESS_TOKEN_OBJECT = 'accessTokenObject';
 const REFRESH_TOKEN_OBJECT = 'refreshTokenObject';
@@ -41,7 +42,7 @@ class Storage {
   }
 
   setUserDetail(detail) {
-    return localStorage.setItem(USER, detail);
+    localStorage.setItem(USER, detail);
   }
 
   cleanUserDetail() {
@@ -49,7 +50,15 @@ class Storage {
   }
 
   getUserDetail() {
-    return localStorage.getItem(USER);
+    return localStorage.getItem(USER) || '';
+  }
+
+  setCompanyDetail(detail) {
+    localStorage.setItem(COMPANY, detail);
+  }
+
+  getCompanyDetail() {
+    return localStorage.getItem(COMPANY) || '';
   }
 
   getToken() {

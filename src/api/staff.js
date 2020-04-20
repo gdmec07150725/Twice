@@ -53,12 +53,7 @@ class Staff {
    * @param {*} params
    */
   assignRoleToStaff(params) {
-    return Restful.post(
-      `/user-service/users/assign/${params.id}?${stringify(params, {
-        arrayFormat: 'repeat',
-        skipNulls: true,
-      })}}`
-    );
+    return Restful.post(`/user-service/users/assign/${params.id}`, params);
   }
 }
 

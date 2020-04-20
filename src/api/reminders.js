@@ -1,4 +1,4 @@
-/* 公司管理 */
+/* 提醒事项 */
 import Restful from './restful';
 import { stringify } from 'qs';
 

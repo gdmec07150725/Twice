@@ -77,6 +77,7 @@ import { Form, FormItem, Input, Select, Option } from 'element-ui';
 import MDialog from '_c/dialog';
 import singleUpload from '_c/upload/singleUpload.vue';
 import regExp from '@/utils/regExp';
+import storage from '@/utils/storage';
 
 export default {
   name: 'staffForm',
@@ -156,9 +157,13 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['addStaff', 'editStaff', 'getRole']),
+    ...mapActions(['addStaff', 'editStaff', 'getRole', 'assignRoleToStaff']),
     handleUploadSuccess() {
       this.$refs['avatar'] && this.$refs['avatar'].clearValidate();
+    },
+    handleSuccess(res = {}) {
+      const { message } = res;
+      message && this.$message.success(message);
     },
     handleError(error = {}) {
       const { message = '' } = error;
@@ -181,19 +186,21 @@ export default {
     assemblyParams() {
       const { roleIds, ...otherParams } = this.staffForm;
       const params = {
-        companyId: 0, // 暂时写死
-        roleIds: [roleIds],
+        companyId: JSON.parse(storage.getCompanyDetail()).id,
         ...otherParams,
       };
-      return params;
+      return { params, roleIds: [roleIds] };
     },
     async handleCreateStaff() {
       try {
-        const params = this.assemblyParams();
+        const { params, roleIds } = this.assemblyParams();
         this.addLoading = true;
         const res = await this.addStaff(params);
-        const { message = '' } = res;
-        message && this.$message.success(message);
+        if (res.data) {
+          // 分配角色
+          await this.assignRoleToStaff({ id: res.data, roleIds });
+        }
+        this.handleSuccess(res);
         this.addLoading = false;
         this.handleCloseDialog(true);
       } catch (error) {
@@ -204,12 +211,15 @@ export default {
     async handleEditStaff() {
       try {
         const { id } = this.staffDetail;
-        const params = this.assemblyParams();
+        const { params, roleIds } = this.assemblyParams();
         params.id = id;
         this.addLoading = true;
         const res = await this.editStaff(params);
-        const { message = '' } = res;
-        message && this.$message.success(message);
+        if (res.data) {
+          // 分配角色
+          await this.assignRoleToStaff({ id: res.data, roleIds });
+        }
+        this.handleSuccess(res);
         this.addLoading = false;
         this.handleCloseDialog(true);
       } catch (error) {

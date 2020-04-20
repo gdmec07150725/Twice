@@ -24,13 +24,12 @@
           :actionWidth="145"
           @onHandleFilterChange="handlefilterChange"
         >
-          <template #username="{ row }">
-            {{ row.user && row.user.username }}
+          <template #roleNameList="{ row }">
+            {{ row.roleNameList && row.roleNameList[0] }}
           </template>
-          <template #email="{ row }">{{ row.user && row.user.email }}</template>
-          <template #establishAt="{ row }">{{
-            row.establishAt | formatDate
-          }}</template>
+          <template #createdAt="{ row }">
+            {{ row.createdAt && row.createdAt | formatTime }}
+          </template>
           <template #btnGroup="{ row }">
             <div class="operation">
               <edit-button @click="handleStaffEdit(row)">编辑</edit-button>
@@ -67,6 +66,8 @@ import MSearch from '_c/search';
 import MPagination from '_c/pagination';
 import staffForm from './staffForm.vue';
 import { filterData, calculationPage } from '@/utils/utils';
+import storage from '@/utils/storage';
+
 export default {
   name: 'staffList',
   components: {
@@ -104,9 +105,9 @@ export default {
           label: '所属职位',
         },
         {
-          prop: 'roles',
+          prop: 'roleNameList',
           label: '角色',
-          slot: false,
+          slot: true,
         },
         {
           prop: 'createdAt',
@@ -191,7 +192,7 @@ export default {
           page: this.pagination.page,
           rows: this.pagination.rows,
           ...params,
-          companyId: 0, // 后面需要改成从内存读
+          companyId: JSON.parse(storage.getCompanyDetail()).id,
         };
         console.log('concatParams', concatParams);
         this.tableLoading = true;

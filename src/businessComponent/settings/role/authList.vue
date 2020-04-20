@@ -74,8 +74,8 @@ export default {
   },
   watch: {
     id(newVal) {
-      this.handleReset();
       if (newVal) {
+        this.handleReset();
         this.queryRoleAuth(newVal);
       }
     },
@@ -89,7 +89,9 @@ export default {
       defaultProps: {
         children: 'childList',
         label: 'description',
+        disabled: this.disabledFun,
       },
+      disabledTree: true,
       dataLoading: false,
       saveLoading: false,
       actionType: 1,
@@ -98,7 +100,7 @@ export default {
         name: '',
       },
       roleForm: {
-        name: '',
+        name: this.name,
       },
       rules: {
         name: [{ required: true, message: '请输入角色名称', trigger: 'blur' }],
@@ -121,6 +123,9 @@ export default {
     handleSuccess(res = {}) {
       const { message } = res;
       message && this.$message.success(message);
+    },
+    disabledFun() {
+      return this.disabledTree;
     },
     filterPid(res = [], pidArr = []) {
       // 去除父节点
@@ -154,11 +159,12 @@ export default {
       return checked;
     },
     handleReset() {
-      this.handleCancelChecked();
+      this.handleSetCheckedKeys([]);
+      this.disabledTree = true;
       this.showForm = false;
     },
-    handleCancelChecked() {
-      this.$refs['tree'] && this.$refs['tree'].setCheckedKeys([]);
+    handleSetCheckedKeys(checkedKeys = []) {
+      this.$refs['tree'] && this.$refs['tree'].setCheckedKeys(checkedKeys);
     },
     handleGetChecked() {
       return this.$refs['tree']
@@ -167,14 +173,15 @@ export default {
     },
     addClick() {
       this.actionType = 1;
-      this.showForm = true;
-      this.handleCancelChecked();
+      this.disabledTree = false;
       this.roleForm = { ...this.defaultForm };
+      this.showForm = true;
+      this.handleSetCheckedKeys([]);
     },
     editClick() {
       this.actionType = 2;
+      this.disabledTree = false;
       this.showForm = true;
-      this.roleForm.name = this.name;
     },
     handleSave() {
       this.$refs['roleForm'].validate(pass => {
@@ -204,7 +211,7 @@ export default {
           type: 'warning',
           closeOnClickModal: false,
         });
-        const res = this.deleteRole(this.id);
+        const res = await this.deleteRole(this.id);
         this.handleSuccess(res);
         this.$emit('refreshRole');
       } catch (error) {
@@ -222,15 +229,16 @@ export default {
           await this.assignAuth(params);
         }
         this.handleSuccess(res);
+        this.disabledTree = true;
         this.saveLoading = false;
         this.showForm = false;
-        this.$emit('refreshRole');
+        this.$emit('refreshRole', res.data);
       } catch (error) {
         this.saveLoading = false;
         this.handleError(error);
       }
     },
-    async handleEditRole() {
+    async handleEditRole(finalChecked) {
       try {
         const { name } = this.roleForm;
         const params = {
@@ -239,10 +247,16 @@ export default {
         };
         this.saveLoading = true;
         const res = await this.editRole(params);
+        if (res && res.data) {
+          // 为用户分配权限
+          const params = { id: res.data, permissionIds: finalChecked };
+          await this.assignAuth(params);
+        }
         this.handleSuccess(res);
+        this.disabledTree = true;
         this.saveLoading = false;
         this.showForm = false;
-        this.$emit('refreshRole');
+        this.$emit('refreshRole', res.data);
       } catch (error) {
         this.saveLoading = false;
         this.handleError(error);
@@ -265,7 +279,7 @@ export default {
         const res = await this.getRoleAuth(id);
         const finalChecked = this.filterChecked(res, [], this.filterPid(res));
         console.log('finalChecked', finalChecked);
-        this.$refs['tree'].setCheckedKeys(finalChecked);
+        this.handleSetCheckedKeys(finalChecked);
         this.dataLoading = false;
       } catch (error) {
         this.dataLoading = false;

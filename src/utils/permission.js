@@ -1,6 +1,7 @@
+import storage from './storage';
 function getUser() {
   // from localStorage get
-  const userStr = localStorage.getItem('user');
+  const userStr = storage.getUserDetail();
   return userStr ? JSON.parse(userStr) : null;
 }
 
@@ -11,22 +12,15 @@ function getUser() {
 export function hasPermission(route) {
   if (route.meta && route.meta.permissions) {
     const user = getUser();
-    // is full permissions
-    if (user && user.fullPermissions) {
-      return true;
-    }
-
-    const permission = user ? user.authorities : [];
-    if (route.meta.permissions.includes('full:permission')) {
-      return user && user.fullPermissions;
-    }
+    const permission =
+      user && user.roles.length > 0
+        ? user.roles[0].permissions.map(item => item.name)
+        : [];
     // console.log(route.meta.permissions, permission.some(role => route.meta.permissions.includes(role)))
-    if (route.meta.all) {
-      return route.meta.permissions.every(role => permission.includes(role));
-    }
-    // return permission.some(role => route.meta.permissions.includes(role));
-    // 暂时使用全部路由
-    return true;
+    // if (route.meta.all) {
+    //   return route.meta.permissions.every(role => permission.includes(role));
+    // }
+    return permission.some(role => route.meta.permissions.includes(role));
   } else {
     return true;
   }

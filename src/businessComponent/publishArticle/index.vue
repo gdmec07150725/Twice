@@ -118,6 +118,8 @@ import { mapMutations, mapActions, mapState } from 'vuex';
 import avatarNavigation from '@/components/avatarNavigation';
 import quillEditor from '_c/quillEditor/quillEditor.vue';
 import customizeUpload from '_c/customizeUpload';
+import storage from '@/utils/storage';
+
 export default {
   name: 'publishArticleDetail',
   components: {
@@ -193,7 +195,7 @@ export default {
         if (title && content && itemActive) {
           const params = {
             categoryId: itemActive,
-            companyId: 1,
+            companyId: JSON.parse(storage.getCompanyDetail()).id,
             userId: 1,
             title,
             content,
@@ -213,7 +215,7 @@ export default {
     queryCategoryList() {
       // 做好登录之后需要去掉这个参数
       const params = {
-        companyId: 1,
+        companyId: JSON.parse(storage.getCompanyDetail()).id,
       };
       this.getCategoryList(params);
     },

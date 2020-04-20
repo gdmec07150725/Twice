@@ -11,7 +11,7 @@
             <span class="count">10</span>
           </a>
         </li>
-        <li class="item comment">
+        <li class="item comment" @click.stop="handleComment">
           <a class="title-box">
             <img
               src="https://b-gold-cdn.xitu.io/v3/static/img/comment.4d5744f.svg"
@@ -27,6 +27,11 @@
 <script>
 export default {
   name: 'actionIcon',
+  methods: {
+    handleComment() {
+      this.$emit('onHandleReply');
+    },
+  },
 };
 </script>
 <style lang="less" scoped>
@@ -49,6 +54,9 @@ export default {
     color: #b2bac2;
     border-radius: 1px;
     // border: 1px solid #edeeef;
+  }
+  .action-list > .item:hover {
+    cursor: pointer;
   }
   .action-list > .item.like {
     padding: 0;

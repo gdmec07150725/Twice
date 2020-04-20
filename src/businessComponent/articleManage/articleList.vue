@@ -81,6 +81,8 @@ import MPagination from '_c/pagination';
 import rejectDialog from '_c/dialog/rejectDialog.vue';
 import articleDetail from './articleDetail.vue';
 import { filterData } from '@/utils/utils';
+import storage from '@/utils/storage';
+
 export default {
   name: 'articleList',
   components: {
@@ -181,7 +183,7 @@ export default {
         const concatParams = {
           page: this.pagination.page,
           rows: this.pagination.rows,
-          companyId: 1,
+          companyId: JSON.parse(storage.getCompanyDetail()).id,
           ...params,
         };
         this.tableLoading = true;

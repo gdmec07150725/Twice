@@ -24,7 +24,10 @@
           v-html="articleDetail.content"
           class="ql-editor article-content"
         ></div>
-        <comment />
+        <div class="article-comment-wrapper">
+          <div class="title">评论</div>
+          <comment />
+        </div>
       </article>
     </context-left>
     <context-right />
@@ -34,7 +37,7 @@
 import contextLeft from '@/components/context/contextLeft.vue';
 import contextRight from '@/components/context/contextRight.vue';
 import userAvatar from '@/businessComponent/userAvatar';
-import comment from '@/businessComponent/comment';
+import comment from '@/components/comment';
 import { mapActions } from 'vuex';
 export default {
   name: 'articleDetail',
@@ -54,7 +57,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['getArticleDetail']),
+    ...mapActions(['getArticleDetail', 'getCommentList']),
     async handleGetArticleDetail(articleId) {
       try {
         const res = await this.getArticleDetail(articleId);
@@ -66,6 +69,18 @@ export default {
         console.log(error);
       }
     },
+    async handleGetArticleComment(articleId) {
+      try {
+        const params = {
+          contentId: articleId,
+          type: 'COMMENT_TYPE_ARTICLE',
+        };
+        const res = await this.getCommentList(params);
+        console.log('res', res);
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
   created() {
     const {
@@ -73,6 +88,7 @@ export default {
     } = this.$route;
     if (id) {
       this.handleGetArticleDetail(id);
+      this.handleGetArticleComment(id);
     }
   },
 };

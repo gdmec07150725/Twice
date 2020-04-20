@@ -1,4 +1,4 @@
-/* 公司管理 */
+/* 分类管理 */
 import Restful from './restful';
 import { stringify } from 'qs';
 

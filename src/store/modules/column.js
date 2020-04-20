@@ -3,6 +3,7 @@
  * 审计日志
  */
 import column from '@/api/column';
+import storage from '@/utils/storage';
 
 const defaultPagination = {
   page: 1,
@@ -51,7 +52,7 @@ const actions = {
   // 获取父级专栏
   getParentColumn({ commit }, params) {
     return new Promise((resolve, reject) => {
-      params.companyId = 1; // 后面做好登录之后需要去掉
+      params.companyId = JSON.parse(storage.getCompanyDetail()).id;
       column
         .getParentColumn(params)
         .then(res => {
@@ -80,7 +81,7 @@ const actions = {
   // 新增专栏
   addColumn({ commit }, params) {
     return new Promise((resolve, reject) => {
-      params.companyId = 1; // 后面做好登录之后需要去掉
+      params.companyId = JSON.parse(storage.getCompanyDetail()).id;
       column
         .addColumn(params)
         .then(res => {

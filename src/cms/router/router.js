@@ -25,7 +25,7 @@ export const permissionRouter = [
     hidden: false,
     redirect: '/reminders/index',
     meta: {
-      permissions: [],
+      permissions: ['reminder'],
     },
     children: [
       {
@@ -34,7 +34,7 @@ export const permissionRouter = [
         icon: 'icon-tixingshixiang',
         meta: {
           title: '提醒事项',
-          permissions: [],
+          permissions: ['reminder'],
         },
         component: () => import('@/cms/views/reminders'),
       },
@@ -46,7 +46,7 @@ export const permissionRouter = [
     hidden: false,
     redirect: '/publishInfo/index',
     meta: {
-      permissions: [],
+      permissions: ['annouce'],
     },
     children: [
       {
@@ -55,7 +55,7 @@ export const permissionRouter = [
         icon: 'icon-fabugonggao',
         meta: {
           title: '发布公告',
-          permissions: [],
+          permissions: ['annouce'],
         },
         component: () => import('@/cms/views/publishInfo'),
       },
@@ -70,7 +70,7 @@ export const permissionRouter = [
     alwaysShow: true, // 显示一级menu
     meta: {
       title: '文档管理',
-      permissions: [],
+      permissions: ['documentManagement'],
     },
     children: [
       {
@@ -78,7 +78,7 @@ export const permissionRouter = [
         name: 'folder',
         meta: {
           title: '文件夹管理',
-          permissions: [],
+          permissions: ['folderManagement'],
         },
         component: () => import('@/cms/views/documentation/folder.vue'),
       },
@@ -87,7 +87,7 @@ export const permissionRouter = [
         name: 'file',
         meta: {
           title: '文件管理',
-          permissions: [],
+          permissions: ['fileManagement'],
         },
         component: () => import('@/cms/views/documentation/file.vue'),
       },
@@ -102,7 +102,7 @@ export const permissionRouter = [
     alwaysShow: true,
     meta: {
       title: '番茄工作法',
-      permissions: [],
+      permissions: ['pomodoroTechnique'],
     },
     children: [
       {
@@ -110,7 +110,7 @@ export const permissionRouter = [
         name: 'activityList',
         meta: {
           title: '活动清单',
-          permissions: [],
+          permissions: ['activityList'],
         },
         component: () => import('@/cms/views/tomatoMethod/activityList.vue'),
       },
@@ -119,7 +119,7 @@ export const permissionRouter = [
         name: 'todoList',
         meta: {
           title: '今日待办',
-          permissions: [],
+          permissions: ['todoToday'],
         },
         component: () => import('@/cms/views/tomatoMethod/todoList.vue'),
       },
@@ -134,7 +134,7 @@ export const permissionRouter = [
     alwaysShow: true,
     meta: {
       title: '物资统计',
-      permissions: [],
+      permissions: ['materialStatistics'],
     },
     children: [
       {
@@ -142,7 +142,7 @@ export const permissionRouter = [
         name: 'materialManage',
         meta: {
           title: '物资管理',
-          permissions: [],
+          permissions: ['materialManagement'],
         },
         component: () =>
           import('@/cms/views/materialStatistics/materialManage.vue'),
@@ -152,7 +152,7 @@ export const permissionRouter = [
         name: 'materialConsume',
         meta: {
           title: '物资消耗',
-          permissions: [],
+          permissions: ['materialConsumption'],
         },
         component: () =>
           import('@/cms/views/materialStatistics/materialConsume.vue'),
@@ -165,7 +165,7 @@ export const permissionRouter = [
     redirect: '/projectManage/index',
     hidden: false,
     meta: {
-      permissions: [],
+      permissions: ['projectManagement'],
     },
     children: [
       {
@@ -174,7 +174,7 @@ export const permissionRouter = [
         icon: 'icon-xiangmuguanli',
         meta: {
           title: '项目管理',
-          permissions: [],
+          permissions: ['projectManagement'],
         },
         component: () => import('@/cms/views/projectManage'),
       },
@@ -186,7 +186,7 @@ export const permissionRouter = [
     redirect: '/reimburseManage/index',
     hidden: false,
     meta: {
-      permissions: [],
+      permissions: ['reimbursementManagement'],
     },
     children: [
       {
@@ -195,7 +195,7 @@ export const permissionRouter = [
         icon: 'icon-baoxiaoguanli',
         meta: {
           title: '报销管理',
-          permissions: [],
+          permissions: ['reimbursementManagement'],
         },
         component: () => import('@/cms/views/reimburseManage'),
       },
@@ -209,7 +209,7 @@ export const permissionRouter = [
     hidden: false,
     meta: {
       title: '内容管理',
-      permissions: [],
+      permissions: ['contentManage'],
     },
     children: [
       {
@@ -217,7 +217,7 @@ export const permissionRouter = [
         name: 'columnManage',
         meta: {
           title: '专栏管理',
-          permissions: [],
+          permissions: ['columnsManagement'],
         },
         component: () => import('@/cms/views/columnManage'),
       },
@@ -229,7 +229,7 @@ export const permissionRouter = [
         meta: {
           noCache: true,
           activeMenu: 'columnManage',
-          permissions: [],
+          permissions: ['columnsManagement'],
         },
         component: () =>
           import('@/businessComponent/columnManage/childrenColumnList.vue'),
@@ -239,7 +239,7 @@ export const permissionRouter = [
         name: 'articleManage',
         meta: {
           title: '文章管理',
-          permissions: [],
+          permissions: ['articleManagement'],
         },
         component: () => import('@/cms/views/articleManage'),
       },
@@ -251,7 +251,7 @@ export const permissionRouter = [
     redirect: '/staffManage/index',
     hidden: false,
     meta: {
-      permission: [],
+      permissions: ['staffManagement'],
     },
     children: [
       {
@@ -260,7 +260,7 @@ export const permissionRouter = [
         icon: 'icon-renyuan',
         meta: {
           title: '人员管理',
-          permission: [],
+          permissions: ['staffManagement'],
         },
         component: () => import('@/cms/views/staffManage'),
       },
@@ -272,7 +272,7 @@ export const permissionRouter = [
     redirect: '/companyManage/index',
     hidden: false,
     meta: {
-      permission: [],
+      permissions: ['companyManagement'],
     },
     children: [
       {
@@ -281,7 +281,7 @@ export const permissionRouter = [
         icon: 'icon-gongsiguanli',
         meta: {
           title: '公司管理',
-          permission: [],
+          permissions: ['companyManagement'],
         },
         component: () => import('@/cms/views/companyManage'),
       },
@@ -296,33 +296,33 @@ export const permissionRouter = [
     alwaysShow: true,
     meta: {
       title: '系统配置',
-      permissions: [],
+      permissions: ['systemConfiguration'],
     },
     children: [
-      {
-        path: 'authorization',
-        name: 'authorization',
-        meta: {
-          title: '权限管理',
-          permissions: [],
-        },
-        component: () => import('@/cms/views/settings/authorization'),
-      },
       {
         path: 'role',
         name: 'role',
         meta: {
           title: '角色管理',
-          permission: [],
+          permissions: ['roleManagement'],
         },
         component: () => import('@/cms/views/settings/role'),
+      },
+      {
+        path: 'authorization',
+        name: 'authorization',
+        meta: {
+          title: '权限管理',
+          permissions: ['authManagement'],
+        },
+        component: () => import('@/cms/views/settings/authorization'),
       },
       {
         path: 'constant',
         name: 'constant',
         meta: {
           title: '字典管理',
-          permissions: [],
+          permissions: ['constantManagement'],
         },
         component: () =>
           import('@/cms/views/settings/constant/parentConstant.vue'),
@@ -335,7 +335,7 @@ export const permissionRouter = [
         meta: {
           noCache: true,
           activeMenu: 'constant',
-          permissions: [],
+          permissions: ['constantManagement'],
         },
         component: () =>
           import('@/businessComponent/settings/constant/childConstantList.vue'),

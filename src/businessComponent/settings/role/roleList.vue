@@ -79,12 +79,10 @@ export default {
     async refreshRole(id) {
       await this.queryRoleList();
       if (id) {
+        const willClickItem = this.roleList.filter(item => item.id === id);
         this.roleList.length > 0 &&
-          this.handleRoleClick(
-            this.roleList.filter(item => {
-              return item.id === id;
-            })
-          );
+          willClickItem.length > 0 &&
+          this.handleRoleClick(willClickItem[0]);
       } else {
         this.roleList.length > 0 && this.handleRoleClick(this.roleList[0]);
       }

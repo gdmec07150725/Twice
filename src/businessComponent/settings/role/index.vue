@@ -44,10 +44,11 @@ export default {
       this.currentRoleName = name;
     },
     handleRoleAdd() {
+      this.handleRoleClick({ id: '', name: '' });
       this.$refs['authList'] && this.$refs['authList'].addClick();
     },
-    handleRefreshRole() {
-      this.$refs['roleList'] && this.$refs['roleList'].refreshRole();
+    handleRefreshRole(id) {
+      this.$refs['roleList'] && this.$refs['roleList'].refreshRole(id);
     },
   },
 };
