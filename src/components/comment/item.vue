@@ -4,7 +4,7 @@
       <user-avatar />
       <div class="comment-content-wrapper">
         <div class="comment-header">Tony</div>
-        <div class="comment-content">content</div>
+        <div class="comment-content">{{ item.content }}</div>
         <div class="comment-footer">
           <div class="comment-time">两小时前</div>
           <div class="comment-action">
@@ -16,7 +16,21 @@
           v-if="openReply"
           v-click-out="handleCloseReply"
         >
-          <comment-input :isReplyArticle="false" />
+          <comment-input
+            :isReplyArticle="false"
+            @onReplyComment="handleReplyComment"
+          />
+        </div>
+        <div
+          class="children-item-container"
+          v-if="item.childComment && item.childComment.length > 0"
+        >
+          <comment-item
+            v-for="childItem in item.childComment"
+            :key="childItem.id"
+            :item="childItem"
+            @onReplyComment="handleReplyComment"
+          />
         </div>
       </div>
     </div>
@@ -28,6 +42,10 @@ import userAvatar from '@/businessComponent/userAvatar';
 import commentInput from './commentInput';
 export default {
   name: 'commentItem',
+  props: {
+    item: Object,
+    default: () => ({}),
+  },
   components: {
     actionIcon,
     userAvatar,
@@ -46,12 +64,22 @@ export default {
     handleCloseReply() {
       this.openReply = false;
     },
-    handleReply() {},
+    handleReplyComment(replyContent) {
+      if (typeof replyContent === 'object') {
+        this.$emit('onReplyComment', replyContent);
+      } else {
+        const params = {
+          replyId: this.item.id,
+          replyContent,
+        };
+        this.$emit('onReplyComment', params);
+      }
+    },
   },
 };
 </script>
 <style lang="less" scoped>
-.commentItem-wrapper {
+.commentItem-wrapper:not(:last-child) {
   margin-bottom: 10px;
   border-bottom: 1px solid #f1f1f1;
 }

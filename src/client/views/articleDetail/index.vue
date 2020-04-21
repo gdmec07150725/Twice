@@ -26,7 +26,11 @@
         ></div>
         <div class="article-comment-wrapper">
           <div class="title">评论</div>
-          <comment />
+          <comment
+            :commentList="commentList"
+            @onHandleReplyArticle="handleReplyArticle"
+            @onHandleReplyComment="handleReplyComment"
+          />
         </div>
       </article>
     </context-left>
@@ -39,6 +43,7 @@ import contextRight from '@/components/context/contextRight.vue';
 import userAvatar from '@/businessComponent/userAvatar';
 import comment from '@/components/comment';
 import { mapActions } from 'vuex';
+import storage from '@/utils/storage';
 export default {
   name: 'articleDetail',
   components: {
@@ -54,10 +59,46 @@ export default {
         title: '',
         image: '',
       },
+      commentList: [],
+      articleId: '',
     };
   },
   methods: {
-    ...mapActions(['getArticleDetail', 'getCommentList']),
+    ...mapActions(['getArticleDetail', 'getCommentList', 'publishComment']),
+    async handleReplyArticle(content) {
+      try {
+        const params = {
+          content,
+          contentId: this.articleId,
+          replyId: 0,
+          type: 'COMMENT_TYPE_ARTICLE',
+          userId: JSON.parse(storage.getUserDetail()).id,
+        };
+        const res = await this.publishComment(params);
+        if (res.code === 200) {
+          this.handleGetArticleComment();
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async handleReplyComment(params) {
+      try {
+        const concatParams = {
+          replyId: params.replyId,
+          content: params.replyContent,
+          contentId: this.articleId,
+          type: 'COMMENT_TYPE_ARTICLE',
+          userId: JSON.parse(storage.getUserDetail()).id,
+        };
+        const res = await this.publishComment(concatParams);
+        if (res.code === 200) {
+          this.handleGetArticleComment();
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async handleGetArticleDetail(articleId) {
       try {
         const res = await this.getArticleDetail(articleId);
@@ -76,7 +117,7 @@ export default {
           type: 'COMMENT_TYPE_ARTICLE',
         };
         const res = await this.getCommentList(params);
-        console.log('res', res);
+        this.commentList = res;
       } catch (error) {
         console.log(error);
       }
@@ -87,6 +128,7 @@ export default {
       query: { id },
     } = this.$route;
     if (id) {
+      this.articleId = id;
       this.handleGetArticleDetail(id);
       this.handleGetArticleComment(id);
     }

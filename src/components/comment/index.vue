@@ -3,15 +3,19 @@
     <div class="reply-article">
       <user-avatar />
       <div class="reply-article-input">
-        <comment-input :isReplyArticle="true" />
+        <comment-input
+          :isReplyArticle="true"
+          @onReplyArticle="handReplyArticle"
+        />
       </div>
     </div>
     <div class="reply-comment">
-      <comment-item />
-      <comment-item />
-      <comment-item />
-      <comment-item />
-      <comment-item />
+      <comment-item
+        v-for="item in commentList"
+        :item="item"
+        :key="item.id"
+        @onReplyComment="handleReplyComment"
+      />
     </div>
   </div>
 </template>
@@ -21,10 +25,24 @@ import commentItem from './item.vue';
 import commentInput from './commentInput';
 export default {
   name: 'comment',
+  props: {
+    commentList: {
+      type: Array,
+      default: () => [],
+    },
+  },
   components: {
     userAvatar,
     commentItem,
     commentInput,
+  },
+  methods: {
+    handReplyArticle(replyContent) {
+      this.$emit('onHandleReplyArticle', replyContent);
+    },
+    handleReplyComment(params) {
+      this.$emit('onHandleReplyComment', params);
+    },
   },
 };
 </script>

@@ -15,7 +15,7 @@ class Comment {
    * 发表评论
    * @param {*} params
    */
-  async PublishComment(params) {
+  async publishComment(params) {
     return Restful.post('/user-service/comments', params);
   }
 

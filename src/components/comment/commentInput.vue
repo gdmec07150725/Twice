@@ -17,7 +17,7 @@
         <span>表情</span>
       </div>
       <div class="reply-button">
-        <button class="submit-btn">评论</button>
+        <button class="submit-btn" @click="handleSubmit">评论</button>
       </div>
     </div>
   </div>
@@ -45,6 +45,13 @@ export default {
     handleFocus() {
       if (this.isReplyArticle) {
         this.showReplyAction = true;
+      }
+    },
+    handleSubmit() {
+      if (this.isReplyArticle) {
+        this.$emit('onReplyArticle', this.replyContent);
+      } else {
+        this.$emit('onReplyComment', this.replyContent);
       }
     },
   },
