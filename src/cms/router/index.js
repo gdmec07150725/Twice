@@ -20,6 +20,7 @@ router.beforeEach(async (to, from, next) => {
   NProgress.start();
 
   const isLogin = Number(storage.getLogin());
+  console.log('isLogin', isLogin);
   const { name } = to;
   if (isLogin) {
     if (!store.state.cmsRouter.hasGetRules) {

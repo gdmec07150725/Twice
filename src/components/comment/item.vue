@@ -3,8 +3,11 @@
     <div class="item-container">
       <user-avatar />
       <div class="comment-content-wrapper">
-        <div class="comment-header">Tony</div>
-        <div class="comment-content">{{ item.content }}</div>
+        <div class="comment-header">{{ item.username }}</div>
+        <div class="comment-content" v-if="item.replyId">
+          回复 {{ item.replyName }} ：{{ item.content }}
+        </div>
+        <div class="comment-content" v-else>{{ item.content }}</div>
         <div class="comment-footer">
           <div class="comment-time">两小时前</div>
           <div class="comment-action">
@@ -81,7 +84,6 @@ export default {
 <style lang="less" scoped>
 .commentItem-wrapper:not(:last-child) {
   margin-bottom: 10px;
-  border-bottom: 1px solid #f1f1f1;
 }
 .item-container {
   display: flex;
@@ -103,5 +105,8 @@ export default {
       border-radius: 3px;
     }
   }
+}
+.children-item-container {
+  background-color: #fafbfc;
 }
 </style>

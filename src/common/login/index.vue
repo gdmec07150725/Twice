@@ -1,10 +1,10 @@
 <template>
   <div class="login_wrapper">
     <div class="login_title">Login</div>
-    <el-input v-model="username" placeholder="admin" class="input"></el-input>
+    <el-input v-model="email" placeholder="请输入邮箱" class="input"></el-input>
     <el-input
       v-model="password"
-      placeholder="admin"
+      placeholder="请输入密码"
       type="password"
       class="input"
     ></el-input>
@@ -45,7 +45,7 @@ export default {
   },
   data() {
     return {
-      username: '',
+      email: '',
       password: '',
       loading: false,
       redirect: undefined,
@@ -72,11 +72,11 @@ export default {
       storage.saveRefreshToken(refreshToken);
     },
     handleSubmit() {
-      const { username, password } = this;
-      if (username && password) {
+      const { email, password } = this;
+      if (email && password) {
         // 两小时之后过期 (提前5分钟过期)
         const params = {
-          username,
+          email,
           password,
         };
         this.handleLogin(params);

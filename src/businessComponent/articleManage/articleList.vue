@@ -20,6 +20,9 @@
           :actionWidth="145"
           @rowClick="handleRowClick"
         >
+          <template #category="{ row}">
+            {{ row.category && row.category.name }}
+          </template>
           <template #createdAt="{ row }">
             {{ row.createdAt | formatTime }}
           </template>
@@ -116,9 +119,9 @@ export default {
           slot: false,
         },
         {
-          prop: 'categoryId',
+          prop: 'category',
           label: '所属专栏',
-          slot: false,
+          slot: true,
         },
         {
           prop: 'createdAt',
