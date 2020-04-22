@@ -6,6 +6,11 @@
       :size="25"
       @click.native="handleCollapse"
     />
+    <div class="user-wrapper">
+      <div class="user-avatar">
+        <img :src="user.avatar" width="100%" height="100%" />
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -51,7 +56,12 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(['CHANGECOLLAPSE', 'CLOSECOLLAPSE', 'RESETUSER']),
+    ...mapMutations([
+      'CHANGECOLLAPSE',
+      'CLOSECOLLAPSE',
+      'RESETUSER',
+      // 'GET_USER_DETAIL',
+    ]),
     ...mapActions(['logout']),
     handleJudgeCollapse() {
       if (this.collapse) {
@@ -80,6 +90,7 @@ export default {
     };
   },
   created() {
+    // this.GET_USER_DETAIL(); // 获取用户信息
     this.screenWidth = document.body.clientWidth;
     if (this.screenWidth < 992) {
       this.CLOSECOLLAPSE(true);
@@ -95,7 +106,12 @@ export default {
 .trigger-icon {
   cursor: pointer;
 }
-
+.user-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  position: relative;
+}
 .header_content {
   height: 100%;
   display: flex;
