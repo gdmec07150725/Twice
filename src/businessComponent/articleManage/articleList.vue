@@ -20,7 +20,10 @@
           :actionWidth="145"
           @rowClick="handleRowClick"
         >
-          <template #category="{ row}">
+          <template #userId="{ row }">
+            {{ row.user && row.user.username }}
+          </template>
+          <template #category="{ row }">
             {{ row.category && row.category.name }}
           </template>
           <template #createdAt="{ row }">
@@ -116,7 +119,7 @@ export default {
         {
           prop: 'userId',
           label: '用户名称',
-          slot: false,
+          slot: true,
         },
         {
           prop: 'category',

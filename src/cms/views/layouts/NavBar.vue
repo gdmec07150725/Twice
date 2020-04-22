@@ -7,16 +7,31 @@
       @click.native="handleCollapse"
     />
     <div class="user-wrapper">
-      <div class="user-avatar">
-        <img :src="user.avatar" width="100%" height="100%" />
+      <div class="user-name">
+        {{ user.username }}
       </div>
+      <el-dropdown trigger="click" @command="handleCommand">
+        <div class="user-avatar">
+          <img :src="user.avatar" width="100%" height="100%" />
+        </div>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="logout">登出</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
   </div>
 </template>
 <script>
-import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
+import { mapState, mapGetters, mapMutations } from 'vuex';
+import { Dropdown, DropdownMenu, DropdownItem } from 'element-ui';
+import storage from '@/utils/storage';
 export default {
   name: 'Navbar',
+  components: {
+    'el-dropdown': Dropdown,
+    'el-dropdown-menu': DropdownMenu,
+    'el-dropdown-item': DropdownItem,
+  },
   data() {
     return {
       isReset: false,
@@ -60,15 +75,18 @@ export default {
       'CHANGECOLLAPSE',
       'CLOSECOLLAPSE',
       'RESETUSER',
-      // 'GET_USER_DETAIL',
+      'GET_USER_DETAIL',
     ]),
-    ...mapActions(['logout']),
     handleJudgeCollapse() {
       if (this.collapse) {
         this.collapseIcon = 'icon-menu-fold';
       } else {
         this.collapseIcon = 'icon-menu-fold-left';
       }
+    },
+    handleLogout() {
+      storage.clear();
+      window.location.reload();
     },
     handleCollapse() {
       this.CHANGECOLLAPSE();
@@ -90,7 +108,7 @@ export default {
     };
   },
   created() {
-    // this.GET_USER_DETAIL(); // 获取用户信息
+    this.GET_USER_DETAIL(); // 获取用户信息
     this.screenWidth = document.body.clientWidth;
     if (this.screenWidth < 992) {
       this.CLOSECOLLAPSE(true);
@@ -106,11 +124,21 @@ export default {
 .trigger-icon {
   cursor: pointer;
 }
-.user-avatar {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  position: relative;
+.user-wrapper {
+  display: flex;
+  align-items: center;
+  .user-name {
+    margin-right: 15px;
+    color: #999;
+  }
+  .user-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
 }
 .header_content {
   height: 100%;
