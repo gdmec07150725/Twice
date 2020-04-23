@@ -4,10 +4,12 @@
       <article slot="leftContent" class="article">
         <div class="author-info-block">
           <a href="#" target="_blank" class="avatar-link">
-            <user-avatar />
+            <user-avatar :url="articleDetail.user.avatar" />
           </a>
           <div class="author-info-box">
-            <a target="_blank" class="username ellipsis">Tony</a>
+            <a target="_blank" class="username ellipsis">
+              {{ articleDetail.user.username }}
+            </a>
             <div class="meta-box">
               <time class="time">2020年03月09日</time>
               <span class="views-count">阅读 100</span>
@@ -27,6 +29,7 @@
         <div class="article-comment-wrapper">
           <div class="title">评论</div>
           <comment
+            :key="commentKey"
             :commentList="commentList"
             @onHandleReplyArticle="handleReplyArticle"
             @onHandleReplyComment="handleReplyComment"
@@ -40,7 +43,7 @@
 <script>
 import contextLeft from '@/components/context/contextLeft.vue';
 import contextRight from '@/components/context/contextRight.vue';
-import userAvatar from '@/businessComponent/userAvatar';
+import userAvatar from '@/components/userAvatar';
 import comment from '@/components/comment';
 import { mapActions } from 'vuex';
 import storage from '@/utils/storage';
@@ -61,6 +64,7 @@ export default {
       },
       commentList: [],
       articleId: '',
+      commentKey: Date.now(),
     };
   },
   methods: {
@@ -77,6 +81,7 @@ export default {
         const res = await this.publishComment(params);
         if (res.code === 200) {
           this.handleGetArticleComment();
+          this.commentKey = Date.now();
         }
       } catch (error) {
         console.log(error);
@@ -94,6 +99,7 @@ export default {
         const res = await this.publishComment(concatParams);
         if (res.code === 200) {
           this.handleGetArticleComment();
+          this.commentKey = Date.now();
         }
       } catch (error) {
         console.log(error);

@@ -1,10 +1,6 @@
 <template>
   <div>
-    <div class="avatar">
-      <img
-        src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3617305860,3974013488&fm=26&gp=0.jpg"
-      />
-    </div>
+    <user-avatar :url="user.avatar" />
     <ul class="nav-menu user-dropdown-list" v-if="toggleShowUserDropDown">
       <div class="nav-menu-item-group">
         <li class="nav-menu-item">
@@ -70,27 +66,23 @@
 </template>
 <script>
 import { mapState } from 'vuex';
+import userAvatar from '@/components/userAvatar';
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'avatarNavigation',
+  components: {
+    userAvatar,
+  },
   computed: {
     ...mapState({
       toggleShowUserDropDown: state => state.toggleShowUserDropDown,
     }),
+    ...mapGetters(['user']),
   },
 };
 </script>
 <style lang="less" scoped>
-.avatar {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  position: relative;
-  img {
-    display: inline-block;
-    width: 100%;
-    height: 100%;
-  }
-}
 .nav-menu {
   position: absolute;
   top: 100%;

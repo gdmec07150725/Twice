@@ -1,7 +1,7 @@
 <template>
   <div class="comment-wrapper">
     <div class="reply-article">
-      <user-avatar />
+      <user-avatar :url="user.avatar" />
       <div class="reply-article-input">
         <comment-input
           :isReplyArticle="true"
@@ -20,9 +20,10 @@
   </div>
 </template>
 <script>
-import userAvatar from '@/businessComponent/userAvatar';
+import userAvatar from '@/components/userAvatar';
 import commentItem from './item.vue';
 import commentInput from './commentInput';
+import { mapGetters } from 'vuex';
 export default {
   name: 'comment',
   props: {
@@ -30,6 +31,9 @@ export default {
       type: Array,
       default: () => [],
     },
+  },
+  computed: {
+    ...mapGetters(['user']),
   },
   components: {
     userAvatar,

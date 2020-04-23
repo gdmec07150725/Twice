@@ -1,7 +1,7 @@
 <template>
   <div class="commentItem-wrapper">
     <div class="item-container">
-      <user-avatar />
+      <user-avatar :url="item.avatar" />
       <div class="comment-content-wrapper">
         <div class="comment-header">{{ item.username }}</div>
         <div class="comment-content" v-if="item.replyId">
@@ -11,7 +11,7 @@
         <div class="comment-footer">
           <div class="comment-time">两小时前</div>
           <div class="comment-action">
-            <action-icon @onHandleReply="handleOpenReply" />
+            <action-icon @onHandleReply="handleOpenReply(item.username)" />
           </div>
         </div>
         <div
@@ -20,6 +20,7 @@
           v-click-out="handleCloseReply"
         >
           <comment-input
+            :replyName="replyName"
             :isReplyArticle="false"
             @onReplyComment="handleReplyComment"
           />
@@ -41,7 +42,7 @@
 </template>
 <script>
 import actionIcon from '@/components/actionIcon';
-import userAvatar from '@/businessComponent/userAvatar';
+import userAvatar from '@/components/userAvatar';
 import commentInput from './commentInput';
 export default {
   name: 'commentItem',
@@ -58,10 +59,12 @@ export default {
     return {
       toggleReply: false,
       openReply: false,
+      replyName: '',
     };
   },
   methods: {
-    handleOpenReply() {
+    handleOpenReply(name) {
+      this.replyName = name;
       this.openReply = !this.openReply;
     },
     handleCloseReply() {

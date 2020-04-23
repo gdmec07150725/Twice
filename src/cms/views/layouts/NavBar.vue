@@ -130,6 +130,7 @@ export default {
   .user-name {
     margin-right: 15px;
     color: #999;
+    font-size: 14px;
   }
   .user-avatar {
     width: 30px;

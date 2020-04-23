@@ -77,12 +77,16 @@
                           <li class="item post">专栏</li>
                           <li class="item username">
                             <div class="user-popover-box">
-                              <a href="#">Tony</a>
+                              <a href="#">
+                                {{ item.user && item.user.username }}
+                              </a>
                             </div>
                           </li>
                           <li class="item time">5分钟前</li>
                           <li class="item tag">
-                            <a href="#" class="tag">JavaScript</a>
+                            <a href="#" class="tag">
+                              {{ item.category && item.category.name }}
+                            </a>
                           </li>
                         </ul>
                       </div>

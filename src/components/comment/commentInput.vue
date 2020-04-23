@@ -6,7 +6,7 @@
         :class="{ empty: !replyContent }"
         contenteditable="true"
         spellcheck="fasle"
-        :placeholder="isReplyArticle ? '输入评论...' : '回复Tony...'"
+        :placeholder="isReplyArticle ? '输入评论...' : `回复${replyName}...`"
         @focus="handleFocus"
         @input="handleInput($event)"
       ></div>
@@ -30,6 +30,11 @@ export default {
       // 是否为回复文章
       type: Boolean,
       default: false,
+    },
+    replyName: {
+      // 被回复人名称
+      type: String,
+      default: '',
     },
   },
   data() {
