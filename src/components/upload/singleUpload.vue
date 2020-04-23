@@ -41,6 +41,11 @@ export default {
     'el-upload': Upload,
     'el-dialog': Dialog,
   },
+  watch: {
+    value(newVal) {
+      this.imageUrl = newVal;
+    },
+  },
   data() {
     return {
       dialogVisible: false,

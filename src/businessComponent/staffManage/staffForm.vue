@@ -82,13 +82,14 @@ import storage from '@/utils/storage';
 export default {
   name: 'staffForm',
   props: {
+    id: {
+      // 人员id
+      type: [String, Number],
+      default: '',
+    },
     actionType: {
       type: Number,
       default: 1, // 默认是新增
-    },
-    staffDetail: {
-      type: Object,
-      default: () => ({}),
     },
   },
   components: {
@@ -137,13 +138,13 @@ export default {
             trigger: 'change',
           },
         ],
-        // avatar: [
-        //   {
-        //     required: true,
-        //     message: '请上传公司logo',
-        //     trigger: 'change',
-        //   },
-        // ],
+        avatar: [
+          {
+            required: true,
+            message: '请上传人员头像',
+            trigger: 'change',
+          },
+        ],
         email: [
           {
             required: true,
@@ -157,7 +158,13 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['addStaff', 'editStaff', 'getRole', 'assignRoleToStaff']),
+    ...mapActions([
+      'addStaff',
+      'editStaff',
+      'getRole',
+      'assignRoleToStaff',
+      'getStaffDetail',
+    ]),
     handleUploadSuccess() {
       this.$refs['avatar'] && this.$refs['avatar'].clearValidate();
     },
@@ -210,9 +217,8 @@ export default {
     },
     async handleEditStaff() {
       try {
-        const { id } = this.staffDetail;
         const { params, roleIds } = this.assemblyParams();
-        params.id = id;
+        params.id = this.id;
         this.addLoading = true;
         const res = await this.editStaff(params);
         if (res.data) {
@@ -236,13 +242,18 @@ export default {
         this.handleError(error);
       }
     },
-    initCompany() {
-      Object.keys(this.staffForm).forEach(item => {
-        this.staffForm[item] = this.staffDetail[item] || '';
-      });
-      const { roleIds } = this.staffDetail;
-      if (roleIds) {
-        this.staffForm['roleIds'] = roleIds[0];
+    async initStaff() {
+      try {
+        const res = await this.getStaffDetail(this.id);
+        Object.keys(this.staffForm).forEach(item => {
+          this.staffForm[item] = res[item] || '';
+        });
+        const { roles } = res;
+        if (roles && roles.length > 0) {
+          this.staffForm['roleIds'] = roles[0].id;
+        }
+      } catch (error) {
+        this.handleError(error);
       }
     },
     handleCloseDialog(refresh = false) {
@@ -252,7 +263,7 @@ export default {
   created() {
     this.queryRoleList();
     if (this.actionType === 2) {
-      this.initCompany();
+      this.initStaff();
     }
   },
 };

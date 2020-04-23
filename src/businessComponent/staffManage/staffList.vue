@@ -52,8 +52,8 @@
     <template v-if="openFormModal">
       <staff-form
         @onHandleCloseDialog="handleCloseDialog"
+        :id="staffId"
         :actionType="actionType"
-        :staffDetail="staffDetail"
       />
     </template>
   </div>
@@ -118,7 +118,7 @@ export default {
       tableLoading: false,
       openFormModal: false,
       actionType: 1,
-      staffDetail: {},
+      staffId: '',
     };
   },
   methods: {
@@ -137,7 +137,7 @@ export default {
     handleStaffEdit(row) {
       this.actionType = 2;
       this.openFormModal = true;
-      this.staffDetail = { ...row };
+      this.staffId = row.id;
     },
     async handleStaffDelete(row) {
       try {
