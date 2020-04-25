@@ -1,14 +1,17 @@
 <template>
   <div class="welcome-context">
+    <article-suspended />
     <context-left class="ql-snow content-wrapper">
       <article slot="leftContent" class="article">
         <div class="author-info-block">
           <a href="#" target="_blank" class="avatar-link">
-            <user-avatar :url="articleDetail.user.avatar" />
+            <user-avatar
+              :url="articleDetail.user && articleDetail.user.avatar"
+            />
           </a>
           <div class="author-info-box">
             <a target="_blank" class="username ellipsis">
-              {{ articleDetail.user.username }}
+              {{ articleDetail.user && articleDetail.user.username }}
             </a>
             <div class="meta-box">
               <time class="time">2020年03月09日</time>
@@ -26,7 +29,7 @@
           v-html="articleDetail.content"
           class="ql-editor article-content"
         ></div>
-        <div class="article-comment-wrapper">
+        <div class="article-comment-wrapper" id="article-comment-wrapper">
           <div class="title">评论</div>
           <comment
             :key="commentKey"
@@ -41,6 +44,7 @@
   </div>
 </template>
 <script>
+import articleSuspended from '@/businessComponent/articleSuspended';
 import contextLeft from '@/components/context/contextLeft.vue';
 import contextRight from '@/components/context/contextRight.vue';
 import userAvatar from '@/components/userAvatar';
@@ -50,6 +54,7 @@ import storage from '@/utils/storage';
 export default {
   name: 'articleDetail',
   components: {
+    articleSuspended,
     contextLeft,
     contextRight,
     comment,
@@ -57,11 +62,7 @@ export default {
   },
   data() {
     return {
-      articleDetail: {
-        content: '',
-        title: '',
-        image: '',
-      },
+      articleDetail: {},
       commentList: [],
       articleId: '',
       commentKey: Date.now(),

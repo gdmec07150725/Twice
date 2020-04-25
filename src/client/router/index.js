@@ -18,8 +18,9 @@ router.beforeEach(async (to, from, next) => {
   // start progress bar
   NProgress.start();
   const isLogin = Number(storage.getLogin());
+  const refreshToken = storage.getRefreshToken();
   const { name } = to;
-  if (isLogin) {
+  if (isLogin && refreshToken && refreshToken.isValid()) {
     // 现在暂时用cms的后面需要改成client的
     if (!store.state.cmsRouter.hasGetRules) {
       // generate accessible routes map based on roles

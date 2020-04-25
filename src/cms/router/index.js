@@ -20,9 +20,9 @@ router.beforeEach(async (to, from, next) => {
   NProgress.start();
 
   const isLogin = Number(storage.getLogin());
-  console.log('isLogin', isLogin);
+  const refreshToken = storage.getRefreshToken();
   const { name } = to;
-  if (isLogin) {
+  if (isLogin && refreshToken && refreshToken.isValid()) {
     if (!store.state.cmsRouter.hasGetRules) {
       // generate accessible routes map based on roles
       const routers = await store.dispatch('concatRoutes');

@@ -105,7 +105,7 @@ class Storage {
   }
 
   /**
-   * 保存refresh token 提前十分钟过期
+   * 保存refresh token 提前一分钟过期
    * 现在refresh token 是1个小时过期
    * @param {*} refreshToken
    */

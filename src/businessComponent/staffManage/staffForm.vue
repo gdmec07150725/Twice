@@ -221,10 +221,7 @@ export default {
         params.id = this.id;
         this.addLoading = true;
         const res = await this.editStaff(params);
-        if (res.data) {
-          // 分配角色
-          await this.assignRoleToStaff({ id: res.data, roleIds });
-        }
+        await this.assignRoleToStaff({ id: this.id, roleIds });
         this.handleSuccess(res);
         this.addLoading = false;
         this.handleCloseDialog(true);

@@ -110,6 +110,9 @@ export default {
       });
     },
   },
+  created() {
+    storage.clear();
+  },
 };
 </script>
 <style scoped lang="less">

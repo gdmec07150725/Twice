@@ -12,14 +12,12 @@
           ref="tree"
           node-key="id"
           :expand-on-click-node="false"
-          :default-expanded-keys="defaultExpandKey"
+          :default-expand-all="true"
           :data="treeData"
           :props="defaultProps"
           :render-content="cusotmRenderContent"
           :highlight-current="true"
           @node-click="handleNodeClick"
-          @node-expand="handleNodeExpand"
-          @node-collapse="handleNodeCollapse"
         ></el-tree>
       </div>
     </el-card>
@@ -99,27 +97,27 @@ export default {
         store.setCurrentNode(node);
       });
     },
-    handleNodeExpand(data) {
-      const { id } = data;
-      const expendArr = this.defaultExpandKey;
-      expendArr.push(id);
-      this.defaultExpandKey = [...expendArr];
-    },
-    handleNodeCollapse(data) {
-      const { id } = data;
-      const expendArr = this.defaultExpandKey;
-      let currentKey = '';
-      this.defaultExpandKey.forEach((item, index) => {
-        if (item === id) {
-          currentKey = index;
-          return;
-        }
-      });
-      if (currentKey) {
-        expendArr.splice(currentKey, 1);
-        this.defaultExpandKey = expendArr;
-      }
-    },
+    // handleNodeExpand(data) {
+    //   const { id } = data;
+    //   const expendArr = this.defaultExpandKey;
+    //   expendArr.push(id);
+    //   this.defaultExpandKey = [...expendArr];
+    // },
+    // handleNodeCollapse(data) {
+    //   const { id } = data;
+    //   const expendArr = this.defaultExpandKey;
+    //   let currentKey = '';
+    //   this.defaultExpandKey.forEach((item, index) => {
+    //     if (item === id) {
+    //       currentKey = index;
+    //       return;
+    //     }
+    //   });
+    //   if (currentKey) {
+    //     expendArr.splice(currentKey, 1);
+    //     this.defaultExpandKey = expendArr;
+    //   }
+    // },
     async queryAllAuth(id) {
       try {
         this.dataLoading = true;
