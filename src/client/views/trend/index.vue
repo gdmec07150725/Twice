@@ -191,7 +191,7 @@ export default {
 <style lang="less" scoped>
 .trend-editor-wrapper {
   background-color: #fff;
-  padding: 20px 20px 0 20px;
+  padding: 20px;
   border-radius: 5px;
   margin-bottom: 10px;
   .trend-editor {
