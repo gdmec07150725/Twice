@@ -2,6 +2,7 @@ import layouts from '@/client/views/layouts';
 import home from '@/client/views/home';
 import publishArticle from '@/client/views/publishArticle';
 import articleDetail from '@/client/views/articleDetail';
+import trend from '@/client/views/trend';
 
 export const routes = [
   {
@@ -14,6 +15,18 @@ export const routes = [
         path: 'home',
         name: 'home',
         component: home,
+      },
+    ],
+  },
+  {
+    path: '/trend',
+    name: 'trend',
+    component: layouts,
+    children: [
+      {
+        path: 'index',
+        name: 'trend',
+        component: trend,
       },
     ],
   },

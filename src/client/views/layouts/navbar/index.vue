@@ -84,7 +84,7 @@ export default {
         },
         {
           label: '沸点',
-          value: 'boilingPoint',
+          value: 'trend',
         },
         {
           label: '财商',

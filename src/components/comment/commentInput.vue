@@ -11,20 +11,16 @@
         @input="handleInput($event)"
       ></div>
     </div>
-    <div class="reply-action" v-if="showReplyAction">
-      <div class="reply-icon">
-        <div class="icon"></div>
-        <span>表情</span>
-      </div>
-      <div class="reply-button">
-        <button class="submit-btn" @click="handleSubmit">评论</button>
-      </div>
-    </div>
+    <action :show="showReplyAction" @onHandleSubmit="handleSubmit" />
   </div>
 </template>
 <script>
+import action from './action.vue';
 export default {
   name: 'commentInput',
+  components: {
+    action,
+  },
   props: {
     isReplyArticle: {
       // 是否为回复文章
@@ -88,37 +84,6 @@ export default {
   }
   .rich-input:not(.empty)::before {
     display: none;
-  }
-}
-.reply-action {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-  .reply-icon {
-    display: flex;
-    color: #027fff;
-    .icon {
-      width: 18px;
-      height: 18px;
-      margin-right: 5px;
-      background-image: url('https://b-gold-cdn.xitu.io/v3/static/img/emoji.5594dbb.svg');
-      background-repeat: no-repeat;
-      background-size: cover;
-    }
-    span {
-      font-size: 13px;
-    }
-  }
-  .reply-button {
-    .submit-btn {
-      padding: 8px 16px;
-      color: #fff;
-      background-color: #027fff;
-      border-radius: 2px;
-      border: none;
-      cursor: pointer;
-    }
   }
 }
 </style>
