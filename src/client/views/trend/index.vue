@@ -1,96 +1,118 @@
 <template>
   <div class="welcome-context">
+    <div class="trend-suspended">
+      <ul class="navigation">
+        <li
+          class="nav-item"
+          :class="{ active: navigationAction === item.value }"
+          v-for="item in navigationList"
+          :key="item.value"
+          @click="navigationAction = item.value"
+        >
+          {{ item.label }}
+        </li>
+      </ul>
+    </div>
     <context-left>
-      <div slot="leftContent">
-        <div class="trend-editor-wrapper">
-          <div class="trend-editor">
-            <div
-              class="trend-input"
-              contenteditable="true"
-              @input="handleInput($event)"
-            />
-            <div class="trend-image-wrapper" v-if="imageList.length > 0">
+      <div slot="leftContent" class="leftContent">
+        <div class="trend-main">
+          <div class="trend-editor-wrapper">
+            <div class="trend-editor">
               <div
-                class="image-item"
-                v-for="(item, index) in imageList"
-                :key="index"
-              >
-                <img :src="item" width="100%" height="100%" />
-                <span class="delete" @click="handleDelete(index)">
+                class="trend-input"
+                contenteditable="true"
+                @input="handleInput($event)"
+              />
+              <div class="trend-image-wrapper" v-if="imageList.length > 0">
+                <div
+                  class="image-item"
+                  v-for="(item, index) in imageList"
+                  :key="index"
+                >
+                  <img :src="item" width="100%" height="100%" />
+                  <span class="delete" @click="handleDelete(index)">
+                    <icon-font
+                      icon="icon-close"
+                      :size="10"
+                      class="image-close-icon"
+                      color="#fff"
+                    />
+                  </span>
+                </div>
+                <div class="image-item" @click="handleImageClick">
                   <icon-font
-                    icon="icon-close"
-                    :size="10"
-                    class="image-close-icon"
-                    color="#fff"
+                    icon="icon-add"
+                    :size="20"
+                    class="image-add-icon"
+                    color="#8c939d"
                   />
-                </span>
-              </div>
-              <div class="image-item" @click="handleImageClick">
-                <icon-font
-                  icon="icon-add"
-                  :size="20"
-                  class="image-add-icon"
-                  color="#8c939d"
-                />
-              </div>
-            </div>
-          </div>
-          <action
-            :show="true"
-            :showImageIcon="true"
-            @onHandleImageClick="handleImageClick"
-            @onHandleSubmit="handleSubmit"
-          />
-          <customizeUpload
-            ref="customizeUpload"
-            @onHandleStartUpload="handleStartUpload"
-            @onHandleImageUrl="handleImageUrl"
-          />
-        </div>
-        <template v-if="trendsList.length > 0">
-          <div
-            class="trend-content-wrapper"
-            v-for="(item, index) in trendsList"
-            :key="index"
-          >
-            <div class="author-info-block">
-              <user-avatar :url="avatarImage" />
-              <div class="author-info-box">
-                <a target="_blank" class="username ellipsis">
-                  Tony
-                </a>
-                <div class="meta-box">
-                  <time class="time">8小时前</time>
                 </div>
               </div>
             </div>
-            <div class="content-box">
-              <div class="content-text">
-                {{ item.content }}
-              </div>
-              <div class="content-image"></div>
-            </div>
-            <div class="trend-action-wrapper">
-              <div class="like action-btn">
-                <icon-font icon="icon-zan2" color="#cdcdcd" />
-              </div>
-              <div class="comment action-btn" @click="toggleShowComment">
-                <icon-font icon="icon-pinglun" color="#cdcdcd" />
-              </div>
-            </div>
-            <div class="trend-comment-wrapper" v-if="showComment">
-              <comment
-                :key="commentKey"
-                :commentList="commentList"
-                @onHandleReplyArticle="handleReplyArticle"
-                @onHandleReplyComment="handleReplyComment"
-              />
-              <div class="container">
-                <em class="triangle"></em>
-              </div>
-            </div>
+            <action
+              :show="true"
+              :showImageIcon="true"
+              @onHandleImageClick="handleImageClick"
+              @onHandleSubmit="handleSubmit"
+            />
+            <customizeUpload
+              ref="customizeUpload"
+              @onHandleStartUpload="handleStartUpload"
+              @onHandleImageUrl="handleImageUrl"
+            />
           </div>
-        </template>
+          <template v-if="trendsList.length > 0">
+            <div
+              class="trend-content-wrapper"
+              v-for="(item, index) in trendsList"
+              :key="index"
+            >
+              <div class="author-info-block">
+                <user-avatar :url="avatarImage" />
+                <div class="author-info-box">
+                  <a target="_blank" class="username ellipsis">
+                    Tony
+                  </a>
+                  <div class="meta-box">
+                    <time class="time">8小时前</time>
+                  </div>
+                </div>
+              </div>
+              <div class="content-box">
+                <div class="content-text">
+                  {{ item.content }}
+                </div>
+                <div class="content-image"></div>
+              </div>
+              <div class="trend-action-wrapper">
+                <div class="like action-btn">
+                  <icon-font icon="icon-zan2" color="#cdcdcd" />
+                </div>
+                <div
+                  class="comment action-btn"
+                  @click="toggleShowComment(item.id)"
+                >
+                  <icon-font icon="icon-pinglun" color="#cdcdcd" />
+                </div>
+              </div>
+              <div class="trend-comment-wrapper" v-if="showComment">
+                <comment
+                  :key="commentKey"
+                  :commentList="commentList"
+                  @onHandleReplyArticle="
+                    content => handleReplyArticle(content, item.id)
+                  "
+                  @onHandleReplyComment="
+                    content => handleReplyComment(content, item.id)
+                  "
+                />
+                <div class="container">
+                  <em class="triangle"></em>
+                </div>
+              </div>
+            </div>
+          </template>
+        </div>
       </div>
     </context-left>
     <context-right />
@@ -125,14 +147,36 @@ export default {
         'https://forum-dev.oss-cn-shenzhen.aliyuncs.com/test/2020-04-24/158c77064a6c4c9589ca102f29f97f5d-u=4021323957,90575369&fm=15&gp=0.jpg',
       trendContent: '',
       trendsList: [],
+      commentList: [],
       commentKey: Date.now(),
       showComment: false,
+      navigationList: [
+        {
+          label: '全部',
+          value: 1,
+        },
+        {
+          label: '自己',
+          value: 2,
+        },
+        {
+          label: '关注',
+          value: 3,
+        },
+      ],
+      navigationAction: 1,
     };
   },
   methods: {
-    ...mapActions(['addTrend', 'getAllTrendByCompany']),
-    toggleShowComment() {
+    ...mapActions([
+      'addTrend',
+      'getAllTrendByCompany',
+      'publishComment',
+      'getCommentList',
+    ]),
+    toggleShowComment(id) {
       this.showComment = !this.showComment;
+      this.handleGetTrendComment(id);
     },
     handleInput(e) {
       this.trendContent = e.target.innerHTML;
@@ -162,6 +206,34 @@ export default {
         this.createNewTrend(params);
       }
     },
+    handleReplyComment(params, contentId) {
+      const concatParams = {
+        replyId: params.replyId,
+        content: params.replyContent,
+        contentId,
+        type: 'COMMENT_TYPE_TREND',
+        userId: JSON.parse(storage.getUserDetail()).id,
+      };
+      this.replyTrend(concatParams);
+    },
+    handleReplyArticle(content, contentId) {
+      const params = {
+        content,
+        contentId,
+        replyId: 0,
+        type: 'COMMENT_TYPE_TREND',
+        userId: JSON.parse(storage.getUserDetail()).id,
+      };
+      this.replyTrend(params);
+    },
+    async replyTrend(params) {
+      try {
+        await this.publishComment(params);
+        this.handleGetTrendComment(params.contentId);
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async createNewTrend(params) {
       try {
         await this.addTrend(params);
@@ -177,7 +249,18 @@ export default {
         this.trendsList = this.trendsList.concat(
           await this.getAllTrendByCompany(id)
         );
-        console.log('trendsList', this.trendsList);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async handleGetTrendComment(articleId) {
+      try {
+        const params = {
+          contentId: articleId,
+          type: 'COMMENT_TYPE_TREND',
+        };
+        const res = await this.getCommentList(params);
+        this.commentList = res;
       } catch (error) {
         console.log(error);
       }
@@ -189,6 +272,44 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.trend-suspended {
+  position: fixed;
+  top: 75px;
+  width: 110px;
+  margin-right: 20px;
+  background-color: #fff;
+  border-radius: 2px;
+  .navigation {
+    padding: 12px;
+    .nav-item {
+      height: 30px;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      border-radius: 3px;
+      font-size: 14px;
+      color: #909090;
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
+      &.active {
+        background-color: #007fff;
+        color: #fff;
+      }
+      &:hover {
+        color: #007fff;
+        background: hsla(0, 0%, 94.9%, 0.6);
+      }
+    }
+  }
+}
+.leftContent {
+  display: flex;
+  justify-content: flex-end;
+  .trend-main {
+    width: 570px;
+  }
+}
 .trend-editor-wrapper {
   background-color: #fff;
   padding: 20px;

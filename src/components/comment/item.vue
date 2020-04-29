@@ -4,10 +4,12 @@
       <user-avatar :url="item.avatar" />
       <div class="comment-content-wrapper">
         <div class="comment-header">{{ item.username }}</div>
-        <div class="comment-content" v-if="item.replyId">
-          回复 {{ item.replyName }} ：{{ item.content }}
-        </div>
-        <div class="comment-content" v-else>{{ item.content }}</div>
+        <div
+          class="comment-content"
+          v-if="item.replyId"
+          v-html="`回复 ${item.replyName} : ${item.content}`"
+        ></div>
+        <div class="comment-content" v-else v-html="item.content"></div>
         <div class="comment-footer">
           <div class="comment-time">两小时前</div>
           <div class="comment-action">
@@ -85,8 +87,12 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.commentItem-wrapper:not(:last-child) {
-  margin-bottom: 10px;
+.commentItem-wrapper {
+  padding: 10px 10px 0 10px;
+  &:not(:last-child) {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+  }
 }
 .item-container {
   display: flex;
