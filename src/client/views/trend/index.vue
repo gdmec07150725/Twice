@@ -95,21 +95,10 @@
                   <icon-font icon="icon-pinglun" color="#cdcdcd" />
                 </div>
               </div>
-              <div class="trend-comment-wrapper" v-if="showComment">
-                <comment
-                  :key="commentKey"
-                  :commentList="commentList"
-                  @onHandleReplyArticle="
-                    content => handleReplyArticle(content, item.id)
-                  "
-                  @onHandleReplyComment="
-                    content => handleReplyComment(content, item.id)
-                  "
-                />
-                <div class="container">
-                  <em class="triangle"></em>
-                </div>
-              </div>
+              <comment-wrapper
+                :ref="`commentWrapper${item.id}`"
+                :id="item.id"
+              />
             </div>
           </template>
         </div>
@@ -124,7 +113,7 @@ import contextRight from '@/components/context/contextRight.vue';
 import action from '@/components/comment/action.vue';
 import customizeUpload from '@/components/customizeUpload';
 import userAvatar from '@/components/userAvatar';
-import comment from '@/components/comment';
+import commentWrapper from './commentWrapper.vue';
 import { mapActions } from 'vuex';
 import storage from '@/utils/storage';
 
@@ -136,19 +125,15 @@ export default {
     action,
     customizeUpload,
     userAvatar,
-    comment,
+    commentWrapper,
   },
   data() {
     return {
-      imageList: [
-        'https://forum-dev.oss-cn-shenzhen.aliyuncs.com/test/2020-04-28/ff452c831d274186b20d6c44a1f95ef6-banner3.jpg',
-      ],
+      imageList: [],
       avatarImage:
         'https://forum-dev.oss-cn-shenzhen.aliyuncs.com/test/2020-04-24/158c77064a6c4c9589ca102f29f97f5d-u=4021323957,90575369&fm=15&gp=0.jpg',
       trendContent: '',
       trendsList: [],
-      commentList: [],
-      commentKey: Date.now(),
       showComment: false,
       navigationList: [
         {
@@ -168,15 +153,10 @@ export default {
     };
   },
   methods: {
-    ...mapActions([
-      'addTrend',
-      'getAllTrendByCompany',
-      'publishComment',
-      'getCommentList',
-    ]),
+    ...mapActions(['addTrend', 'getAllTrendByCompany']),
     toggleShowComment(id) {
-      this.showComment = !this.showComment;
-      this.handleGetTrendComment(id);
+      this.$refs[`commentWrapper${id}`] &&
+        this.$refs[`commentWrapper${id}`][0].toggleShowComment();
     },
     handleInput(e) {
       this.trendContent = e.target.innerHTML;
@@ -206,34 +186,6 @@ export default {
         this.createNewTrend(params);
       }
     },
-    handleReplyComment(params, contentId) {
-      const concatParams = {
-        replyId: params.replyId,
-        content: params.replyContent,
-        contentId,
-        type: 'COMMENT_TYPE_TREND',
-        userId: JSON.parse(storage.getUserDetail()).id,
-      };
-      this.replyTrend(concatParams);
-    },
-    handleReplyArticle(content, contentId) {
-      const params = {
-        content,
-        contentId,
-        replyId: 0,
-        type: 'COMMENT_TYPE_TREND',
-        userId: JSON.parse(storage.getUserDetail()).id,
-      };
-      this.replyTrend(params);
-    },
-    async replyTrend(params) {
-      try {
-        await this.publishComment(params);
-        this.handleGetTrendComment(params.contentId);
-      } catch (error) {
-        console.log(error);
-      }
-    },
     async createNewTrend(params) {
       try {
         await this.addTrend(params);
@@ -249,18 +201,6 @@ export default {
         this.trendsList = this.trendsList.concat(
           await this.getAllTrendByCompany(id)
         );
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async handleGetTrendComment(articleId) {
-      try {
-        const params = {
-          contentId: articleId,
-          type: 'COMMENT_TYPE_TREND',
-        };
-        const res = await this.getCommentList(params);
-        this.commentList = res;
       } catch (error) {
         console.log(error);
       }
@@ -423,34 +363,6 @@ export default {
       width: 1px;
       height: 24px;
       background-color: #ebebeb;
-    }
-  }
-}
-.trend-comment-wrapper {
-  position: relative;
-  padding: 15px;
-  margin: 0 -15px;
-  border-top: 1px solid #eee;
-  .container {
-    position: absolute;
-    top: -8px;
-    left: 75%;
-    margin: -7px 0 0 -7px;
-    width: 14px;
-    height: 14px;
-    border-top: 1px solid #fff;
-    transform: rotate(180deg);
-    .triangle {
-      position: absolute;
-      top: -6px;
-      left: 0;
-      right: 0;
-      width: 10px;
-      height: 10px;
-      transform: rotate(45deg);
-      border-right: 1px solid #ebebeb;
-      border-bottom: 1px solid #ebebeb;
-      background: #fff;
     }
   }
 }
