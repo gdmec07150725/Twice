@@ -19,6 +19,7 @@
           <div class="trend-editor-wrapper">
             <div class="trend-editor">
               <div
+                id="trend-input"
                 class="trend-input"
                 contenteditable="true"
                 @input="handleInput($event)"
@@ -52,6 +53,7 @@
             <action
               :show="true"
               :showImageIcon="true"
+              @onHandleSelectedEmoji="handleSelectedEmoji"
               @onHandleImageClick="handleImageClick"
               @onHandleSubmit="handleSubmit"
             />
@@ -160,6 +162,12 @@ export default {
     },
     handleInput(e) {
       this.trendContent = e.target.innerHTML;
+    },
+    handleSelectedEmoji(url) {
+      // TODO
+      document.getElementById(
+        'trend-input'
+      ).innerHTML = `<img src="${url}" width="22px" height="22px" />`;
     },
     handleImageClick() {
       this.$refs['customizeUpload'] &&
