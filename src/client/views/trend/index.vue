@@ -22,6 +22,7 @@
                 id="trend-input"
                 class="trend-input"
                 contenteditable="true"
+                @blur="handleBlur"
                 @input="handleInput($event)"
               />
               <div class="trend-image-wrapper" v-if="imageList.length > 0">
@@ -81,9 +82,7 @@
                 </div>
               </div>
               <div class="content-box">
-                <div class="content-text">
-                  {{ item.content }}
-                </div>
+                <div class="content-text" v-html="item.content" />
                 <div class="content-image"></div>
               </div>
               <div class="trend-action-wrapper">
@@ -152,6 +151,9 @@ export default {
         },
       ],
       navigationAction: 1,
+      sel: '',
+      range: '',
+      textContent: '',
     };
   },
   methods: {
@@ -160,14 +162,48 @@ export default {
       this.$refs[`commentWrapper${id}`] &&
         this.$refs[`commentWrapper${id}`][0].toggleShowComment();
     },
+    handleBlur() {
+      this.sel = window.getSelection();
+      this.range = this.sel.getRangeAt(0);
+      this.range.deleteContents();
+    },
+    insertHtmlAtCaret(html) {
+      if (window.getSelection) {
+        // IE9 and non-IE
+        if (this.sel.getRangeAt && this.sel.rangeCount) {
+          var el = document.createElement('div');
+          el.innerHTML = html;
+          var frag = document.createDocumentFragment(),
+            node,
+            lastNode;
+          while ((node = el.firstChild)) {
+            lastNode = frag.appendChild(node);
+          }
+          this.range.insertNode(frag);
+          // Preserve the selection
+          if (lastNode) {
+            this.range = this.range.cloneRange();
+            this.range.setStartAfter(lastNode);
+            this.range.collapse(true);
+            this.sel.removeAllRanges();
+            this.sel.addRange(this.range);
+          }
+        }
+      } else if (document.selection && document.selection.type != 'Control') {
+        // IE < 9
+        document.selection.createRange().pasteHTML(html);
+      }
+      this.textContent = $('.trend-input').html();
+      this.trendContent = this.textContent;
+    },
     handleInput(e) {
       this.trendContent = e.target.innerHTML;
     },
     handleSelectedEmoji(url) {
       // TODO
-      document.getElementById(
-        'trend-input'
-      ).innerHTML = `<img src="${url}" width="22px" height="22px" />`;
+      $('.trend-input').focus();
+      this.textContent = `<img class="emoji" src="${url}" width="20px" height="20px" style="vertical-align: sub; margin: 0 1px" />`;
+      this.insertHtmlAtCaret(this.textContent);
     },
     handleImageClick() {
       this.$refs['customizeUpload'] &&
@@ -272,6 +308,7 @@ export default {
       flex: 1;
       min-height: 75px;
       padding: 8px 10px;
+      font-size: 15px;
     }
     .trend-image-wrapper {
       display: flex;
