@@ -16,35 +16,13 @@
           <div class="triangle"></div>
           <div class="emoji-content">
             <ul class="category">
-              <li class="item" @click="handleSelectedEmoji">
-                <img
-                  class="emoji-item"
-                  src="https://gold-cdn.xitu.io/asset/twemoji/2.6.0/svg/1f603.svg"
-                />
-              </li>
-              <li class="item">
-                <img
-                  class="emoji-item"
-                  src="https://gold-cdn.xitu.io/asset/twemoji/2.6.0/svg/1f603.svg"
-                />
-              </li>
-              <li class="item">
-                <img
-                  class="emoji-item"
-                  src="https://gold-cdn.xitu.io/asset/twemoji/2.6.0/svg/1f603.svg"
-                />
-              </li>
-              <li class="item">
-                <img
-                  class="emoji-item"
-                  src="https://gold-cdn.xitu.io/asset/twemoji/2.6.0/svg/1f603.svg"
-                />
-              </li>
-              <li class="item">
-                <img
-                  class="emoji-item"
-                  src="https://gold-cdn.xitu.io/asset/twemoji/2.6.0/svg/1f603.svg"
-                />
+              <li
+                class="item"
+                v-for="item in emojiData"
+                :key="item"
+                @click="handleSelectedEmoji(item)"
+              >
+                <img class="emoji-item" :src="item" />
               </li>
             </ul>
           </div>
@@ -64,6 +42,7 @@
   </div>
 </template>
 <script>
+import emojiData from '@/utils/emojiMock';
 export default {
   name: 'action',
   props: {
@@ -79,6 +58,7 @@ export default {
   data() {
     return {
       showEmoji: false,
+      emojiData: emojiData,
     };
   },
   methods: {
@@ -88,11 +68,8 @@ export default {
     toggleShowEmoji() {
       this.showEmoji = !this.showEmoji;
     },
-    handleSelectedEmoji() {
-      this.$emit(
-        'onHandleSelectedEmoji',
-        'https://gold-cdn.xitu.io/asset/twemoji/2.6.0/svg/1f603.svg'
-      );
+    handleSelectedEmoji(url) {
+      this.$emit('onHandleSelectedEmoji', url);
     },
     handleCloseEmoji() {
       if (this.showEmoji) {
@@ -138,7 +115,7 @@ export default {
         top: 30px;
         z-index: 1;
         bottom: 0;
-        width: 280px;
+        width: 290px;
         height: 210px;
         border-radius: 2px;
         background-color: #fff;
@@ -157,7 +134,7 @@ export default {
         & .emoji-content {
           margin-bottom: 10px;
           .category {
-            max-width: 280px;
+            max-width: 290px;
             max-height: 225px;
             display: flex;
             flex-wrap: wrap;

@@ -234,6 +234,7 @@ export default {
       try {
         await this.addTrend(params);
         this.trendContent = '';
+        document.getElementById('trend-input').innerHTML = '';
         this.queryAllTrend();
       } catch (error) {
         console.log(error);

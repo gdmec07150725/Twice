@@ -73,6 +73,7 @@ export default {
       this.openReply = false;
     },
     handleReplyComment(replyContent) {
+      console.log('replyContent', replyContent);
       if (typeof replyContent === 'object') {
         this.$emit('onReplyComment', replyContent);
       } else {
@@ -100,6 +101,7 @@ export default {
     flex: 1;
     .comment-content {
       margin: 5px 0 10px;
+      font-size: 15px;
     }
     .comment-footer {
       display: flex;

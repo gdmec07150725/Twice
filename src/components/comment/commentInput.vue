@@ -2,16 +2,22 @@
   <div>
     <div class="reply-input-box">
       <div
+        :id="_uid"
         class="rich-input"
         :class="{ empty: !replyContent }"
         contenteditable="true"
         spellcheck="fasle"
         :placeholder="isReplyArticle ? '输入评论...' : `回复${replyName}...`"
         @focus="handleFocus"
+        @blur="handleBlur"
         @input="handleInput($event)"
       ></div>
     </div>
-    <action :show="showReplyAction" @onHandleSubmit="handleSubmit" />
+    <action
+      :show="showReplyAction"
+      @onHandleSubmit="handleSubmit"
+      @onHandleSelectedEmoji="handleSelectedEmoji"
+    />
   </div>
 </template>
 <script>
@@ -37,6 +43,9 @@ export default {
     return {
       replyContent: '',
       showReplyAction: !this.isReplyArticle,
+      sel: '',
+      range: '',
+      textContent: '',
     };
   },
   methods: {
@@ -49,11 +58,53 @@ export default {
       }
     },
     handleSubmit() {
+      console.log('replyContent', this.replyContent);
       if (this.isReplyArticle) {
         this.$emit('onReplyArticle', this.replyContent);
       } else {
         this.$emit('onReplyComment', this.replyContent);
       }
+    },
+    handleBlur() {
+      this.sel = window.getSelection();
+      this.range = this.sel.getRangeAt(0);
+      this.range.deleteContents();
+    },
+    insertHtmlAtCaret(html) {
+      if (window.getSelection) {
+        console.log('进来了');
+        // IE9 and non-IE
+        if (this.sel.getRangeAt && this.sel.rangeCount) {
+          var el = document.createElement('div');
+          el.innerHTML = html;
+          var frag = document.createDocumentFragment(),
+            node,
+            lastNode;
+          while ((node = el.firstChild)) {
+            lastNode = frag.appendChild(node);
+          }
+          this.range.insertNode(frag);
+          // Preserve the selection
+          if (lastNode) {
+            this.range = this.range.cloneRange();
+            this.range.setStartAfter(lastNode);
+            this.range.collapse(true);
+            this.sel.removeAllRanges();
+            this.sel.addRange(this.range);
+          }
+        }
+      } else if (document.selection && document.selection.type != 'Control') {
+        // IE < 9
+        document.selection.createRange().pasteHTML(html);
+      }
+      this.textContent = document.getElementById(this._uid).innerHTML;
+      console.log('dom', this.textContent);
+      this.replyContent = this.textContent;
+    },
+    handleSelectedEmoji(url) {
+      // $('.rich-input').focus();
+      this.textContent = `<img class="emoji" src="${url}" width="20px" height="20px" style="vertical-align: sub; margin: 0 1px" />`;
+      this.insertHtmlAtCaret(this.textContent);
     },
   },
 };
@@ -74,6 +125,7 @@ export default {
     color: #17181a;
     outline: none;
     min-height: 18px;
+    font-size: 15px;
   }
   .rich-input::before {
     content: attr(placeholder);
