@@ -163,8 +163,12 @@ export default {
         this.$refs[`commentWrapper${id}`][0].toggleShowComment();
     },
     handleBlur() {
-      this.sel = window.getSelection();
-      this.range = this.sel.getRangeAt(0);
+      this.sel = window.getSelection()
+        ? window.getSelection()
+        : document.selection;
+      this.range = this.sel.createRange
+        ? this.sel.createRange()
+        : this.sel.getRangeAt(0);
       this.range.deleteContents();
     },
     insertHtmlAtCaret(html) {
@@ -193,15 +197,13 @@ export default {
         // IE < 9
         document.selection.createRange().pasteHTML(html);
       }
-      this.textContent = $('.trend-input').html();
+      this.textContent = document.getElementById('trend-input').innerHTML;
       this.trendContent = this.textContent;
     },
     handleInput(e) {
       this.trendContent = e.target.innerHTML;
     },
     handleSelectedEmoji(url) {
-      // TODO
-      $('.trend-input').focus();
       this.textContent = `<img class="emoji" src="${url}" width="20px" height="20px" style="vertical-align: sub; margin: 0 1px" />`;
       this.insertHtmlAtCaret(this.textContent);
     },

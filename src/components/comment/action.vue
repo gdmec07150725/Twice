@@ -116,7 +116,7 @@ export default {
         z-index: 1;
         bottom: 0;
         width: 290px;
-        height: 210px;
+        height: 200px;
         border-radius: 2px;
         background-color: #fff;
         box-shadow: 0 5px 18px 0 rgba(0, 0, 0, 0.16);
@@ -134,8 +134,6 @@ export default {
         & .emoji-content {
           margin-bottom: 10px;
           .category {
-            max-width: 290px;
-            max-height: 225px;
             display: flex;
             flex-wrap: wrap;
             align-items: center;
