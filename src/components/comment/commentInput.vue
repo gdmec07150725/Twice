@@ -11,7 +11,9 @@
         @focus="handleFocus"
         @blur="handleBlur"
         @input="handleInput($event)"
-      ></div>
+      >
+        <br />
+      </div>
     </div>
     <action
       :show="showReplyAction"
@@ -124,17 +126,17 @@ export default {
     line-height: 1.7;
     color: #17181a;
     outline: none;
-    min-height: 18px;
+    min-height: 40px;
     font-size: 15px;
   }
-  .rich-input::before {
+  .rich-input:before {
     content: attr(placeholder);
     position: absolute;
     opacity: 0.4;
     pointer-events: none;
     user-select: none;
   }
-  .rich-input:not(.empty)::before {
+  .rich-input:not(.empty):before {
     display: none;
   }
 }

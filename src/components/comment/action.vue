@@ -120,6 +120,7 @@ export default {
         border-radius: 2px;
         background-color: #fff;
         box-shadow: 0 5px 18px 0 rgba(0, 0, 0, 0.16);
+        box-sizing: content-box;
         cursor: default;
         & .triangle {
           position: absolute;
