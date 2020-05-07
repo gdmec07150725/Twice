@@ -126,8 +126,8 @@ export default {
     line-height: 1.7;
     color: #17181a;
     outline: none;
-    min-height: 40px;
     font-size: 15px;
+    box-sizing: content-box;
   }
   .rich-input:before {
     content: attr(placeholder);

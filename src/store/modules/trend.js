@@ -17,10 +17,10 @@ const actions = {
     });
   },
   // 获取公司的所有动态
-  getAllTrendByCompany({ commit }, id) {
+  getAllTrendByCompany({ commit }, params) {
     return new Promise((resolve, reject) => {
       trend
-        .getAllTrendByCompany(id)
+        .getAllTrendByCompany(params)
         .then(res => {
           resolve(res);
         })

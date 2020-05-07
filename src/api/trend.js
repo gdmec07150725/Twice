@@ -1,6 +1,6 @@
 /* 动态 */
 import Restful from './restful';
-// import { stringify } from 'qs';
+import { stringify } from 'qs';
 
 class Trend {
   /**
@@ -13,10 +13,12 @@ class Trend {
 
   /**
    * 根据公司id查找某个公司所有的动态
-   * @param {*} id
+   * @param {*} params
    */
-  async getAllTrendByCompany(id) {
-    return Restful.get(`/user-service/trends/company/${id}`);
+  async getAllTrendByCompany(params) {
+    return Restful.get(
+      `/user-service/trends/company/${params.id}?${stringify(params)}`
+    );
   }
 }
 

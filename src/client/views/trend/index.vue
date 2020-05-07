@@ -69,6 +69,8 @@
               class="trend-content-wrapper"
               v-for="(item, index) in trendsList"
               :key="index"
+              :canScroll="canScroll"
+              v-scroll-to-load="judgePagination"
             >
               <div class="author-info-block">
                 <user-avatar :url="avatarImage" />
@@ -83,7 +85,9 @@
               </div>
               <div class="content-box">
                 <div class="content-text" v-html="item.content" />
-                <div class="content-image"></div>
+                <div class="content-image" v-if="item.images.length === 1">
+                  <img :src="item.images[0].url" width="100%" height="auto" />
+                </div>
               </div>
               <div class="trend-action-wrapper">
                 <div class="like action-btn">
@@ -130,6 +134,9 @@ export default {
   },
   data() {
     return {
+      page: 1,
+      size: 10,
+      totalPage: 0,
       imageList: [],
       avatarImage:
         'https://forum-dev.oss-cn-shenzhen.aliyuncs.com/test/2020-04-24/158c77064a6c4c9589ca102f29f97f5d-u=4021323957,90575369&fm=15&gp=0.jpg',
@@ -154,6 +161,7 @@ export default {
       sel: '',
       range: '',
       textContent: '',
+      canScroll: true,
     };
   },
   methods: {
@@ -222,6 +230,12 @@ export default {
       this.imageList.splice(index, 1);
       console.log(this.imageList);
     },
+    resetData() {
+      this.page = 1;
+      this.totalPage = 0;
+      this.trendsList = [];
+      this.imageList = [];
+    },
     handleSubmit() {
       if (this.trendContent) {
         const params = {
@@ -229,6 +243,11 @@ export default {
           userId: JSON.parse(storage.getUserDetail()).id,
           companyId: JSON.parse(storage.getCompanyDetail()).id,
         };
+        if (this.imageList.length > 0) {
+          params.images = this.imageList.map(item => ({ url: item }));
+        } else {
+          params.images = [];
+        }
         this.createNewTrend(params);
       }
     },
@@ -237,17 +256,39 @@ export default {
         await this.addTrend(params);
         this.trendContent = '';
         document.getElementById('trend-input').innerHTML = '';
+        this.resetData();
         this.queryAllTrend();
       } catch (error) {
         console.log(error);
       }
     },
-    async queryAllTrend() {
+    judgePagination() {
+      // 判断页码，当前页码加1如果大于或总页码就不能请求了
+      const { page, totalPage } = this;
+      if (totalPage && page + 1 > totalPage) {
+        return;
+      }
+      const params = {
+        page: page + 1,
+      };
+      this.queryAllTrend(params);
+    },
+    async queryAllTrend(params) {
       try {
         const id = JSON.parse(storage.getCompanyDetail()).id;
-        this.trendsList = this.trendsList.concat(
-          await this.getAllTrendByCompany(id)
-        );
+        const concatParams = {
+          id,
+          page: this.page,
+          size: this.size,
+          ...params,
+        };
+        this.canScroll = false;
+        const res = await this.getAllTrendByCompany(concatParams);
+        const { currentPage, result, totalPage } = res || {};
+        this.page = currentPage;
+        this.trendsList = this.trendsList.concat(result);
+        this.totalPage = totalPage;
+        this.canScroll = true;
       } catch (error) {
         console.log(error);
       }
@@ -388,6 +429,11 @@ export default {
     margin-left: 52px;
     margin-bottom: 20px;
     font-size: 16px;
+    .content-image {
+      width: 200px;
+      max-height: 600px;
+      margin-top: 10px;
+    }
   }
 }
 .trend-action-wrapper {
