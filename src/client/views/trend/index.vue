@@ -85,9 +85,8 @@
               </div>
               <div class="content-box">
                 <div class="content-text" v-html="item.content" />
-                <div class="content-image" v-if="item.images.length === 1">
-                  <img :src="item.images[0].url" width="100%" height="auto" />
-                </div>
+                <!-- 图片预览组件 -->
+                <trend-image-view :imageList="mockImageList" />
               </div>
               <div class="trend-action-wrapper">
                 <div class="like action-btn">
@@ -117,6 +116,7 @@ import contextLeft from '@/components/context/contextLeft.vue';
 import contextRight from '@/components/context/contextRight.vue';
 import action from '@/components/comment/action.vue';
 import customizeUpload from '@/components/customizeUpload';
+import trendImageView from '@/components/trendImageView';
 import userAvatar from '@/components/userAvatar';
 import commentWrapper from './commentWrapper.vue';
 import { mapActions } from 'vuex';
@@ -131,6 +131,7 @@ export default {
     customizeUpload,
     userAvatar,
     commentWrapper,
+    trendImageView,
   },
   data() {
     return {
@@ -162,6 +163,20 @@ export default {
       range: '',
       textContent: '',
       canScroll: true,
+      mockImageList: [
+        {
+          url:
+            'https://forum-dev.oss-cn-shenzhen.aliyuncs.com/test/2020-05-07/e0931b14b0704b6d903cf57d8cc4f59b-timg.png',
+        },
+        {
+          url:
+            'https://forum-dev.oss-cn-shenzhen.aliyuncs.com/test/2020-04-23/c9bda0bd4d504fa08c0287057292febf-111454203454.jpg',
+        },
+        {
+          url:
+            'https://forum-dev.oss-cn-shenzhen.aliyuncs.com/test/2020-04-24/158c77064a6c4c9589ca102f29f97f5d-u=4021323957,90575369&fm=15&gp=0.jpg',
+        },
+      ],
     };
   },
   methods: {
@@ -426,14 +441,8 @@ export default {
     }
   }
   .content-box {
-    margin-left: 52px;
-    margin-bottom: 20px;
+    margin: 0 52px 20px 52px;
     font-size: 16px;
-    .content-image {
-      width: 200px;
-      max-height: 600px;
-      margin-top: 10px;
-    }
   }
 }
 .trend-action-wrapper {
