@@ -82,7 +82,9 @@
                               </a>
                             </div>
                           </li>
-                          <li class="item time">5分钟前</li>
+                          <li class="item time">
+                            {{ item.createdAt | relativeTime }}
+                          </li>
                           <li class="item tag">
                             <a href="#" class="tag">
                               {{ item.category && item.category.name }}

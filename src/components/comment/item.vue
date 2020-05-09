@@ -11,7 +11,7 @@
         ></div>
         <div class="comment-content" v-else v-html="item.content"></div>
         <div class="comment-footer">
-          <div class="comment-time">两小时前</div>
+          <div class="comment-time">{{ item.createdAt | relativeTime }}</div>
           <div class="comment-action">
             <action-icon @onHandleReply="handleOpenReply(item.username)" />
           </div>

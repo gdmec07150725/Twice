@@ -14,7 +14,9 @@
               {{ articleDetail.user && articleDetail.user.username }}
             </a>
             <div class="meta-box">
-              <time class="time">2020年03月09日</time>
+              <time class="time">
+                {{ articleDetail.publishedAt | formatTime }}
+              </time>
               <span class="views-count">阅读 100</span>
             </div>
           </div>

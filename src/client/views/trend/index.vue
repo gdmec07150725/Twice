@@ -72,13 +72,15 @@
                 :key="index"
               >
                 <div class="author-info-block">
-                  <user-avatar :url="avatarImage" />
+                  <user-avatar :url="item.user && item.user.avatar" />
                   <div class="author-info-box">
                     <a target="_blank" class="username ellipsis">
-                      Tony
+                      {{ item.user && item.user.username }}
                     </a>
                     <div class="meta-box">
-                      <time class="time">8小时前</time>
+                      <time class="time">{{
+                        item.createdAt | relativeTime
+                      }}</time>
                     </div>
                   </div>
                 </div>
@@ -139,8 +141,6 @@ export default {
       size: 10,
       totalPage: 0,
       imageList: [],
-      avatarImage:
-        'https://forum-dev.oss-cn-shenzhen.aliyuncs.com/test/2020-04-24/158c77064a6c4c9589ca102f29f97f5d-u=4021323957,90575369&fm=15&gp=0.jpg',
       trendContent: '',
       trendsList: [],
       showComment: false,
