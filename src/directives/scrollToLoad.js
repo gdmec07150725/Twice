@@ -16,6 +16,8 @@ export default {
         const canScroll = el.getAttribute('canScroll');
         const heightBelowTop = getOffsetHeight(el) + getElementTop(el);
         const offsetHeight = getOffsetHeight(window.document.documentElement);
+        console.log('heightBelowTop', heightBelowTop);
+        console.log('offsetHeight', offsetHeight);
         const shouldTrigger = heightBelowTop - offsetHeight <= 100;
         if (shouldTrigger && canScroll) {
           binding.value(); // 请求数据

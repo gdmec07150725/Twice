@@ -14,7 +14,7 @@ import customizeLoading from '@/lib/loading/index.js';
 Vue.component('icon-font', IconFont); // 全局注册icon组件
 
 Vue.prototype.$loading = customizeLoading.service;
-
+Vue.prototype.$ELEMENT = { size: 'medium' }; // client端后面后面写了自己的组件之后可以去掉对elementUI的依赖
 Vue.config.productionTip = false;
 
 Vue.use(Vue => {

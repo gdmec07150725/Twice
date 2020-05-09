@@ -15,3 +15,9 @@ export default {
   },
 };
 </script>
+<style scoped>
+.main-wrapper {
+  min-height: 100%;
+  background-color: #f4f5f5;
+}
+</style>

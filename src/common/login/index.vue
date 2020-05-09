@@ -1,21 +1,31 @@
 <template>
   <div class="login_wrapper">
-    <div class="login_title">Login</div>
-    <el-input v-model="email" placeholder="请输入邮箱" class="input"></el-input>
-    <el-input
-      v-model="password"
-      placeholder="请输入密码"
-      type="password"
-      class="input"
-    ></el-input>
-    <el-button
-      type="primary"
-      class="button"
-      @click="handleSubmit"
-      :loading="loading"
-    >
-      login
-    </el-button>
+    <div class="login_container">
+      <div class="login_title">
+        Twice
+      </div>
+      <el-input
+        v-model="email"
+        placeholder="请输入邮箱"
+        class="input"
+        @keyup.enter.native="handleSubmit"
+      ></el-input>
+      <el-input
+        v-model="password"
+        placeholder="请输入密码"
+        type="password"
+        class="input"
+        @keyup.enter.native="handleSubmit"
+      ></el-input>
+      <el-button
+        type="primary"
+        class="button"
+        @click="handleSubmit"
+        :loading="loading"
+      >
+        login
+      </el-button>
+    </div>
   </div>
 </template>
 
@@ -117,15 +127,27 @@ export default {
 </script>
 <style scoped lang="less">
 .login_wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #66b1ff;
+}
+.login_container {
   position: absolute;
-  width: 350px;
   left: 50%;
-  top: 200px;
-  transform: translateX(-50%);
+  top: 50%;
+  width: 350px;
+  height: 230px;
+  padding: 25px;
+  background-color: #fff;
+  transform: translate(-50%, -50%);
+  border-radius: 3px;
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.3);
   .login_title {
+    font-size: 25px;
+    margin-bottom: 30px;
     text-align: center;
     font-weight: 600;
-    margin-bottom: 15px;
   }
   .input {
     margin-bottom: 15px;

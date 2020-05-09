@@ -65,44 +65,44 @@
             />
           </div>
           <template v-if="trendsList.length > 0">
-            <div
-              class="trend-content-wrapper"
-              v-for="(item, index) in trendsList"
-              :key="index"
-              :canScroll="canScroll"
-              v-scroll-to-load="judgePagination"
-            >
-              <div class="author-info-block">
-                <user-avatar :url="avatarImage" />
-                <div class="author-info-box">
-                  <a target="_blank" class="username ellipsis">
-                    Tony
-                  </a>
-                  <div class="meta-box">
-                    <time class="time">8小时前</time>
+            <div :canScroll="canScroll" v-scroll-to-load="judgePagination">
+              <div
+                class="trend-content-wrapper"
+                v-for="(item, index) in trendsList"
+                :key="index"
+              >
+                <div class="author-info-block">
+                  <user-avatar :url="avatarImage" />
+                  <div class="author-info-box">
+                    <a target="_blank" class="username ellipsis">
+                      Tony
+                    </a>
+                    <div class="meta-box">
+                      <time class="time">8小时前</time>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="content-box">
-                <div class="content-text" v-html="item.content" />
-                <!-- 图片预览组件 -->
-                <trend-image-view :imageList="mockImageList" />
-              </div>
-              <div class="trend-action-wrapper">
-                <div class="like action-btn">
-                  <icon-font icon="icon-zan2" color="#cdcdcd" />
+                <div class="content-box">
+                  <div class="content-text" v-html="item.content" />
+                  <!-- 图片预览组件 -->
+                  <trend-image-view :imageList="item.images" />
                 </div>
-                <div
-                  class="comment action-btn"
-                  @click="toggleShowComment(item.id)"
-                >
-                  <icon-font icon="icon-pinglun" color="#cdcdcd" />
+                <div class="trend-action-wrapper">
+                  <div class="like action-btn">
+                    <icon-font icon="icon-zan2" color="#cdcdcd" />
+                  </div>
+                  <div
+                    class="comment action-btn"
+                    @click="toggleShowComment(item.id)"
+                  >
+                    <icon-font icon="icon-pinglun" color="#cdcdcd" />
+                  </div>
                 </div>
+                <comment-wrapper
+                  :ref="`commentWrapper${item.id}`"
+                  :id="item.id"
+                />
               </div>
-              <comment-wrapper
-                :ref="`commentWrapper${item.id}`"
-                :id="item.id"
-              />
             </div>
           </template>
         </div>
@@ -163,20 +163,6 @@ export default {
       range: '',
       textContent: '',
       canScroll: true,
-      mockImageList: [
-        {
-          url:
-            'https://forum-dev.oss-cn-shenzhen.aliyuncs.com/test/2020-05-07/e0931b14b0704b6d903cf57d8cc4f59b-timg.png',
-        },
-        {
-          url:
-            'https://forum-dev.oss-cn-shenzhen.aliyuncs.com/test/2020-04-23/c9bda0bd4d504fa08c0287057292febf-111454203454.jpg',
-        },
-        {
-          url:
-            'https://forum-dev.oss-cn-shenzhen.aliyuncs.com/test/2020-04-24/158c77064a6c4c9589ca102f29f97f5d-u=4021323957,90575369&fm=15&gp=0.jpg',
-        },
-      ],
     };
   },
   methods: {
@@ -278,6 +264,7 @@ export default {
       }
     },
     judgePagination() {
+      console.log('触发了');
       // 判断页码，当前页码加1如果大于或总页码就不能请求了
       const { page, totalPage } = this;
       if (totalPage && page + 1 > totalPage) {

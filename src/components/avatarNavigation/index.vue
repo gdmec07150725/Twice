@@ -54,7 +54,7 @@
         </li>
       </div>
       <div class="nav-menu-item-group">
-        <li class="nav-menu-item">
+        <li class="nav-menu-item" @click="handleLogout">
           <a>
             <icon-font icon="icondengchu" class="nav-menu-item-icon" />
             <span>登出</span>
@@ -68,6 +68,7 @@
 import { mapState } from 'vuex';
 import userAvatar from '@/components/userAvatar';
 import { mapGetters } from 'vuex';
+import storage from '@/utils/storage';
 
 export default {
   name: 'avatarNavigation',
@@ -79,6 +80,12 @@ export default {
       toggleShowUserDropDown: state => state.toggleShowUserDropDown,
     }),
     ...mapGetters(['user']),
+  },
+  methods: {
+    handleLogout() {
+      storage.clear();
+      window.location.reload();
+    },
   },
 };
 </script>
