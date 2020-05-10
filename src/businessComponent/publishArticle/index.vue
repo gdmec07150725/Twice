@@ -8,11 +8,14 @@
             文章将会自动保存至
             <a>草稿</a>
           </div>
-          <div class="main-image-selector with-padding unset">
+          <div
+            class="main-image-selector with-padding unset"
+            v-click-out="handleCloseCoverImage"
+          >
             <div
               class="toggle-btn"
               :class="{ hasCoverImage: richForm.coverImage ? true : false }"
-              @click.stop="handleToggleCoverImage"
+              @click="handleToggleCoverImage"
             ></div>
             <div class="panel" v-if="toggleCoverImage">
               <div class="title">添加封面大图</div>
@@ -38,8 +41,11 @@
               @onHandleImageUrl="handleImageUrl"
             />
           </div>
-          <div class="publish-popup with-padding">
-            <div class="toggle-btn" @click.stop="handleTogglePublish">
+          <div
+            class="publish-popup with-padding"
+            v-click-out="handleClosePublish"
+          >
+            <div class="toggle-btn" @click="handleTogglePublish">
               <span class="title">
                 发布
               </span>
@@ -50,11 +56,7 @@
                 :size="18"
               />
             </div>
-            <div
-              class="panel"
-              v-if="togglePublish"
-              v-click-out="handleTogglePublish"
-            >
+            <div class="panel" v-if="togglePublish">
               <div class="title">发布文章</div>
               <div class="category-box">
                 <template v-for="item in categoryList">
@@ -93,12 +95,17 @@
         </div>
       </header>
       <main class="rich-text-editor-main">
+        <div id="title-input-hidden" class="title-input" style="height: 0;">
+          {{ richForm.title }}
+        </div>
         <textarea
           placeholder="请输入标题"
           maxlength="80"
           rows="1"
+          id="title-input"
           class="title-input"
           v-model="richForm.title"
+          @input="handleTitleInput"
         ></textarea>
         <quill-editor
           :value="richForm.content"
@@ -161,8 +168,14 @@ export default {
     handleToggleCoverImage() {
       this.toggleCoverImage = !this.toggleCoverImage;
     },
+    handleCloseCoverImage() {
+      this.toggleCoverImage = false;
+    },
     handleTogglePublish() {
       this.togglePublish = !this.togglePublish;
+    },
+    handleClosePublish() {
+      this.togglePublish = false;
     },
     handleQuillEditorInput(value) {
       if (value) {
@@ -188,6 +201,26 @@ export default {
       e.stopPropagation();
       this.CHANGESHOWUSERDROPDOWN();
     },
+    handleTitleInput(e) {
+      // 通过获取文本域的滚动高度，动态设置文本域的高度
+      const target = e.target;
+      // const scrollHeight = target.scrollHeight;
+      // console.log('height', target.style.height);
+      // console.log('scrollHeight', scrollHeight);
+      // if (scrollHeight > 61) {
+      //   target.style.height = `
+      //     ${scrollHeight - 12}px
+      //   `;
+      // } else {
+      //   target.style.height = '49px';
+      // }
+      this.$nextTick(() => {
+        const scrollHeight = document.getElementById('title-input-hidden')
+          .scrollHeight;
+        console.log('scrollHeight', scrollHeight);
+        target.style.height = `${scrollHeight - 11}px`;
+      });
+    },
     async handleInsertArticle() {
       try {
         const { title, content, coverImage } = this.richForm;
@@ -203,7 +236,7 @@ export default {
             status: 'ARTICLE_STATUS_CHECKING', // 待审核状态
           };
           const res = await this.insertArticle(params);
-          this.handleTogglePublish();
+          this.handleClosePublish();
           if (res && res.message) {
             alert(res.message);
           }

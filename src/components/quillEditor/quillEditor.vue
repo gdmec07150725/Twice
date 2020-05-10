@@ -36,11 +36,11 @@
           :icon="isFullScreen ? 'icon-suoxiao' : 'icon-fangda'"
         />
       </span>
-      <div class="resizable-b" ref="refresizable">
+      <!-- <div class="resizable-b" ref="refresizable">
         <span class="resizable-cursor">
           <icon-font class="resizable-b-arrow" :icon="'icon-icon'" />
         </span>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

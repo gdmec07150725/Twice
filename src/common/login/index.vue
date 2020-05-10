@@ -135,12 +135,12 @@ export default {
 .login_container {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 200px;
   width: 350px;
   height: 230px;
   padding: 25px;
   background-color: #fff;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   border-radius: 3px;
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.3);
   .login_title {
