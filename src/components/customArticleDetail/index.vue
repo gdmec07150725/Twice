@@ -3,10 +3,18 @@
     <article slot="leftContent" class="article">
       <div class="author-info-block">
         <a href="#" target="_blank" class="avatar-link">
-          <div class="avatar"></div>
+          <div class="avatar">
+            <img
+              :src="articleDetail.user && articleDetail.user.avatar"
+              width="100%"
+              height="100%"
+            />
+          </div>
         </a>
         <div class="author-info-box">
-          <a target="_blank" class="username ellipsis">Tony</a>
+          <a target="_blank" class="username ellipsis">{{
+            articleDetail.user && articleDetail.user.username
+          }}</a>
           <div class="meta-box">
             <time class="time">{{
               (articleDetail.publishedAt && articleDetail.publishedAt) ||
