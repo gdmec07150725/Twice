@@ -638,6 +638,7 @@ export default {
 }
 .quill-editor-wrapper {
   height: 100%;
+  padding: 0 15px 12px;
   //   min-height: 150px;
   //   max-height: 800px;
 }

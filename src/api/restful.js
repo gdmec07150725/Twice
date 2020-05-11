@@ -11,7 +11,8 @@ import configs from '@/configs';
 import Ajax from '@/utils/ajax';
 import storage from '@/utils/storage';
 import { Message } from 'element-ui';
-import router from '@/cms/router';
+import cmsRouter from '@/cms/router';
+import clientRouter from '@/client/router';
 // import { getCookie, setCookie } from '@/utils/utils';
 // import moment from 'moment';
 /**
@@ -90,7 +91,8 @@ function handlerError(err) {
   if (status === 401) {
     // 重新登录
     storage.clear();
-    router.push({ name: 'login' });
+    cmsRouter.push({ name: 'login' });
+    clientRouter.push({ name: 'login' });
     return Promise.reject(false);
   }
   if (status === 403) {
