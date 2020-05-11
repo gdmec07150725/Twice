@@ -95,7 +95,7 @@
         </div>
       </header>
       <main class="rich-text-editor-main">
-        <div id="title-input-hidden" class="title-input" style="height: 0;">
+        <div id="title-input-hidden" class="title-input" style="height: 0">
           {{ richForm.title }}
         </div>
         <textarea
@@ -105,7 +105,7 @@
           id="title-input"
           class="title-input"
           v-model="richForm.title"
-          @input="handleTitleInput"
+          @keyup="handleTitleInput"
         ></textarea>
         <quill-editor
           :value="richForm.content"
@@ -218,7 +218,13 @@ export default {
         const scrollHeight = document.getElementById('title-input-hidden')
           .scrollHeight;
         console.log('scrollHeight', scrollHeight);
-        target.style.height = `${scrollHeight - 11}px`;
+        // const finalHeight = scrollHeight + 12;
+        // console.log('finalHeight', finalHeight);
+        if (scrollHeight > 55) {
+          target.style.height = `${scrollHeight}px`;
+        } else {
+          target.style.height = '55px';
+        }
       });
     },
     async handleInsertArticle() {

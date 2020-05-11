@@ -23,6 +23,10 @@ html {
   font-size: 12px;
 }
 
+textarea {
+  font: inherit;
+}
+
 a {
   text-decoration: none;
   color: #71777c;
@@ -57,7 +61,6 @@ li {
 .welcome-context {
   display: flex;
   align-items: flex-start;
-  margin-top: 15px;
   // border: 1px solid #ff0000;
 }
 
@@ -74,4 +77,14 @@ li {
 .thumb {
   background-position: 50%;
   background-repeat: no-repeat;
+}
+
+// 修改滚动条样式
+::-webkit-scrollbar {
+  width: .6rem;
+  height: .6rem;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  outline: none;
 }

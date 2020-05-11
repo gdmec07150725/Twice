@@ -3,6 +3,15 @@
     <second-nav>
       <template slot="list">
         <li
+          :class="[
+            'nav-item',
+            !secondItem && !thirdItem ? 'nav-item-active' : '',
+          ]"
+          @click="() => handleSecondNavClick('')"
+        >
+          <div class="category-popover-box">推荐</div>
+        </li>
+        <li
           v-for="item in categoryList"
           :key="item.id"
           :class="['nav-item', secondItem === item.id ? 'nav-item-active' : '']"
@@ -168,11 +177,17 @@ export default {
       'SET_THIRD_CATEGORY',
       'REST_CLIENT_ARTICLE_LIST',
       'REST_CLIENT_PAGINATION',
+      'REST_CHILD_CATEGORY',
     ]),
     handleSecondNavClick(id) {
       this.SET_SECOND_CATEGORY(id);
       // 请求二级分类
-      this.querChildCategoryList(id);
+      if (id) {
+        this.querChildCategoryList(id);
+      } else {
+        this.REST_CHILD_CATEGORY(); // 重设二级分类的值
+        this.SET_THIRD_CATEGORY('');
+      }
       this.REST_CLIENT_ARTICLE_LIST(); // 清空文章数据
       this.loadListData({ page: 1 });
     },

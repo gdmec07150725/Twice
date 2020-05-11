@@ -4,6 +4,8 @@ import publishArticle from '@/client/views/publishArticle';
 import articleDetail from '@/client/views/articleDetail';
 import trend from '@/client/views/trend';
 
+export const permissionRouter = []; // TODO: 加上路由权限控制
+
 export const routes = [
   {
     path: '/',

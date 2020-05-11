@@ -45,6 +45,9 @@ const mutations = {
   REST_CLIENT_PAGINATION(state) {
     state.clientArticlePagination = { ...clientDefaultPagination };
   },
+  REST_CHILD_CATEGORY(state) {
+    state.childCategory = [];
+  },
   SAVE_CATEGORY_LIST(state, data) {
     let { categoryList } = state;
     categoryList = [...data.result];

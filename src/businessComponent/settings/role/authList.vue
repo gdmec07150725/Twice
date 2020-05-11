@@ -1,6 +1,8 @@
 <template>
   <div>
-    <el-card>
+    <el-card
+      :body-style="{ maxHeight: 'calc(100vh - 250px)', overflowY: 'auto' }"
+    >
       <div class="header-wrapper" slot="header">
         <div v-if="!showForm" class="header-action">
           <div>{{ roleForm.name }}</div>

@@ -11,7 +11,7 @@ NProgress.configure({ showSpinner: false }); // NProgress Configuration
 Vue.use(VueRouter);
 
 const router = new VueRouter({
-  routes,
+  routes: [...routes],
 });
 
 router.beforeEach(async (to, from, next) => {
@@ -21,10 +21,9 @@ router.beforeEach(async (to, from, next) => {
   const refreshToken = storage.getRefreshToken();
   const { name } = to;
   if (isLogin && refreshToken && refreshToken.isValid()) {
-    // 现在暂时用cms的后面需要改成client的
-    if (!store.state.cmsRouter.hasGetRules) {
+    if (!store.state.clientRouter.hasGetRules) {
       // generate accessible routes map based on roles
-      const routers = await store.dispatch('concatRoutes');
+      const routers = await store.dispatch('concatClientRoutes');
       router.addRoutes(routers); // 动态挂载路由
       next({ ...to, replace: true });
     }

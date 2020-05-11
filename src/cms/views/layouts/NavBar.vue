@@ -15,6 +15,7 @@
           <img :src="user.avatar" width="100%" height="100%" />
         </div>
         <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="jumpToClient">打开用户端</el-dropdown-item>
           <el-dropdown-item command="logout">登出</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -91,9 +92,13 @@ export default {
     handleCollapse() {
       this.CHANGECOLLAPSE();
     },
+    handleJumpToClient() {
+      const url = '/client.html#/home';
+      window.open(url);
+    },
     handleCommand(command) {
-      if (command === 'reset') {
-        this.handleResetPassword();
+      if (command === 'jumpToClient') {
+        this.handleJumpToClient();
       } else {
         this.handleLogout();
       }

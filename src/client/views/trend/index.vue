@@ -302,6 +302,9 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.welcome-context {
+  margin-top: 15px;
+}
 .trend-suspended {
   position: fixed;
   top: 75px;

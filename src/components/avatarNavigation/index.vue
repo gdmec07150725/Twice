@@ -54,6 +54,12 @@
         </li>
       </div>
       <div class="nav-menu-item-group">
+        <li class="nav-menu-item" @click="handleJumpToCms">
+          <a>
+            <icon-font icon="icondengchu" class="nav-menu-item-icon" />
+            <span>打开管理后台</span>
+          </a>
+        </li>
         <li class="nav-menu-item" @click="handleLogout">
           <a>
             <icon-font icon="icondengchu" class="nav-menu-item-icon" />
@@ -82,6 +88,10 @@ export default {
     ...mapGetters(['user']),
   },
   methods: {
+    handleJumpToCms() {
+      const url = '/cms.html#/workplace';
+      window.open(url);
+    },
     handleLogout() {
       storage.clear();
       window.location.reload();

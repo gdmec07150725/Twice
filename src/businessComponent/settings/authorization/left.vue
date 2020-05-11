@@ -1,6 +1,8 @@
 <template>
   <div class="tree-wrapper">
-    <el-card>
+    <el-card
+      :body-style="{ maxHeight: 'calc(100vh - 250px)', overflowY: 'auto' }"
+    >
       <div class="header-wrapper" slot="header">
         <div>权限列表</div>
         <!-- <edit-button size="small" @click="handleExpandAll">
