@@ -64,6 +64,7 @@ import { Form, FormItem, Input, Select, Option } from 'element-ui';
 import MDialog from '_c/dialog';
 import publishTimePicker from '_c/timeSelect/publishTimePicker.vue';
 import * as filter from '@/utils/filter';
+import storage from '@/utils/storage';
 export default {
   name: 'remindersForm',
   props: {
@@ -135,7 +136,7 @@ export default {
       try {
         const params = {
           ...this.remindersForm,
-          userId: 1, // 后面做好登录之后，应该不需要传这个参数
+          userId: JSON.parse(storage.getUserDetail()).id, // 后面做好登录之后，应该不需要传这个参数
         };
         this.addLoading = true;
         const res = await this.createNewReminders(params);
@@ -154,7 +155,7 @@ export default {
         const params = {
           id,
           ...this.remindersForm,
-          userId: 1,
+          userId: JSON.parse(storage.getUserDetail()).id, // 后面做好登录之后，应该不需要传这个参数
         };
         this.addLoading = true;
         const res = await this.editReminders(params);

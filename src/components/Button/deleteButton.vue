@@ -1,6 +1,7 @@
 <template>
   <div class="deleteButton_wrapper">
     <el-button
+      v-permission="permission"
       type="danger"
       :disabled="disabled"
       :icon="icon"

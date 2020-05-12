@@ -40,6 +40,7 @@
               <edit-button
                 :disabled="row.status !== 'ARTICLE_STATUS_CHECKING'"
                 @click="handleAgree(row)"
+                :permission="['articleEdit']"
               >
                 同意
               </edit-button>
@@ -47,6 +48,7 @@
                 class="global_button"
                 :disabled="row.status !== 'ARTICLE_STATUS_CHECKING'"
                 @click="openRejectModal(row)"
+                :permission="['articleEdit']"
               >
                 拒绝
               </delete-button>

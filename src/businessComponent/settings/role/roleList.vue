@@ -13,6 +13,7 @@
             icon="el-icon-plus"
             class="btn"
             @click="handleRoleAdd"
+            v-permission="['roleAdd']"
           >
             新增角色
           </el-button>

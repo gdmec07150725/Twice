@@ -3,7 +3,12 @@
     <el-card v-loading="dataLoading">
       <div class="header-wrapper" slot="header">
         <div>{{ actionType === 1 ? '新增权限' : '编辑权限' }}</div>
-        <el-button type="primary" size="small" @click="handleSave">
+        <el-button
+          type="primary"
+          size="small"
+          @click="handleSave"
+          v-permission="['authAdd', 'authEdit']"
+        >
           保存
         </el-button>
       </div>
@@ -12,6 +17,7 @@
           size="small"
           :type="actionType === 1 ? 'primary' : ''"
           @click="modifyActionType(1)"
+          v-permission="['authAdd']"
         >
           新增
         </el-button>
@@ -19,6 +25,7 @@
           size="small"
           :type="actionType === 2 ? 'primary' : ''"
           @click="modifyActionType(2)"
+          v-permission="['authEdit']"
         >
           编辑
         </el-button>

@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-button
+      v-permission="permission"
       type="success"
       :disabled="disabled"
       :icon="icon"
@@ -36,6 +37,11 @@ export default {
     loading: {
       type: Boolean,
       default: false,
+    },
+    permission: {
+      // 权限
+      type: Array,
+      default: () => [],
     },
   },
   data() {

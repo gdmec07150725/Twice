@@ -28,6 +28,8 @@
 <script>
 import { Card, Tree } from 'element-ui';
 import { mapActions } from 'vuex';
+import checkPermission from '@/utils/permission';
+
 export default {
   name: 'authorizationLeft',
   components: {
@@ -65,9 +67,11 @@ export default {
             />
           </span>
           <span class="label">{description}</span>
-          <span class="delete-icon" on-click={() => this.handleRemove(data)}>
-            <icon-font icon="icon-shanchu" size={13} />
-          </span>
+          {checkPermission(['roleDelete']) && (
+            <span class="delete-icon" on-click={() => this.handleRemove(data)}>
+              <icon-font icon="icon-shanchu" size={13} />
+            </span>
+          )}
         </div>
       );
     },

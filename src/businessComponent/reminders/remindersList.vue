@@ -11,7 +11,11 @@
         </div>
       </div>
       <div slot="buttonGroup">
-        <edit-button @click="handleAddReminders" icon="el-icon-plus">
+        <edit-button
+          @click="handleAddReminders"
+          icon="el-icon-plus"
+          :permission="['reminderAdd']"
+        >
           提醒事项
         </edit-button>
       </div>
@@ -34,12 +38,16 @@
           }}</template>
           <template #btnGroup="{ row }">
             <div class="operation">
-              <edit-button @click="handleRemindersEdit(row)">
+              <edit-button
+                @click="handleRemindersEdit(row)"
+                :permission="['reminderEdit']"
+              >
                 编辑
               </edit-button>
               <delete-button
                 @click="handleRemindersDelete(row)"
                 class="global_button"
+                :permission="['reminderDelete']"
               >
                 删除
               </delete-button>

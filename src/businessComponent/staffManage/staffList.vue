@@ -11,7 +11,11 @@
         </div>
       </div>
       <div slot="buttonGroup">
-        <edit-button @click="handleAddStaff" icon="el-icon-plus">
+        <edit-button
+          @click="handleAddStaff"
+          icon="el-icon-plus"
+          :permission="['userAdd']"
+        >
           新增人员
         </edit-button>
       </div>
@@ -32,12 +36,19 @@
           </template>
           <template #btnGroup="{ row }">
             <div class="operation">
-              <edit-button @click="handleStaffEdit(row)">编辑</edit-button>
+              <edit-button
+                @click="handleStaffEdit(row)"
+                :permission="['userEdit']"
+              >
+                编辑
+              </edit-button>
               <delete-button
                 @click="handleStaffDelete(row)"
                 class="global_button"
-                >删除</delete-button
+                :permission="['userDelete']"
               >
+                删除
+              </delete-button>
             </div>
           </template>
         </m-table>

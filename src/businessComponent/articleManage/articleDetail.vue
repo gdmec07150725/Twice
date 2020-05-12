@@ -10,10 +10,18 @@
         <div class="title-desc">文章详情</div>
         <div class="title-action">
           <template v-if="articleContent.status === 'ARTICLE_STATUS_CHECKING'">
-            <edit-button @click="handleAgree(articleContent)" class="btn">
+            <edit-button
+              @click="handleAgree(articleContent)"
+              class="btn"
+              :permission="['articleEdit']"
+            >
               同意
             </edit-button>
-            <delete-button @click="openRejectModal(articleContent)" class="btn">
+            <delete-button
+              @click="openRejectModal(articleContent)"
+              class="btn"
+              :permission="['articleEdit']"
+            >
               拒绝
             </delete-button>
           </template>

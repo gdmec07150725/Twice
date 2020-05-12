@@ -10,9 +10,13 @@
         </div>
       </div>
       <div slot="buttonGroup">
-        <edit-button @click="handleAddChildColumn" icon="el-icon-plus"
-          >新增二级专栏</edit-button
+        <edit-button
+          @click="handleAddChildColumn"
+          icon="el-icon-plus"
+          :permission="['categoryAdd']"
         >
+          新增二级专栏
+        </edit-button>
       </div>
       <div slot="content">
         <m-table
@@ -25,14 +29,19 @@
         >
           <template #btnGroup="{ row }">
             <div class="operation">
-              <edit-button @click="handleChildColumnEdit(row)"
-                >编辑</edit-button
+              <edit-button
+                @click="handleChildColumnEdit(row)"
+                :permission="['categoryEdit']"
               >
+                编辑
+              </edit-button>
               <delete-button
                 @click="handleChildColumnDelete(row)"
                 class="global_button"
-                >删除</delete-button
+                :permission="['categoryDelete']"
               >
+                删除
+              </delete-button>
             </div>
           </template>
         </m-table>

@@ -11,7 +11,11 @@
         </div>
       </div>
       <div slot="buttonGroup">
-        <edit-button @click="handleAddParentColumn" icon="el-icon-plus">
+        <edit-button
+          @click="handleAddParentColumn"
+          icon="el-icon-plus"
+          :permission="['categoryAdd']"
+        >
           新增一级专栏
         </edit-button>
       </div>
@@ -43,12 +47,16 @@
           </template>
           <template #btnGroup="{ row }">
             <div class="operation">
-              <edit-button @click="handleParentColumnEdit(row)">
+              <edit-button
+                @click="handleParentColumnEdit(row)"
+                :permission="['categoryEdit']"
+              >
                 编辑
               </edit-button>
               <delete-button
                 @click="handleParentColumnDelete(row)"
                 class="global_button"
+                :permission="['categoryDelete']"
               >
                 删除
               </delete-button>

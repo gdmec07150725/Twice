@@ -7,13 +7,19 @@
         <div v-if="!showForm" class="header-action">
           <div>{{ roleForm.name }}</div>
           <div>
-            <el-link icon="el-icon-edit" class="edit" @click="editClick">
+            <el-link
+              icon="el-icon-edit"
+              class="edit"
+              @click="editClick"
+              v-if="showEditBtn"
+            >
               编辑
             </el-link>
             <el-link
               icon="el-icon-delete"
               class="delete"
               @click="handleDeleteRole"
+              v-if="showDeleteBtn"
             >
               删除
             </el-link>
@@ -54,6 +60,8 @@
 <script>
 import { Card, Link, Tree, Form, FormItem, Input } from 'element-ui';
 import { mapActions } from 'vuex';
+import checkPermission from '@/utils/permission';
+
 export default {
   name: 'authList',
   components: {
@@ -83,6 +91,20 @@ export default {
     },
     name(newVal) {
       this.roleForm.name = newVal;
+    },
+  },
+  computed: {
+    showEditBtn() {
+      if (checkPermission(['roleEdit'])) {
+        return true;
+      }
+      return false;
+    },
+    showDeleteBtn() {
+      if (checkPermission(['roleDelete'])) {
+        return true;
+      }
+      return false;
     },
   },
   data() {

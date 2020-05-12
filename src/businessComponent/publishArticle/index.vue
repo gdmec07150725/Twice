@@ -235,7 +235,7 @@ export default {
           const params = {
             categoryId: itemActive,
             companyId: JSON.parse(storage.getCompanyDetail()).id,
-            userId: 1,
+            userId: JSON.parse(storage.getUserDetail()).id,
             title,
             content,
             image: coverImage,

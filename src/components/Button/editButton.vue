@@ -1,6 +1,7 @@
 <template>
   <div class="editButton_wrapper">
     <el-button
+      v-permission="permission"
       type="primary"
       :disabled="disabled"
       :icon="icon"
