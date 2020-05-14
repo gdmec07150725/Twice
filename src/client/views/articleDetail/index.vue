@@ -108,9 +108,9 @@ export default {
         console.log(error);
       }
     },
-    async handleGetArticleDetail(articleId) {
+    async handleGetArticleDetail() {
       try {
-        const res = await this.getArticleDetail(articleId);
+        const res = await this.getArticleDetail(this.articleId);
         if (res) {
           this.articleDetail = { ...res };
           console.log(this.articleDetail);
@@ -119,10 +119,10 @@ export default {
         console.log(error);
       }
     },
-    async handleGetArticleComment(articleId) {
+    async handleGetArticleComment() {
       try {
         const params = {
-          contentId: articleId,
+          contentId: this.articleId,
           type: 'COMMENT_TYPE_ARTICLE',
         };
         const res = await this.getCommentList(params);
@@ -138,8 +138,8 @@ export default {
     } = this.$route;
     if (id) {
       this.articleId = id;
-      this.handleGetArticleDetail(id);
-      this.handleGetArticleComment(id);
+      this.handleGetArticleDetail();
+      this.handleGetArticleComment();
     }
   },
 };

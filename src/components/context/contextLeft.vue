@@ -10,7 +10,6 @@ export default {
 </script>
 <style lang="less" scoped>
 .context-left {
-  overflow: hidden;
   flex-grow: 1;
 }
 </style>

@@ -26,7 +26,7 @@
         @change="handleChangeTime"
         :picker-options="{
           start: '00:00',
-          step: '00:15',
+          step: '00:02',
           end: '23:30',
           minTime: minTime,
         }"

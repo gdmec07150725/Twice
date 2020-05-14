@@ -245,6 +245,7 @@ export default {
           this.handleClosePublish();
           if (res && res.message) {
             alert(res.message);
+            this.$router.push({ name: 'home' });
           }
         }
       } catch (error) {
