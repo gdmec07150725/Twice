@@ -1,4 +1,4 @@
-# twice-cms
+# Twice
 
 ## Project setup
 ```

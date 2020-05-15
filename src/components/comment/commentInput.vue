@@ -70,11 +70,11 @@ export default {
     handleBlur() {
       this.sel = window.getSelection();
       this.range = this.sel.getRangeAt(0);
-      this.range.deleteContents();
+      // this.range.deleteContents();
     },
     insertHtmlAtCaret(html) {
       if (window.getSelection) {
-        console.log('进来了');
+        // console.log('进来了');
         // IE9 and non-IE
         if (this.sel.getRangeAt && this.sel.rangeCount) {
           var el = document.createElement('div');
@@ -104,7 +104,10 @@ export default {
       this.replyContent = this.textContent;
     },
     handleSelectedEmoji(url) {
-      // $('.rich-input').focus();
+      if (!this.range) {
+        document.querySelector(`#${this._uid}`).focus();
+        document.querySelector(`#${this._uid}`).blur();
+      }
       this.textContent = `<img class="emoji" src="${url}" width="20px" height="20px" style="vertical-align: sub; margin: 0 1px" />`;
       this.insertHtmlAtCaret(this.textContent);
     },

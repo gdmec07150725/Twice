@@ -178,7 +178,7 @@ export default {
       this.range = this.sel.createRange
         ? this.sel.createRange()
         : this.sel.getRangeAt(0);
-      this.range.deleteContents();
+      // this.range.deleteContents();
     },
     insertHtmlAtCaret(html) {
       if (window.getSelection) {
@@ -213,6 +213,10 @@ export default {
       this.trendContent = e.target.innerHTML;
     },
     handleSelectedEmoji(url) {
+      if (!this.range) {
+        document.querySelector('#trend-input').focus();
+        document.querySelector('#trend-input').blur();
+      }
       this.textContent = `<img class="emoji" src="${url}" width="20px" height="20px" style="vertical-align: sub; margin: 0 1px" />`;
       this.insertHtmlAtCaret(this.textContent);
     },
