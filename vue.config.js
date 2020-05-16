@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const CompressionPlugin = require('compression-webpack-plugin'); // 压缩文件
 
 const resolve = dir => path.join(__dirname, dir);
 
@@ -26,6 +27,20 @@ module.exports = {
   },
   // 打包时不生成.map文件(加快打包的速度)
   productionSourceMap: false,
+  // 打包成gzip文件
+  configureWebpack: () => {
+    if (process.env.NODE_ENV === 'production') {
+      return {
+        plugins: [
+          new CompressionPlugin({
+            test: /\.js$|\.html$|\.css/,
+            threshold: 10240, // 对超过10K的数据进行压缩
+            deleteOriginalAssets: false, // 是否删除原文件
+          }),
+        ],
+      };
+    }
+  },
   // 解决跨域问题
   devServer: {
     port: 8081, // 端口
