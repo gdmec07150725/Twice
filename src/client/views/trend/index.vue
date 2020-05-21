@@ -214,8 +214,8 @@ export default {
     },
     handleSelectedEmoji(url) {
       if (!this.range) {
-        document.querySelector('#trend-input').focus();
-        document.querySelector('#trend-input').blur();
+        document.getElementById('trend-input').focus();
+        document.getElementById('trend-input').blur();
       }
       this.textContent = `<img class="emoji" src="${url}" width="20px" height="20px" style="vertical-align: sub; margin: 0 1px" />`;
       this.insertHtmlAtCaret(this.textContent);

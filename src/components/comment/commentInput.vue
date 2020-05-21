@@ -2,7 +2,7 @@
   <div>
     <div class="reply-input-box">
       <div
-        :id="_uid"
+        :id="`${_uid}_richInput`"
         class="rich-input"
         :class="{ empty: !replyContent }"
         contenteditable="true"
@@ -99,14 +99,17 @@ export default {
         // IE < 9
         document.selection.createRange().pasteHTML(html);
       }
-      this.textContent = document.getElementById(this._uid).innerHTML;
+      this.textContent = document.getElementById(
+        `${this._uid}_richInput`
+      ).innerHTML;
       console.log('dom', this.textContent);
       this.replyContent = this.textContent;
     },
     handleSelectedEmoji(url) {
+      console.log(this.range);
       if (!this.range) {
-        document.querySelector(`#${this._uid}`).focus();
-        document.querySelector(`#${this._uid}`).blur();
+        document.getElementById(`${this._uid}_richInput`).focus();
+        document.getElementById(`${this._uid}_richInput`).blur();
       }
       this.textContent = `<img class="emoji" src="${url}" width="20px" height="20px" style="vertical-align: sub; margin: 0 1px" />`;
       this.insertHtmlAtCaret(this.textContent);
