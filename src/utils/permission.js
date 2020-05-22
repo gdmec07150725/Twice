@@ -8,7 +8,7 @@ function getUser() {
 /**
  * @param {Array} value
  * @returns {Boolean}
- * @example see @/views/permission/directive.vue
+ * @example
  */
 export default function checkPermission(value) {
   return somePermission(value);

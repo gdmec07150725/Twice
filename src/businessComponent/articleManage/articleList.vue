@@ -12,7 +12,7 @@
       </div>
       <div slot="content">
         <m-table
-          :rowStyle="{ cursor: 'pointer' }"
+          :rowStyle="canShowArticleDetail && { cursor: 'pointer' }"
           :tableColumns="tableColumns"
           :tableData="articleList"
           :loading="tableLoading"
@@ -89,6 +89,7 @@ import MPagination from '_c/pagination';
 import rejectDialog from '_c/dialog/rejectDialog.vue';
 import articleDetail from './articleDetail.vue';
 import { filterData } from '@/utils/utils';
+import checkPermission from '@/utils/permission';
 import storage from '@/utils/storage';
 
 export default {
@@ -109,6 +110,12 @@ export default {
       filter: state => state.filter.filter.article,
       // filterInputValue: state => state.filter.filterInput.reminders,
     }),
+    canShowArticleDetail() {
+      if (checkPermission(['articleDetail'])) {
+        return true;
+      }
+      return false;
+    },
   },
   data() {
     return {
@@ -202,8 +209,11 @@ export default {
       }
     },
     handleRowClick(record) {
-      this.openDrawer = true;
-      this.currentArticleDetail = { ...record };
+      // 有文章详情的权限才显示
+      if (this.canShowArticleDetail) {
+        this.openDrawer = true;
+        this.currentArticleDetail = { ...record };
+      }
     },
     handleCloseDrawer() {
       this.openDrawer = false;

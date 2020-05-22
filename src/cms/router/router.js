@@ -239,7 +239,7 @@ export const permissionRouter = [
         name: 'articleManage',
         meta: {
           title: '文章管理',
-          permissions: ['articleManagement'],
+          permissions: ['articleList'],
         },
         component: () => import('@/cms/views/articleManage'),
       },
