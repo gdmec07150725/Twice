@@ -231,7 +231,7 @@ export default {
         if (res && res.message) {
           this.$message.success(res.message);
         }
-        if (this.$refs['articleDetail']) {
+        if (this.$refs['articleDetail'] && this.openDrawer) {
           this.$refs['articleDetail'].queryArticleDetail();
         }
         this.loadArticleList();
