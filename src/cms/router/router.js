@@ -205,6 +205,7 @@ export const permissionRouter = [
     path: '/category',
     name: 'category',
     icon: 'icon-zhuanlan-',
+    alwaysShow: true,
     component: Layouts,
     hidden: false,
     meta: {
