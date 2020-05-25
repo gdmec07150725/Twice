@@ -49,12 +49,6 @@
               <span class="title">
                 发布
               </span>
-              <icon-font
-                :icon="
-                  togglePublish ? 'iconsanjiao_up_s' : 'iconsanjiao_down_s'
-                "
-                :size="18"
-              />
             </div>
             <div class="panel" v-if="togglePublish">
               <div class="title">发布文章</div>
@@ -86,10 +80,7 @@
               </button>
             </div>
           </div>
-          <nav
-            class="navigator main-navigator with-padding"
-            @click="e => handleAvatarClick(e)"
-          >
+          <nav class="navigator main-navigator with-padding">
             <avatar-navigation />
           </nav>
         </div>
@@ -121,7 +112,7 @@
   </div>
 </template>
 <script>
-import { mapMutations, mapActions, mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import avatarNavigation from '@/components/avatarNavigation';
 import quillEditor from '_c/quillEditor/quillEditor.vue';
 import customizeUpload from '_c/customizeUpload';
@@ -154,7 +145,6 @@ export default {
   },
   methods: {
     ...mapActions(['insertArticle', 'getCategoryList']),
-    ...mapMutations(['CHANGESHOWUSERDROPDOWN']),
     // 打开loading
     openLoading() {
       this.coverLoading = '';
@@ -196,10 +186,6 @@ export default {
     handleImageUrl(url) {
       this.closeLoading();
       this.richForm.coverImage = url;
-    },
-    handleAvatarClick(e) {
-      e.stopPropagation();
-      this.CHANGESHOWUSERDROPDOWN();
     },
     handleTitleInput(e) {
       // 通过获取文本域的滚动高度，动态设置文本域的高度

@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <user-avatar :url="user.avatar" />
-    <ul class="nav-menu user-dropdown-list" v-if="toggleShowUserDropDown">
+  <div v-click-out="handleCloseAvatar">
+    <user-avatar :url="user.avatar" @click.native="handleAvatarClick" />
+    <ul class="nav-menu user-dropdown-list" v-if="showAvatar">
       <div class="nav-menu-item-group">
         <li class="nav-menu-item">
           <a>
@@ -71,7 +71,6 @@
   </div>
 </template>
 <script>
-import { mapState } from 'vuex';
 import userAvatar from '@/components/userAvatar';
 import { mapGetters } from 'vuex';
 import storage from '@/utils/storage';
@@ -81,13 +80,21 @@ export default {
   components: {
     userAvatar,
   },
+  data() {
+    return {
+      showAvatar: false,
+    };
+  },
   computed: {
-    ...mapState({
-      toggleShowUserDropDown: state => state.toggleShowUserDropDown,
-    }),
     ...mapGetters(['user']),
   },
   methods: {
+    handleAvatarClick() {
+      this.showAvatar = !this.showAvatar;
+    },
+    handleCloseAvatar() {
+      this.showAvatar = false;
+    },
     handleJumpToCms() {
       const url = '/cms.html#/workplace';
       window.open(url);

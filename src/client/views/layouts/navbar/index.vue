@@ -45,20 +45,22 @@
                 <button class="add-btn" @click="handleWriteArticle">
                   写文章
                 </button>
-                <div class="more" @click="e => handleMoreClick(e)">
+                <div
+                  class="more"
+                  @click="handleMoreClick"
+                  v-click-out="handleCloseMore"
+                >
                   <i class="more-icon ion-android-arrow-dropdown"></i>
                 </div>
-                <ul class="more-list" v-if="toggleShowAddList">
+                <ul class="more-list" v-if="showMore">
                   <li class="item">发布沸点</li>
                 </ul>
               </div>
             </li>
             <li class="nav-item notification">
-              <a class="app-link" href="/" target="_blank">
-                <icon-font icon="icontongzhi" :size="24" />
-              </a>
+              <announce />
             </li>
-            <li class="nav-item menu" @click="e => handleAvatarClick(e)">
+            <li class="nav-item menu">
               <avatar-navigation />
             </li>
           </ul>
@@ -68,12 +70,14 @@
   </div>
 </template>
 <script>
-import { mapState, mapMutations } from 'vuex';
 import avatarNavigation from '@/components/avatarNavigation';
+import announce from '@/businessComponent/announce';
+
 export default {
   name: 'navbar',
   components: {
     avatarNavigation,
+    announce,
   },
   data() {
     return {
@@ -95,22 +99,15 @@ export default {
           value: 'company',
         },
       ],
+      showMore: false,
     };
   },
-  computed: {
-    ...mapState({
-      toggleShowAddList: state => state.toggleShowAddList,
-    }),
-  },
   methods: {
-    ...mapMutations(['CHANGESHOWADDLIST', 'CHANGESHOWUSERDROPDOWN']),
-    handleMoreClick(e) {
-      e.stopPropagation();
-      this.CHANGESHOWADDLIST();
+    handleMoreClick() {
+      this.showMore = !this.showMore;
     },
-    handleAvatarClick(e) {
-      e.stopPropagation();
-      this.CHANGESHOWUSERDROPDOWN();
+    handleCloseMore() {
+      this.showMore = false;
     },
     handleWriteArticle() {
       this.$router.push({ name: 'publishArticle' });

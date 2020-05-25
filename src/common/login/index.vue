@@ -142,7 +142,7 @@ export default {
   background-color: #fff;
   transform: translateX(-50%);
   border-radius: 3px;
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   .login_title {
     font-size: 25px;
     margin-bottom: 30px;
