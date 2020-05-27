@@ -2,8 +2,6 @@
 import Vue from 'vue';
 import loadingVue from './loading.vue';
 
-let instance = '';
-let parent = '';
 /* 基于loadingVue组件创建子类 */
 const LoadingConstructor = Vue.extend(loadingVue);
 LoadingConstructor.prototype.originalPosition = '';
@@ -11,9 +9,11 @@ LoadingConstructor.prototype.originalPosition = '';
 /* 定义close方法，关闭loading */
 LoadingConstructor.prototype.close = function() {
   // 从父节点移除loading组件
-  parent.removeChild(instance.$el);
+  if (this.$el && this.$el.parentNode) {
+    this.$el.parentNode.removeChild(this.$el);
+  }
   // 将loading组件的visible改为false
-  instance.visible = false;
+  this.visible = false;
 };
 
 const addStyle = (options, parent, instance) => {
@@ -29,8 +29,8 @@ const Loading = (options = {}) => {
     options.target = document.querySelector(options.target);
   }
   options.target = options.target || document.body;
-  parent = options.target;
-  instance = new LoadingConstructor({
+  let parent = options.target;
+  let instance = new LoadingConstructor({
     el: document.createElement('div'),
     data: {},
   });
