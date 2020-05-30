@@ -9,11 +9,50 @@
         :height="imgHeight"
       />
     </div>
+    <template v-if="imageList && imageList.length > 1">
+      <div
+        v-if="showPrev"
+        class="control prev"
+        @click.stop="handlePrevImg"
+      ></div>
+      <div
+        v-if="showNext"
+        class="control next"
+        @click.stop="handleNextImg"
+      ></div>
+    </template>
   </div>
 </template>
 <script>
 export default {
   name: 'previewImage',
+  props: {
+    show: {
+      // 是否显示
+      type: Boolean,
+      default: false,
+    },
+    imageList: {
+      // 图片数组
+      type: Array,
+      default: () => [],
+    },
+    defaultCurIndex: {
+      // 打开的时候默认显示第几张图片
+      type: Number,
+      default: 0,
+    },
+  },
+  watch: {
+    show(newVal) {
+      if (newVal) {
+        this.curIndex = this.defaultCurIndex;
+        this.handleTogglePrevAndNext();
+        this.handleImageDetail(this.imageList[this.defaultCurIndex]);
+        this.handleOpenPreview();
+      }
+    },
+  },
   data() {
     return {
       visible: false,
@@ -22,10 +61,13 @@ export default {
       imgHeight: '',
       innerLeft: '',
       innerTop: '',
+      showPrev: false, // 是否可以切换上一张
+      showNext: false, // 是否可以切换下一张
+      curIndex: 0,
     };
   },
   methods: {
-    handleOpenPreview(imgSrc) {
+    handleImageDetail(imgSrc) {
       if (imgSrc) {
         this.imgSrc = imgSrc;
         const that = this;
@@ -46,15 +88,14 @@ export default {
           const realWidth = this.width;
           const realHeight = this.height;
           let imgWidth, imgHeight;
-          const scale = 0.8; // 缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放
-          if (realHeight > windowH * scale) {
-            // 判断图片高度
-            imgHeight = windowH * scale;
-            imgWidth = (imgHeight / realHeight) * realWidth; // 等比例缩放宽度
-          } else if (realWidth > windowW * scale) {
-            // 判断图片宽度
-            imgWidth = windowW * scale;
-            imgHeight = (imgWidth / realWidth) * realHeight; // 等比例缩放高度
+          if (realWidth >= windowW || realHeight >= windowH) {
+            // 判断真实宽度高度和窗口的宽度高度比值
+            const widthRatio = realWidth / windowW;
+            const heightRatio = realHeight / windowH;
+            const finalRatio =
+              widthRatio >= heightRatio ? widthRatio : heightRatio;
+            imgWidth = realWidth / finalRatio;
+            imgHeight = realHeight / finalRatio;
           } else {
             imgWidth = realWidth;
             imgHeight = realHeight;
@@ -62,15 +103,47 @@ export default {
           that.imgWidth = imgWidth;
           that.imgHeight = imgHeight;
           // // 计算图片与窗口做边距和上边距
-          // that.innerLeft = `${(windowW - imgWidth) / 2}px`;
-          // that.innerTop = `${(windowH - imgHeight) / 2}px`;
-          // 显示图片预览
-          that.visible = true;
+          that.innerLeft = `${(windowW - imgWidth) / 2}px`;
+          that.innerTop = `${(windowH - imgHeight) / 2}px`;
         };
       }
     },
+    handleOpenPreview() {
+      this.visible = true;
+    },
     handleClosePreview() {
       this.visible = false;
+      this.$emit('onHandleClosePreview');
+    },
+    handlePrevImg() {
+      const prevIndex = this.curIndex - 1;
+      if (prevIndex >= 0) {
+        this.handleImageDetail(this.imageList[prevIndex]);
+        this.curIndex = prevIndex;
+        this.handleTogglePrevAndNext();
+      }
+    },
+    handleNextImg() {
+      const { length } = this.imageList;
+      const nextIndex = this.curIndex + 1;
+      if (nextIndex <= length) {
+        this.handleImageDetail(this.imageList[nextIndex]);
+        this.curIndex = nextIndex;
+        this.handleTogglePrevAndNext();
+      }
+    },
+    handleTogglePrevAndNext() {
+      // 判断左右切换是否显示
+      if (this.curIndex - 1 < 0) {
+        this.showPrev = false;
+      } else {
+        this.showPrev = true;
+      }
+      if (this.curIndex + 1 >= this.imageList.length) {
+        this.showNext = false;
+      } else {
+        this.showNext = true;
+      }
     },
   },
 };
@@ -81,19 +154,32 @@ export default {
   top: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.7);
-  z-index: 9999;
+  z-index: 1000;
   width: 100%;
   height: 100%;
   overflow: auto;
   #inner-div {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    // top: 50%;
+    // left: 50%;
+    // transform: translate(-50%, -50%);
+  }
+  .control {
+    position: absolute;
+    z-index: 1001;
+    width: 30vw;
+    height: 100vh;
+  }
+  .prev {
+    left: 0;
+    cursor: url(https://b-gold-cdn.xitu.io/v3/static/img/left.906c5c1.cur), auto;
+  }
+  .next {
+    right: 0;
+    cursor: url(https://b-gold-cdn.xitu.io/v3/static/img/right.6275260.cur),
+      auto;
   }
   img {
-    border: 5px solid #fff;
-    border-radius: 5px;
     cursor: zoom-out;
   }
 }
