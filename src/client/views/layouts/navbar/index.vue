@@ -3,7 +3,7 @@
     <header class="main-header">
       <div class="container">
         <a class="logo">
-          <img />
+          <img src="@/assets/img/logo_big.png" />
         </a>
         <nav class="main-nav">
           <ul class="nav-list">

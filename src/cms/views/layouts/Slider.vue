@@ -3,9 +3,13 @@
     <!-- Logo -->
     <div class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span v-if="collapse" class="logo-mini"></span>
+      <span v-if="collapse" class="logo-mini">
+        <img src="@/assets/img/logo_small.png" width="30" height="30" />
+      </span>
       <!--  logo for regular state and mobile devices -->
-      <span v-else class="logo-lg"></span>
+      <span v-else class="logo-lg">
+        <img src="@/assets/img/logo_big.png" />
+      </span>
     </div>
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
@@ -139,10 +143,6 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  img {
-    width: 154px;
-    object-fit: cover;
-  }
 }
 .el-menu:not(.el-menu--collapse) {
   min-width: 231px;

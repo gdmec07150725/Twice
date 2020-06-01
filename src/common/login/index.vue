@@ -2,7 +2,7 @@
   <div class="login_wrapper">
     <div class="login_container">
       <div class="login_title">
-        Twice
+        <img src="@/assets/img/logo_big.png" />
       </div>
       <el-input
         v-model="email"

@@ -3,7 +3,9 @@
     <div class="rich-text-editor">
       <header class="rich-text-editor-header">
         <div class="header-content">
-          <div class="logo" @click="handleGoHome"></div>
+          <div class="logo" @click="handleGoHome">
+            <img src="@/assets/img/logo_big.png" />
+          </div>
           <div class="status-text with-padding">
             文章将会自动保存至
             <a>草稿</a>

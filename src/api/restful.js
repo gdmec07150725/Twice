@@ -153,6 +153,8 @@ class Restful {
       return accessToken.token;
     }
     const url = `/login-service/token/refresh?refreshToken=${freshToken.token}`;
+    // refresh token的时候不需要携带token，所以去掉请求头的token（带上token导致refresh token报500，被坑地好惨）
+    this.setToken();
     const data = await this.ajax.get(url).then(
       res => getResult(res),
       err => handlerError(err)
