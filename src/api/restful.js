@@ -124,6 +124,7 @@ function handlerError(err) {
 class Restful {
   constructor() {
     this.ajax = new Ajax(configs.serverURL);
+    this.canRefreshToken = true; // 限制refresh token的并发请求
   }
 
   async setToken(token) {
@@ -135,15 +136,25 @@ class Restful {
 
   async getToken() {
     const accessToken = storage.getAccessToken();
+    let time;
     if (!accessToken) {
       return '';
     }
     if (accessToken.isValid()) {
       // 判断是否过期了
+      time && clearTimeout(time);
       return accessToken.token;
     }
     // 如果过期了就使用refresh token 获取新的access token
-    return this.freshAccessToken(accessToken);
+    if (this.canRefreshToken) {
+      time && clearTimeout(time);
+      return this.freshAccessToken(accessToken);
+    } else {
+      time && clearTimeout(time);
+      time = setTimeout(() => {
+        this.getToken();
+      }, 200);
+    }
   }
 
   /* 刷新token */
@@ -155,10 +166,12 @@ class Restful {
     const url = `/login-service/token/refresh?refreshToken=${freshToken.token}`;
     // refresh token的时候不需要携带token，所以去掉请求头的token（带上token导致refresh token报500，被坑地好惨）
     this.setToken();
+    this.canRefreshToken = false;
     const data = await this.ajax.get(url).then(
       res => getResult(res),
       err => handlerError(err)
     );
+    this.canRefreshToken = true;
     // storage.saveRefreshToken(data.refreshToken);
     const newAccessToken = storage.saveAccessToken(data.data);
     return newAccessToken.token;
