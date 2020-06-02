@@ -136,24 +136,31 @@ class Restful {
 
   async getToken() {
     const accessToken = storage.getAccessToken();
-    let time;
+    console.log('accessToken', accessToken);
     if (!accessToken) {
       return '';
     }
     if (accessToken.isValid()) {
       // 判断是否过期了
-      time && clearTimeout(time);
+      // time && clearTimeout(time);
       return accessToken.token;
     }
     // 如果过期了就使用refresh token 获取新的access token
     if (this.canRefreshToken) {
-      time && clearTimeout(time);
-      return this.freshAccessToken(accessToken);
+      console.log('执行了');
+      // time && clearTimeout(time);
+      const token = await this.freshAccessToken(accessToken);
+      console.log('new token', token);
+      return token;
     } else {
-      time && clearTimeout(time);
-      time = setTimeout(() => {
-        this.getToken();
+      console.log('进来了');
+      let token = '';
+      setTimeout(async () => {
+        token = await this.getToken();
       }, 200);
+      if (token) {
+        return token;
+      }
     }
   }
 
@@ -174,6 +181,7 @@ class Restful {
     this.canRefreshToken = true;
     // storage.saveRefreshToken(data.refreshToken);
     const newAccessToken = storage.saveAccessToken(data.data);
+    console.log('请求完成');
     return newAccessToken.token;
   }
 
