@@ -125,6 +125,7 @@ class Restful {
   constructor() {
     this.ajax = new Ajax(configs.serverURL);
     this.canRefreshToken = true; // 限制refresh token的并发请求
+    this.freshTokenPromise = '';
   }
 
   async setToken(token) {
@@ -134,9 +135,14 @@ class Restful {
     return this;
   }
 
+  /* 用于限制refresh token的并发请求 */
+  async refreshTokenPromise() {
+    const token = await this.freshTokenPromise;
+    return token;
+  }
+
   async getToken() {
     const accessToken = storage.getAccessToken();
-    console.log('accessToken', accessToken);
     if (!accessToken) {
       return '';
     }
@@ -147,20 +153,13 @@ class Restful {
     }
     // 如果过期了就使用refresh token 获取新的access token
     if (this.canRefreshToken) {
-      console.log('执行了');
       // time && clearTimeout(time);
-      const token = await this.freshAccessToken(accessToken);
-      console.log('new token', token);
-      return token;
+      this.freshTokenPromise = Promise.resolve(
+        this.freshAccessToken(accessToken)
+      );
+      return await this.refreshTokenPromise();
     } else {
-      console.log('进来了');
-      let token = '';
-      setTimeout(async () => {
-        token = await this.getToken();
-      }, 200);
-      if (token) {
-        return token;
-      }
+      return await this.refreshTokenPromise();
     }
   }
 
@@ -181,14 +180,13 @@ class Restful {
     this.canRefreshToken = true;
     // storage.saveRefreshToken(data.refreshToken);
     const newAccessToken = storage.saveAccessToken(data.data);
-    console.log('请求完成');
     return newAccessToken.token;
   }
 
   /* 处理token */
   async ensureAccessToken() {
     const token = await this.getToken();
-    console.log(token);
+    console.log('token', token);
     return this.setToken(token);
   }
 
