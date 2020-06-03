@@ -84,7 +84,7 @@ class Storage {
    */
   saveAccessToken(accessToken, expiresIn) {
     const expireTime =
-      Date.now() + (expiresIn > 0 ? expiresIn - 60 : 120 - 60) * 1000;
+      Date.now() + (expiresIn > 0 ? expiresIn - 60 : 600 - 60) * 1000;
     return this.setAccessToken(accessToken, expireTime);
   }
 
