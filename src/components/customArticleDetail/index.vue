@@ -29,6 +29,7 @@
       </div>
       <h1 class="article-title">{{ articleDetail.title }}</h1>
       <div
+        v-preview-image
         v-html="articleDetail.content"
         class="ql-editor article-content"
       ></div>

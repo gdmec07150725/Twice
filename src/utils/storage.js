@@ -106,11 +106,11 @@ class Storage {
 
   /**
    * 保存refresh token 提前一分钟过期
-   * 现在refresh token 是1个小时过期
+   * 现在refresh token 是1星期过期
    * @param {*} refreshToken
    */
   saveRefreshToken(refreshToken) {
-    const expireTime = Date.now() + (3600 - 60) * 1000;
+    const expireTime = Date.now() + (3600 * 24 * 7 - 60) * 1000;
     const token = new Token(refreshToken, expireTime);
     localStorage.setItem(REFRESH_TOKEN_OBJECT, JSON.stringify(token));
     return token;

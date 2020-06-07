@@ -154,7 +154,7 @@ export default {
   top: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.7);
-  z-index: 1000;
+  z-index: 9999;
   width: 100%;
   height: 100%;
   overflow: auto;
