@@ -2,6 +2,10 @@
 import Vue from 'vue';
 import IconFont from '@/components/icon-font';
 import * as customFilters from '@/utils/filter';
+import 'quill/dist/quill.core.css';
+import 'quill/dist/quill.snow.css';
+import 'quill/dist/quill.bubble.css';
+import 'highlight.js/styles/tomorrow.css'; // highlight.js style
 import '@/assets/font/iconfont.css';
 
 Vue.component('icon-font', IconFont); // 全局注册icon组件

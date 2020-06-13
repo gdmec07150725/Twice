@@ -44,12 +44,14 @@ export default {
     },
   },
   watch: {
-    show(newVal) {
+    async show(newVal) {
       if (newVal) {
         this.curIndex = this.defaultCurIndex;
         this.handleTogglePrevAndNext();
-        this.handleImageDetail(this.imageList[this.defaultCurIndex]);
-        this.handleOpenPreview();
+        const { successful } = await this.handleImageDetail(
+          this.imageList[this.defaultCurIndex]
+        );
+        successful && this.handleOpenPreview();
       }
     },
   },
@@ -67,10 +69,8 @@ export default {
     };
   },
   methods: {
-    handleImageDetail(imgSrc) {
-      if (imgSrc) {
-        this.imgSrc = imgSrc;
-        const that = this;
+    loadImg(imgSrc) {
+      return new Promise((resolve, reject) => {
         let Img = new Image();
         Img.src = imgSrc;
         Img.setAttribute('crossOrigin', 'anonymous'); // 设置图片的跨域问题
@@ -100,18 +100,37 @@ export default {
             imgWidth = realWidth;
             imgHeight = realHeight;
           }
-          that.imgWidth = imgWidth;
-          that.imgHeight = imgHeight;
-          // // 计算图片与窗口做边距和上边距
-          that.innerLeft = `${(windowW - imgWidth) / 2}px`;
-          that.innerTop = `${(windowH - imgHeight) / 2}px`;
+          resolve({ windowW, windowH, imgWidth, imgHeight });
         };
+        Img.onerror = function(e) {
+          reject(e);
+        };
+      });
+    },
+    async handleImageDetail(imgSrc) {
+      try {
+        if (imgSrc) {
+          this.imgSrc = imgSrc;
+          const { windowW, windowH, imgWidth, imgHeight } = await this.loadImg(
+            this.imgSrc
+          );
+          this.imgWidth = imgWidth;
+          this.imgHeight = imgHeight;
+          // 计算图片与窗口做边距和上边距
+          this.innerLeft = `${(windowW - imgWidth) / 2}px`;
+          this.innerTop = `${(windowH - imgHeight) / 2}px`;
+          return { successful: true };
+        }
+      } catch (error) {
+        return { successful: false, error };
       }
     },
     handleOpenPreview() {
+      document.documentElement.style.overflow = 'hidden';
       this.visible = true;
     },
     handleClosePreview() {
+      document.documentElement.style.overflow = 'auto';
       this.visible = false;
       this.$emit('onHandleClosePreview');
     },

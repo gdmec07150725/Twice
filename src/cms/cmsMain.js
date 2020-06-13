@@ -5,7 +5,6 @@ import store from '@/store';
 import '@/commonMain';
 import EventBus from '@/lib/eventBus.js';
 import '@/styles/cmsIndex.less'; // 全局样式
-import 'highlight.js/styles/tomorrow.css';
 import editButton from '_c/Button/editButton.vue';
 import deleteButton from '_c/Button/deleteButton.vue';
 import primaryButton from '_c/Button/primaryButton.vue';

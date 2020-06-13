@@ -4,7 +4,7 @@ import previewImageVue from '@/lib/previewImage/previewImage.vue';
 
 const PreviewImageConstructor = Vue.extend(previewImageVue);
 
-function clickHandler(e) {
+async function clickHandler(e) {
   // 这里判断点击的元素是否是本身，是本身，则返回
   console.log('e', e);
   if (e.target.tagName === 'IMG') {
@@ -15,8 +15,8 @@ function clickHandler(e) {
       data: {},
     });
     console.log('instance', instance);
-    instance.handleImageDetail(imgSrc);
-    instance.handleOpenPreview();
+    const { successful } = await instance.handleImageDetail(imgSrc);
+    successful && instance.handleOpenPreview();
     window.document.body.appendChild(instance.$el);
   }
 }

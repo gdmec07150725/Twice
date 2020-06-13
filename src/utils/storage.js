@@ -78,13 +78,13 @@ class Storage {
 
   /**
    * 保存access token 提前一分钟过期
-   * 现在access token是10分钟过期
+   * 现在access token是30分钟过期
    * @param {*} accessToken token
    * @param {*} expiresIn 过期时间
    */
   saveAccessToken(accessToken, expiresIn) {
     const expireTime =
-      Date.now() + (expiresIn > 0 ? expiresIn - 60 : 600 - 60) * 1000;
+      Date.now() + (expiresIn > 0 ? expiresIn - 60 : 1800 - 60) * 1000;
     return this.setAccessToken(accessToken, expireTime);
   }
 
