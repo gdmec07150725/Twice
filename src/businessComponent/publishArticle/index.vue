@@ -88,17 +88,15 @@
         </div>
       </header>
       <main class="rich-text-editor-main">
-        <div id="title-input-hidden" class="title-input" style="height: 0">
+        <!-- <div id="title-input-hidden" class="title-input" style="height: 0">
           {{ richForm.title }}
-        </div>
+        </div> -->
         <textarea
           placeholder="请输入标题"
           maxlength="80"
-          rows="1"
           id="title-input"
           class="title-input"
           v-model="richForm.title"
-          @keyup="handleTitleInput"
         ></textarea>
         <quill-editor
           :value="richForm.content"
@@ -131,6 +129,11 @@ export default {
     ...mapState({
       categoryList: state => state.article.categoryList,
     }),
+  },
+  watch: {
+    'richForm.title'() {
+      this.handleTitleInput();
+    },
   },
   data() {
     return {
@@ -189,9 +192,9 @@ export default {
       this.closeLoading();
       this.richForm.coverImage = url;
     },
-    handleTitleInput(e) {
+    handleTitleInput() {
       // 通过获取文本域的滚动高度，动态设置文本域的高度
-      const target = e.target;
+      const target = document.getElementById('title-input');
       // const scrollHeight = target.scrollHeight;
       // console.log('height', target.style.height);
       // console.log('scrollHeight', scrollHeight);
@@ -203,11 +206,9 @@ export default {
       //   target.style.height = '49px';
       // }
       this.$nextTick(() => {
-        const scrollHeight = document.getElementById('title-input-hidden')
-          .scrollHeight;
-        console.log('scrollHeight', scrollHeight);
-        // const finalHeight = scrollHeight + 12;
-        // console.log('finalHeight', finalHeight);
+        // 先清空元素的高度，再重新获取。否则删除时不会自适应
+        target.style.height = '';
+        const scrollHeight = target.scrollHeight;
         if (scrollHeight > 55) {
           target.style.height = `${scrollHeight}px`;
         } else {
