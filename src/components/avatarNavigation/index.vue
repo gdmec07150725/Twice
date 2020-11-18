@@ -24,9 +24,9 @@
           </a>
         </li>
         <li class="nav-menu-item">
-          <a>
+          <a @click="handleJumpToMyArticle">
             <icon-font icon="icondianzan3" class="nav-menu-item-icon" />
-            <span>我赞过的</span>
+            <span>我的文章</span>
           </a>
         </li>
         <li class="nav-menu-item">
@@ -98,6 +98,10 @@ export default {
     handleJumpToCms() {
       const url = '/cms.html#/workplace';
       window.open(url);
+    },
+    handleJumpToMyArticle() {
+      this.handleCloseAvatar();
+      this.$router.push({ name: 'myArticle' });
     },
     handleLogout() {
       storage.clear();

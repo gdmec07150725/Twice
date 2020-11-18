@@ -66,5 +66,13 @@ class Article {
       `/user-service/categories/first/${params.id}?${stringify(params)}`
     );
   }
+
+  /**
+   * 获取当前用户发布的文章
+   * @param {*} userId
+   */
+  async getUserPublishArticle(userId) {
+    return Restful.get(`/user-service/articles/user/${userId}`);
+  }
 }
 export default new Article();

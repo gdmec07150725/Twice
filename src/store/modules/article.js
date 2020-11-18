@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import article from '@/api/article';
+
 const defaultPagination = {
   page: 1,
   rows: 10,
@@ -122,6 +123,21 @@ const actions = {
         });
     });
   },
+
+  // 编辑文章（client用于编辑文章）
+  modifyArticleDetail({ commit }, params) {
+    return new Promise((resolve, reject) => {
+      article
+        .editArticleDetail(params)
+        .then(res => {
+          resolve(res);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  },
+
   // 编辑文章（cms用于修改文章审核）
   approveArticle({ commit }, params) {
     return new Promise((resolve, reject) => {
@@ -135,6 +151,7 @@ const actions = {
         });
     });
   },
+
   // 新增文章
   insertArticle({ commit }, params) {
     return new Promise((resolve, reject) => {
@@ -163,6 +180,15 @@ const actions = {
     return new Promise((resolve, reject) => {
       article.getChildCategory(params).then(res => {
         commit('SAVE_CHILD_CATEGORY', res);
+        resolve(res);
+      });
+    });
+  },
+
+  // 获取用户发布的文章
+  getUserPublishArticle({ commit }, params) {
+    return new Promise((resolve, reject) => {
+      article.getUserPublishArticle(params).then(res => {
         resolve(res);
       });
     });

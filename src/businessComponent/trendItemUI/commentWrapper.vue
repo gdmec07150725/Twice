@@ -18,6 +18,10 @@ import storage from '@/utils/storage';
 export default {
   name: 'commentWrapper',
   props: {
+    parentPage: {
+      type: String,
+      default: 'trend',
+    },
     id: {
       type: [String, Number],
       default: '',
@@ -33,6 +37,13 @@ export default {
       commentList: [],
     };
   },
+  computed: {
+    requireType() {
+      return this.parentPage === 'trend'
+        ? 'COMMENT_TYPE_TREND'
+        : 'COMMENT_TYPE_ARTICLE';
+    },
+  },
   methods: {
     ...mapActions(['getCommentList', 'publishComment']),
     toggleShowComment() {
@@ -46,7 +57,7 @@ export default {
         replyId: params.replyId,
         content: params.replyContent,
         contentId: this.id,
-        type: 'COMMENT_TYPE_TREND',
+        type: this.requireType,
         userId: JSON.parse(storage.getUserDetail()).id,
       };
       this.replyTrend(concatParams);
@@ -56,7 +67,7 @@ export default {
         content,
         contentId: this.id,
         replyId: 0,
-        type: 'COMMENT_TYPE_TREND',
+        type: this.requireType,
         userId: JSON.parse(storage.getUserDetail()).id,
       };
       this.replyTrend(params);
@@ -73,7 +84,7 @@ export default {
       try {
         const params = {
           contentId: this.id,
-          type: 'COMMENT_TYPE_TREND',
+          type: this.requireType,
         };
         const res = await this.getCommentList(params);
         this.commentList = res;

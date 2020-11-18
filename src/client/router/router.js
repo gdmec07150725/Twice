@@ -38,6 +38,18 @@ export const routes = [
     component: publishArticle,
   },
   {
+    path: '/myArticle',
+    name: 'myArticle',
+    component: layouts,
+    children: [
+      {
+        path: 'index',
+        name: 'myArticle',
+        component: () => import('@/client/views/myArticle'),
+      },
+    ],
+  },
+  {
     path: '/articleDetail',
     component: layouts,
     redirect: '/articleDetail/index',

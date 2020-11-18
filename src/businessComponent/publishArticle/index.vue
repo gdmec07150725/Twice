@@ -77,9 +77,16 @@
                   </div>
                 </template>
               </div>
-              <button class="publish-btn" @click="handleInsertArticle">
-                确定并发布
-              </button>
+              <template v-if="!articleId">
+                <button class="publish-btn" @click="handleInsertArticle">
+                  确定并发布
+                </button>
+              </template>
+              <template v-else>
+                <button class="publish-btn" @click="handleModifyArticle">
+                  保存
+                </button>
+              </template>
             </div>
           </div>
           <nav class="navigator main-navigator with-padding">
@@ -100,7 +107,7 @@
         ></textarea>
         <quill-editor
           :value="richForm.content"
-          :needReload="false"
+          :needReload="needReload"
           formName="article"
           language="zh_cn"
           defaultHeight="calc(100vh - 190px)"
@@ -125,6 +132,12 @@ export default {
     quillEditor,
     customizeUpload,
   },
+  props: {
+    articleId: {
+      type: [String, Number],
+      default: '',
+    },
+  },
   computed: {
     ...mapState({
       categoryList: state => state.article.categoryList,
@@ -146,10 +159,16 @@ export default {
       togglePublish: false,
       coverLoading: '', // 上传封面图片的loading
       itemActive: '',
+      needReload: false, // 数据回来后，将needReload改为true, 为了重新渲染编辑器
     };
   },
   methods: {
-    ...mapActions(['insertArticle', 'getCategoryList']),
+    ...mapActions([
+      'insertArticle',
+      'getCategoryList',
+      'getArticleDetail',
+      'modifyArticleDetail',
+    ]),
     // 打开loading
     openLoading() {
       this.coverLoading = '';
@@ -241,6 +260,32 @@ export default {
         console.log(error);
       }
     },
+    async handleModifyArticle() {
+      try {
+        const { title, content, coverImage } = this.richForm;
+        const { itemActive } = this;
+        if (title && content && itemActive) {
+          const params = {
+            id: this.articleId,
+            categoryId: itemActive,
+            companyId: JSON.parse(storage.getCompanyDetail()).id,
+            userId: JSON.parse(storage.getUserDetail()).id,
+            title,
+            content,
+            image: coverImage,
+            status: 'ARTICLE_STATUS_CHECKING', // 待审核状态
+          };
+          const res = await this.modifyArticleDetail(params);
+          this.handleClosePublish();
+          if (res && res.message) {
+            alert(res.message);
+            this.$router.push({ name: 'home' });
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
     queryCategoryList() {
       // 做好登录之后需要去掉这个参数
       const params = {
@@ -248,9 +293,32 @@ export default {
       };
       this.getCategoryList(params);
     },
+    async queryArticleDetail() {
+      try {
+        const {
+          title,
+          image,
+          content,
+          categoryId,
+        } = await this.getArticleDetail(this.articleId);
+        this.richForm.title = title;
+        this.richForm.content = content;
+        this.richForm.coverImage = image;
+        this.itemActive = categoryId;
+        this.$nextTick(() => {
+          this.needReload = true;
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
   created() {
     this.queryCategoryList();
+    if (this.articleId) {
+      // 请求文章数据
+      this.queryArticleDetail();
+    }
   },
 };
 </script>

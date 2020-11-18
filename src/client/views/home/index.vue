@@ -102,12 +102,9 @@
                         </ul>
                       </div>
                       <div class="title-row">
-                        <router-link
-                          :to="{ name: 'articleDetail' }"
-                          class="title"
-                        >
+                        <div class="title">
                           {{ item.title }}
-                        </router-link>
+                        </div>
                       </div>
                       <action-icon />
                     </div>
@@ -234,7 +231,8 @@ export default {
     handleReadDetail(item) {
       const { id } = item;
       if (id) {
-        this.$router.replace({ name: 'articleDetail', query: { id } });
+        window.open(`/client.html#/articleDetail/index?id=${id}`);
+        // this.$router.replace({ name: 'articleDetail', query: { id } });
       }
     },
     queryCategoryList() {
