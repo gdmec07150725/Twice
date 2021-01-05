@@ -9,7 +9,7 @@
     "format-code": "prettier-eslint --write \"src/**/*.js\" \"src/**/*.vue\""
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "clonedeep": "^2.0.0",
     "core-js": "^3.4.4",
     "countup": "^1.8.2",
